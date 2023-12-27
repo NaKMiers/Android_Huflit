@@ -10,7 +10,7 @@
 1. Follow @NaKMiers on github
 2. Download Android Studio 2021
 3. Máy ảo Genymotion
-4. Tạo máy ảo Google Pixel XL 1920x1080 400dp trên Genymotion
+4. Tạo máy ảo Google Pixel 1920x1080 420dp trên Genymotion
 5. Học Github CƠ BẢN
 6. Học Java CƠ BẢN
 7. Học lập trình Android
