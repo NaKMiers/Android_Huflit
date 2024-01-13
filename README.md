@@ -30,6 +30,8 @@
 ## Phân công cụ thể
 
 ### Độ phức tạp (được tính dựa trên số giờ dự đoán hoàn thành và tỉ lệ xuất hiện bug dựa trên kinh nghiệm code của @nakmiers)
+* trung bình 2h <=> 1 point
+
 - 1 🥰
 - 2 😁
 - 3 🤔
