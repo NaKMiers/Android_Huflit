@@ -48,11 +48,11 @@
 - 6 Login, Register 😰
 - 3 Change theme 🤔
 
-### Bảo - 16
+### Bảo - 14
 - 5 Tạo chat mới, xóa chat, rename chat, delete chat, delete all chat 😣
 - 3 Điều chỉnh thuộc tính của image mode 🤔
 - 4 Gửi prompt image, nhận images, hiển thị images ra view 🙂
-- 4 Save images, xóa tin nhắn từ AI, clear toàn bộ images trong generating images box 🙂
+- 2 Save images, copy image và completion vào clipboard 🙂
 
 ### Hữu - 15
 - 1 Login View 🥰
