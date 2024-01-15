@@ -1,18 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:src="@drawable/owl" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="310dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="50dp"
+        android:background="#A3FF9800"
+        android:drawableLeft="@drawable/user"
+        android:gravity="fill"
+        android:hint=" EMAIL:"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="310dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="50dp"
+        android:background="#99FF9800"
+        android:drawableLeft="@drawable/lock"
+        android:gravity="fill"
+        android:hint="PASSWORD"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="100dp"
+        android:backgroundTint="#99FF9800"
+        android:text="LOGIN"
+        android:textColor="#0C0C0C" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#99FF9800"
+        android:text="SIGN UP"
+        android:textColor="#171616" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="50dp"
+        android:drawableLeft="@drawable/gg"
+        android:foregroundGravity="center"
+        android:gravity="fill"
+        android:paddingLeft="20dp"
+        android:text="Đăng nhập với Google"
+        android:textAlignment="textStart"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginTop="10dp"
+        android:text="FORGET PASSWORD?"
+        android:textAlignment="center"
+        android:textColor="#3F51B5"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
