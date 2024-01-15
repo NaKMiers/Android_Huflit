@@ -75,6 +75,63 @@
 - 2 Update Profile 😁
 
 
+# Routes (quy định đường dân, params để server trả về dữ liệu)
+### AUTH
+Login(post): /auth/login
+(emailOrUsername, password)
+
+Register(post): /auth/register
+(email, username, password)
+
+Forgot Password(post): /auth/forgot-password
+(email)
+
+Reset Password(post): /auth/reset-password
+(email, token, newPassword)
+
+### BOX
+Get Boxes(get): /box/get-boxes/:type
+
+Create Box(post): /box/create-box/:type
+
+Edit Box(patch): /box/:id
+(title)
+
+Delete Box(delete): /box/:id
+
+### USER
+Get User(get): /user/:id
+
+Change Password(patch): /user/change-password
+(oldPassword, newPassword)
+
+Update Profile(post): /user/update-profile
+(firstname, lastname, birthday, job, address)
+
+Change Theme(patch): /user/change-theme/:theme
+
+Update Image Params(patch): /user/update-image-params
+(amount, size)
+
+### CHAT
+Get Prompts(get): /chat/get-prompts
+
+Create Prompt(post): /chat/create-prompt
+(chatId, prompt)
+
+Create Completion(post): /chat/create-completion
+(chatId, prompt, model, maxTokens, temperature)
+
+### IMAGE
+Get prompts(get): /image/get-prompts
+
+Create prompt(post): /image/create-prompt
+(chatId, prompt)
+
+Create Images(post): /image/create-images
+(chatId, prompt, amount, size)
+
+
 
 # Trình tự làm việc
 
