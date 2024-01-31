@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="167dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="76dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/owl" />
+
+    <EditText
+        android:id="@+id/edtemaillogin"
+        android:layout_width="307dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/custom_edt"
+        android:drawableLeft="@drawable/icon_mail"
+        android:ems="10"
+        android:paddingLeft="20dp"
+        android:hint=" Email: "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <EditText
+        android:id="@+id/edtpasswordlogin"
+        android:layout_width="308dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="text"
+        android:background="@drawable/custom_edt"
+        android:drawableLeft="@drawable/icon_khoa"
+        android:paddingLeft="20dp"
+        android:hint=" Password: "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtemaillogin" />
+
+    <Button
+        android:id="@+id/btnlogin"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:backgroundTint="@null"
+        android:text="LOGIN"
+        android:background="@drawable/custom_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtpasswordlogin" />
+
+    <Button
+        android:id="@+id/btnsignup"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:backgroundTint="@null"
+        android:background="@drawable/custom_btn"
+        android:text="SIGN UP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnlogin" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
