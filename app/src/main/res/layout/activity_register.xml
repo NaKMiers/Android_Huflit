@@ -26,7 +26,7 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         android:paddingStart="20dp"
-        android:text=" EMAIL: "
+        android:hint=" Email: "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -41,7 +41,7 @@
         android:ems="10"
         android:inputType="text"
         android:paddingStart="20dp"
-        android:text=" PHONE: "
+        android:hint=" Phone: "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtmail" />
@@ -56,7 +56,7 @@
         android:ems="10"
         android:inputType="text"
         android:paddingStart="20dp"
-        android:text=" NAME USER: "
+        android:hint=" Username: "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtphone" />
@@ -71,7 +71,7 @@
         android:ems="10"
         android:inputType="text"
         android:paddingStart="20dp"
-        android:text=" PASSWORD: "
+        android:hint=" Password: "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtname" />
@@ -86,7 +86,7 @@
         android:ems="10"
         android:inputType="text"
         android:paddingStart="20dp"
-        android:text=" ENTER THE PASSWORD: "
+        android:hint=" Password again: "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtpassword" />
