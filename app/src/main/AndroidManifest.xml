@@ -16,17 +16,11 @@
             android:name=".DevInfo"
             android:exported="false" />
         <activity
-            android:name=".imageChatMenu"
-            android:exported="true" />
-        <activity
-            android:name=".chatMenu"
-            android:exported="true" />
-        <activity
             android:name=".textChat"
-            android:exported="true" />
+            android:exported="true"/>
         <activity
             android:name=".imageChat"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

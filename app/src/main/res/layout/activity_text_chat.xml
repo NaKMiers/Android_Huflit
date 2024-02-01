@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="start"
-    android:orientation="vertical"
-    tools:context=".imageChat">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:id="@+id/linearLayout"
+        android:orientation="vertical"
+        tools:context=".imageChat">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarChat"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:background="@color/white"
-        app:menu="@menu/menu_image"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme">
+        android:theme="?attr/actionBarTheme"
+        app:menu="@menu/menu_image">
 
         <ImageView
             android:id="@+id/userIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
             android:layout_gravity="start"
             android:src="@drawable/user" />
 
         <ImageView
             android:id="@+id/chatIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
             android:layout_gravity="start"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="30dp"
             android:src="@drawable/chat" />
 
         <TextView
@@ -40,12 +41,14 @@
             android:gravity="center"
             android:text="IMAGE"
             android:textColor="#FF9800"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="618dp">
+        android:layout_height="650dp"
+        android:id="@+id/chatScrollView"
+        >
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -54,7 +57,7 @@
             <ImageView
                 android:id="@+id/backgroundImg"
                 android:layout_width="319dp"
-                android:layout_height="614dp"
+                android:layout_height="650dp"
                 android:layout_gravity="center"
                 android:src="@drawable/owl"
 
@@ -72,44 +75,45 @@
         </FrameLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="84dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/voicesearch" />
-
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <EditText
-                android:id="@+id/edtImageChat"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/edtcustom"
-                android:ems="10"
-                android:hint="Nhập câu lệnh tại đây..."
-                android:inputType="text" />
+            android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="center|end"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/buttonlogout"
-                android:src="@drawable/send" />
-        </FrameLayout>
+                android:id="@+id/imageView"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/voicesearch" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/edtImageChat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/edtcustom"
+                    android:ems="10"
+                    android:hint="Nhập câu lệnh tại đây..."
+                    android:inputType="text"
+                    android:paddingLeft="15dp" />
+
+                <ImageView
+                    android:id="@+id/imageButton"
+                    android:layout_width="59dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center|end"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/buttonlogout"
+                    android:src="@drawable/send" />
+            </FrameLayout>
+
+        </LinearLayout>
+
 
     </LinearLayout>
-
-
-</LinearLayout>

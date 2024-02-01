@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -19,17 +19,17 @@
 
         <ImageView
             android:id="@+id/userIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
             android:layout_gravity="start"
             android:src="@drawable/user" />
 
         <ImageView
             android:id="@+id/chatIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
             android:layout_gravity="start"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="30dp"
             android:src="@drawable/chat" />
 
         <TextView
@@ -39,12 +39,12 @@
             android:layout_gravity="center"
             android:text="CHAT ACTIVITY"
             android:textColor="#FF9800"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="618dp">
+        android:layout_height="651dp">
 
         <TextView
             android:id="@+id/textView"
@@ -66,8 +66,8 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="84dp"
-            android:layout_height="match_parent"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/voicesearch" />
 
@@ -87,16 +87,16 @@
                 android:ems="10"
                 android:hint="Nhập câu lệnh tại đây..."
                 android:inputType="text"
+                android:paddingLeft="15dp"
                 android:scrollbarAlwaysDrawHorizontalTrack="false" />
 
             <ImageView
                 android:id="@+id/imageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_width="59dp"
+                android:layout_height="26dp"
                 android:layout_gravity="center|end"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/buttonlogout"
-                android:paddingLeft="15dp"
                 android:src="@drawable/send" />
         </FrameLayout>
 
