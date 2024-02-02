@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="start"
     android:orientation="vertical"
-    tools:context=".imageChat">
+    tools:context=".ImageChat">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarImage"

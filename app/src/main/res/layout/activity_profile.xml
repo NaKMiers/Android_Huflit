@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:textColor="@color/red"
+        android:textColor="#f44336"
         android:text="Thông tin chi tiết"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -140,5 +140,4 @@
         app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,27 +1,17 @@
 package com.anpha.android_huflit;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import androidx.core.view.GravityCompat;
 import android.widget.PopupWindow;
 import android.view.View;
 import android.view.LayoutInflater;
-import android.view.Gravity;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-public class imageChat extends AppCompatActivity {
+public class ImageChat extends AppCompatActivity {
 
     PopupWindow popupWindow;
 
