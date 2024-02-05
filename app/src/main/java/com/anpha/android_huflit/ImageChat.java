@@ -2,6 +2,7 @@ package com.anpha.android_huflit;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Size;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.os.Bundle;
@@ -17,10 +18,14 @@ public class ImageChat extends AppCompatActivity {
 
     Toolbar toolbarImage;
 
-    ImageButton btnPlus1, btnPlus2, btnMinus1, btnMinus2;
+    ImageButton btnPlus1, btnInCr, btnMinus1, btnDes;
 
     TextView txtAmount, txtSize;
     int currentValue = 1;
+    Size[] ImageSize;
+
+    int OptionSizeIndex = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +43,12 @@ public class ImageChat extends AppCompatActivity {
         );
 
         btnMinus1 = popupView.findViewById(R.id.btnMinus1);
-        btnMinus2 = popupView.findViewById(R.id.btnMinus2);
+        btnInCr = popupView.findViewById(R.id.btnInCr);
         btnPlus1 = popupView.findViewById(R.id.btnPlus1);
-        btnPlus2 = popupView.findViewById(R.id.btnPlus2);
+        btnDes = popupView.findViewById(R.id.btnDes);
         txtAmount = popupView.findViewById(R.id.txtAmount);
         txtSize = popupView.findViewById(R.id.txtSize);
+
         toolbarImage.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -69,9 +75,32 @@ public class ImageChat extends AppCompatActivity {
                 updateTextView();
             }
         });
+        ImageSize = new Size[]{new Size(256, 256), new Size(526, 526)};
+        btnInCr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (OptionSizeIndex < ImageSize.length - 1) {
+                    OptionSizeIndex = (OptionSizeIndex + 1) % ImageSize.length;
+                    updateTextView();
+                }
+            }
+        });
+        btnDes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (OptionSizeIndex > 0) {
+                    OptionSizeIndex = (OptionSizeIndex - 1) % ImageSize.length;
+                    updateTextView();
+                }
+            }
+        });
     }
+
+
         private void updateTextView() {
             txtAmount.setText(String.valueOf(currentValue));
+            Size selectedSize = ImageSize[OptionSizeIndex];
+            txtSize.setText( selectedSize.getWidth() + "x" + selectedSize.getHeight());
         }
     }
 

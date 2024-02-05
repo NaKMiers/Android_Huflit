@@ -22,7 +22,7 @@
         <EditText
             android:id="@+id/editTextText2"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/plaintextcustom"
             android:drawableLeft="@drawable/search1"
@@ -208,7 +208,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/btnMinus2"
+                    android:id="@+id/btnDes"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="50dp"
@@ -227,7 +227,7 @@
                     android:textSize="16sp" />
 
                 <ImageButton
-                    android:id="@+id/btnPlus2"
+                    android:id="@+id/btnInCr"
                     android:layout_width="45dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="50dp"
