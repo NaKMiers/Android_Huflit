@@ -85,7 +85,8 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/voicesearch" />
+                android:src="@drawable/voicesearch"
+                android:layout_marginBottom="15dp"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -101,7 +102,9 @@
                     android:ems="10"
                     android:hint="Nhập câu lệnh tại đây..."
                     android:inputType="text"
-                    android:paddingLeft="15dp" />
+                    android:paddingLeft="15dp"
+                    android:paddingRight="35dp"
+                    android:layout_marginBottom="15dp"/>
 
                 <ImageView
                     android:id="@+id/imageButton"
@@ -110,7 +113,9 @@
                     android:layout_gravity="center|end"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/buttonlogout"
-                    android:src="@drawable/send" />
+                    android:src="@drawable/send"
+                    android:layout_marginBottom="5dp"
+                    />
             </FrameLayout>
 
         </LinearLayout>
