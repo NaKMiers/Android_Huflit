@@ -75,7 +75,7 @@ public class ImageChat extends AppCompatActivity {
                 updateTextView();
             }
         });
-        ImageSize = new Size[]{new Size(256, 256), new Size(526, 526)};
+        ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(104,1024)};
         btnInCr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
