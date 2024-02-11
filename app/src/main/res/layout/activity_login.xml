@@ -20,13 +20,14 @@
         android:id="@+id/edtemaillogin"
         android:layout_width="307dp"
         android:layout_height="67dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/custom_edt"
-        android:drawableLeft="@drawable/icon_mail"
+        android:drawableLeft="@drawable/icon_user"
         android:ems="10"
-        android:hint=" Email: "
+        android:hint=" Username"
         android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
@@ -39,7 +40,7 @@
         android:drawableLeft="@drawable/icon_khoa"
         android:ems="10"
         android:hint=" Password: "
-        android:inputType="text"
+        android:inputType="textPassword"
         android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
@@ -72,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnlogin" />
 
     <ImageView
-        android:id="@+id/imageView12"
+        android:id="@+id/imgGG"
         android:layout_width="56dp"
         android:layout_height="43dp"
         android:layout_marginTop="12dp"
@@ -83,7 +84,7 @@
         app:srcCompat="@drawable/google" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/txtloginwithgg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -91,7 +92,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.073"
-        app:layout_constraintStart_toEndOf="@+id/imageView12"
+        app:layout_constraintStart_toEndOf="@+id/imgGG"
         app:layout_constraintTop_toBottomOf="@+id/btnsignup" />
 
     <TextView
@@ -105,6 +106,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.544"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintTop_toBottomOf="@+id/txtloginwithgg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

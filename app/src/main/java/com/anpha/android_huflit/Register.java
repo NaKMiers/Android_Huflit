@@ -31,8 +31,8 @@ public class Register extends AppCompatActivity {
     {
         edtemailregister=findViewById(R.id.edtemailregister);
         edtnameregister=findViewById(R.id.edtemailregister);
-        edtpasswordregister=findViewById(R.id.edtpasswordregister);
-        edtpassagainregister=findViewById(R.id.edtpasswordregister);
+        edtpasswordregister=findViewById(R.id.edtpasswordregistergg);
+        edtpassagainregister=findViewById(R.id.edtpasswordregistergg);
         edtphoneregister=findViewById(R.id.edtphoneregister);
         btnregister=findViewById(R.id.btnregister);
         txtsigninregister=findViewById(R.id.txtsigninregister);
