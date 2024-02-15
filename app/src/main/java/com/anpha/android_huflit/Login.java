@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Login extends AppCompatActivity {
      Button btnsignin,btnlogin;
      EditText edtemaillogin,edtpasswordlogin;
-     TextView txtforgetpassword;
+     TextView txtforgetpassword,txtloginwithgg;
+     ImageView imgGG;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,20 @@ public class Login extends AppCompatActivity {
                 startActivity(forgotpassword);
             }
         });
+        txtloginwithgg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginwithgg = new Intent(Login.this, LoginGG.class);
+                startActivity(loginwithgg);
+            }
+        });
+        imgGG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent imgGG = new Intent(Login.this, LoginGG.class);
+                startActivity(imgGG);
+            }
+        });
     }
     public void addControlLogin()
     {
@@ -41,5 +57,7 @@ public class Login extends AppCompatActivity {
         edtemaillogin=findViewById(R.id.edtemaillogin);
         edtpasswordlogin=findViewById(R.id.edtpasswordlogin);
         txtforgetpassword = findViewById(R.id.txtforgetpassword);
+        txtloginwithgg=findViewById(R.id.txtloginwithgg);
+        imgGG=findViewById(R.id.imgGG);
     }
 }
