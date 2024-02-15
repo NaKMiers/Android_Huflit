@@ -125,7 +125,7 @@
                 android:src="@drawable/information" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/txtSurName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -151,7 +151,7 @@
                 android:src="@drawable/settings" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/txtName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -204,7 +204,7 @@
 
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/txtAddress"
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
                 android:background="@drawable/socialedit"
