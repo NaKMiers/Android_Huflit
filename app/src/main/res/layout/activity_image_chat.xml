@@ -47,7 +47,7 @@
         android:layout_height="651dp">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtHelp1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
@@ -78,7 +78,7 @@
             android:layout_weight="1">
 
             <EditText
-                android:id="@+id/edtImageChat"
+                android:id="@+id/edtImgChat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -91,7 +91,7 @@
                 android:scrollbarAlwaysDrawHorizontalTrack="false" />
 
             <ImageView
-                android:id="@+id/imageButton"
+                android:id="@+id/btnSend"
                 android:layout_width="59dp"
                 android:layout_height="26dp"
                 android:layout_gravity="center|end"
