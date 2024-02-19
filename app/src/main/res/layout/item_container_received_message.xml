@@ -20,5 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent="0.8"
+        android:maxWidth="250dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

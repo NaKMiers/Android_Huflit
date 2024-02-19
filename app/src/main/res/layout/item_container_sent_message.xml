@@ -30,6 +30,8 @@
         app:layout_constraintEnd_toStartOf="@id/imageProfile"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.75"
+        android:maxWidth="250dp"
         />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

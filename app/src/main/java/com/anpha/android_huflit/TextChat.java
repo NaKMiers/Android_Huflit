@@ -50,6 +50,9 @@ public class TextChat extends AppCompatActivity {
         txtHelp1 = findViewById(R.id.txtHelp1);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
+        edtTextChat.requestFocus();
+        edtTextChat.setSelection(edtTextChat.getText().length());
+
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

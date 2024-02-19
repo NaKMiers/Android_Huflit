@@ -48,7 +48,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="644dp">
+        android:layout_height="653dp">
 
 
         <ImageView
@@ -108,9 +108,10 @@
                 android:background="@drawable/edtcustom"
                 android:ems="10"
                 android:hint="Nhập câu lệnh tại đây..."
-                android:inputType="text"
+                android:inputType="textMultiLine"
+                android:scrollHorizontally="false"
                 android:paddingLeft="15dp"
-                android:paddingRight="35dp" />
+                android:paddingRight="50dp" />
 
             <ImageView
                 android:id="@+id/btnSend"
