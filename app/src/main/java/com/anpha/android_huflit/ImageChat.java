@@ -102,5 +102,6 @@ public class ImageChat extends AppCompatActivity {
             Size selectedSize = ImageSize[OptionSizeIndex];
             txtSize.setText( selectedSize.getWidth() + "x" + selectedSize.getHeight());
         }
-    }
+
+}
 
