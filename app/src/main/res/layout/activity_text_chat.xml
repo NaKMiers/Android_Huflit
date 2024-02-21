@@ -53,8 +53,8 @@
 
         <ImageView
             android:id="@+id/backgroundImg"
-            android:layout_width="319dp"
-            android:layout_height="match_parent"
+            android:layout_width="311dp"
+            android:layout_height="351dp"
             android:layout_gravity="center"
             android:src="@drawable/owl"
 
@@ -92,13 +92,16 @@
             android:id="@+id/imageView"
             android:layout_width="70dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:src="@drawable/voicesearch" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <EditText
                 android:id="@+id/edtTextChat"
@@ -109,9 +112,9 @@
                 android:ems="10"
                 android:hint="Nhập câu lệnh tại đây..."
                 android:inputType="textMultiLine"
-                android:scrollHorizontally="false"
                 android:paddingLeft="15dp"
-                android:paddingRight="50dp" />
+                android:paddingRight="50dp"
+                android:scrollHorizontally="false" />
 
             <ImageView
                 android:id="@+id/btnSend"
@@ -120,8 +123,8 @@
                 android:layout_gravity="center|end"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/buttonlogout"
-                android:src="@drawable/send"
-                android:onClick="handleSendChatPrompt"/>
+                android:onClick="handleSendChatPrompt"
+                android:src="@drawable/send" />
         </FrameLayout>
 
     </LinearLayout>

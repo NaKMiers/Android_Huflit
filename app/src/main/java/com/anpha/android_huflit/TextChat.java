@@ -71,7 +71,7 @@ public class TextChat extends AppCompatActivity {
         popupWindow = new PopupWindow(
                 popupView,
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                1600,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
                 true
         );
 

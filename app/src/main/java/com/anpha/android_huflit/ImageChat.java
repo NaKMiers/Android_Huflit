@@ -38,7 +38,7 @@ public class ImageChat extends AppCompatActivity {
         popupWindow = new PopupWindow(
                 popupView,
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                1730,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
                 true
         );
 
