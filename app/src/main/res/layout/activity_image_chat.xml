@@ -56,6 +56,7 @@
             android:textSize="20sp" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
@@ -63,8 +64,7 @@
             android:overScrollMode="never"
             android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:stackFromEnd="true"
-            />
+            app:stackFromEnd="true" />
     </FrameLayout>
 
     <LinearLayout
@@ -106,7 +106,7 @@
                 android:scrollHorizontally="false" />
 
             <ImageView
-                android:id="@+id/btnSend"
+                android:id="@+id/btnSendImg"
                 android:layout_width="59dp"
                 android:layout_height="26dp"
                 android:layout_gravity="center|end"

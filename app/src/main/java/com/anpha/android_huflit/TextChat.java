@@ -53,12 +53,12 @@ public class TextChat extends AppCompatActivity {
         setContentView(R.layout.activity_text_chat);
 
 
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerViewImage);
         messages = new ArrayList<>();
         adapter = new MessageAdapter(messages);
         recyclerView.setAdapter(adapter);
         toolbarChat = findViewById(R.id.toolbarChat);
-        btnSend = findViewById(R.id.btnSend);
+        btnSend = findViewById(R.id.btnSendImg);
         edtTextChat = findViewById(R.id.edtTextChat);
         txtHelp1 = findViewById(R.id.txtHelp1);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
