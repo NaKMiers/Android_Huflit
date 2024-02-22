@@ -1,9 +1,12 @@
 package com.anpha.android_huflit;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Size;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,8 +15,26 @@ import android.view.View;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
+import com.anpha.android_huflit.Message.ImageMessage;
+import com.anpha.android_huflit.Message.ImageMessageAdapter;
+import com.anpha.android_huflit.Message.MessageAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ImageChat extends AppCompatActivity {
 
+    private RecyclerView recyclerViewImage;
+
+    private ImageMessageAdapter adapter;
+
+    private List<ImageMessage> messages;
+
+    TextView txtHelp2;
+
+    EditText edtImgChat;
+
+    ImageView btnSendImg;
     PopupWindow popupWindow;
 
     Toolbar toolbarImage;
@@ -31,23 +52,47 @@ public class ImageChat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_chat);
 
-
         toolbarImage = findViewById(R.id.toolbarImage);
 
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_image_chat_menu, null);
         popupWindow = new PopupWindow(
                 popupView,
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                1730,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
                 true
         );
-
+        recyclerViewImage = findViewById(R.id.recyclerViewImage);
+        messages = new ArrayList<>();
+        adapter = new ImageMessageAdapter(messages);
+        recyclerViewImage.setAdapter(adapter);
+        txtHelp2 = findViewById(R.id.txtHelp2);
+        edtImgChat = findViewById(R.id.edtImgChat);
+        btnSendImg = findViewById(R.id.btnSendImg);
         btnMinus1 = popupView.findViewById(R.id.btnMinus1);
         btnInCr = popupView.findViewById(R.id.btnInCr);
         btnPlus1 = popupView.findViewById(R.id.btnPlus1);
         btnDes = popupView.findViewById(R.id.btnDes);
         txtAmount = popupView.findViewById(R.id.txtAmount);
         txtSize = popupView.findViewById(R.id.txtSize);
+        btnSendImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String messageText = edtImgChat.getText().toString().trim();
+                if(!messageText.isEmpty()){
+                    txtHelp2.setText("");
+                    ImageMessage sentMessage = new ImageMessage(messageText,true);
+                    messages.add(sentMessage);
+                    adapter.notifyItemInserted(messages.size() - 1);
+
+                    ImageMessage reivedMessage = new ImageMessage(false,R.drawable.boy);
+                    messages.add(reivedMessage);
+                    adapter.notifyItemInserted(messages.size() - 1);
+                    recyclerViewImage.scrollToPosition(messages.size() - 1);
+
+                    edtImgChat.setText("");
+                }
+            }
+        });
 
         toolbarImage.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

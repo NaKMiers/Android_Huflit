@@ -23,6 +23,7 @@
             android:id="@+id/editTextText2"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/plaintextcustom"
             android:drawableLeft="@drawable/search1"
@@ -142,7 +143,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
             android:background="#E3E3E3"
             android:orientation="vertical">
 
@@ -244,7 +247,7 @@
             android:layout_width="75dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/buttonlogout"
             android:text="SAVE"
             android:textSize="14sp" />
@@ -253,24 +256,23 @@
             android:layout_width="wrap_content"
             android:layout_height="27dp"
             android:layout_gravity="center"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="80dp"
             android:text="Các trang Social khác"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="45dp">
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp">
 
 
             <TextView
                 android:id="@+id/txtAddress"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="110dp"
                 android:background="@drawable/socialedit" />
 
             <ImageView
