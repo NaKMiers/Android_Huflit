@@ -15,13 +15,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="800dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/editTextText2"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/plaintextcustom"
             android:drawableLeft="@drawable/search1"
@@ -173,34 +174,24 @@
             android:background="@drawable/buttonlogout"
             android:text="Log out"
             android:textAllCaps="false"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="27dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="200dp"
             android:text="Các trang Social khác"
             android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.484"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="120dp">
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp">
 
 
             <TextView
@@ -208,9 +199,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
                 android:background="@drawable/socialedit"
-                android:drawablePadding="20dp"
-                android:gravity="center_vertical"
-                android:paddingTop="40dp">
+                android:gravity="center_vertical">
 
             </TextView>
 
