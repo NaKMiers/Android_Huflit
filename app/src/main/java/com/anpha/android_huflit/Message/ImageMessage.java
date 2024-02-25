@@ -6,7 +6,7 @@ public class ImageMessage {
 
     private int imageResource;
 
-    public ImageMessage(String text, boolean sentByUser, int imageResource) {
+    public ImageMessage() {
         this.text = text;
         this.sentByUser = sentByUser;
         this.imageResource = imageResource;
