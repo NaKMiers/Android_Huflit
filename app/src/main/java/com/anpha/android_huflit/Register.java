@@ -1,5 +1,6 @@
 package com.anpha.android_huflit;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,9 +9,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class Register extends AppCompatActivity {
-    EditText edtemailregister,edtphoneregister,edtnameregister,edtpasswordregister,edtpassagainregister;
+    EditText edtemail,edtphone,edtusername,edtpasswordlogin,edtpassagainregister;
     Button btnregister;
     TextView txtsigninregister;
 
@@ -18,23 +32,86 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        addControlRegister();
+       edtemail=findViewById(R.id.edtemailregister);
+       edtphone=findViewById(R.id.edtphoneregister);
+     edtpasswordlogin =findViewById(R.id.edtpasswordregister);
+     edtpassagainregister=findViewById(R.id.edtpassagainregister);
+     edtusername=findViewById(R.id.edtusernameregister);
+
+
+        btnregister=findViewById(R.id.btnregister);
+        txtsigninregister=findViewById(R.id.txtsigninregister);
+
         txtsigninregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent register = new Intent(Register.this, Login.class);
+                Intent register = new Intent(Register.this,Login.class);
                 startActivity(register);
             }
         });
+        btnregister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email=edtemail.getText().toString().trim();
+                String username = edtusername.getText().toString().trim();
+                String password =edtpasswordlogin.getText().toString().trim();
+                String confirmPassword = edtpassagainregister.getText().toString();
+
+                // Kiểm tra điều kiện nhập đầy đủ thông tin và mật khẩu khớp nhau
+                if (email.isEmpty() || username.isEmpty()||password.isEmpty()|| confirmPassword.isEmpty())
+                { Toast.makeText(Register.this,"Please fill in all fields",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!password.equals(confirmPassword)) {
+                    Toast.makeText(Register.this, "Password and Confirm Password must match", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //tạo request body với thông tin đăng ký
+                RequestBody requestBody = new FormBody.Builder()
+                        .add("email",email)
+                        .add("username",username)
+                        .add("password",password)
+                        .build();
+                //tạo request POST
+                Request request = new Request.Builder()
+                        .url("https://android-huflit-server.vercel.app/auth/register")
+                        .post(requestBody)
+                        .build();
+                // Thực hiện request
+                OkHttpClient client = new OkHttpClient();
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(Register.this,"Registation failed",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                     if (response.isSuccessful())
+                     {
+                         // Đăng ký thành công, chuyển sang màn hình đăng nhập
+                         Intent intent = new Intent(Register.this, Login.class);
+                         startActivity(intent);
+                     }
+                     else
+                     {
+                         // Đăng ký thất bại
+                         runOnUiThread(new Runnable() {
+                             @Override
+                             public void run() {
+                                 Toast.makeText(Register.this,"Registration failed",Toast.LENGTH_SHORT).show();
+                             }
+                         });
+                     }
+                    }
+                });
+            }
+        });
     }
-    public void addControlRegister()
-    {
-        edtemailregister=findViewById(R.id.edtemailregister);
-        edtnameregister=findViewById(R.id.edtemailregister);
-        edtpasswordregister=findViewById(R.id.edtpasswordregistergg);
-        edtpassagainregister=findViewById(R.id.edtpasswordregistergg);
-        edtphoneregister=findViewById(R.id.edtphoneregister);
-        btnregister=findViewById(R.id.btnregister);
-        txtsigninregister=findViewById(R.id.txtsigninregister);
-    }
+
 }

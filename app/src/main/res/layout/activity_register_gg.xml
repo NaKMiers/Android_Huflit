@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edtemailregistergg" />
 
     <EditText
-        android:id="@+id/edtnameregister"
+        android:id="@+id/edtusernameregister"
         android:layout_width="307dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -88,10 +88,10 @@
         android:paddingStart="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtpasswordregistergg" />
+        app:layout_constraintTop_toBottomOf="@+id/edtpasswordregister" />
 
     <EditText
-        android:id="@+id/edtpasswordregistergg"
+        android:id="@+id/edtpasswordregister"
         android:layout_width="307dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -103,7 +103,7 @@
         android:paddingStart="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtnameregister" />
+        app:layout_constraintTop_toBottomOf="@+id/edtusernameregister" />
 
     <Button
         android:id="@+id/btnregistergg"
