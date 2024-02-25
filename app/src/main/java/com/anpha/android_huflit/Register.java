@@ -1,6 +1,6 @@
 package com.anpha.android_huflit;
 
-import androidx.annotation.NonNull;
+import  androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -37,8 +37,6 @@ public class Register extends AppCompatActivity {
      edtpasswordlogin =findViewById(R.id.edtpasswordregister);
      edtpassagainregister=findViewById(R.id.edtpassagainregister);
      edtusername=findViewById(R.id.edtusernameregister);
-
-
         btnregister=findViewById(R.id.btnregister);
         txtsigninregister=findViewById(R.id.txtsigninregister);
 
@@ -53,13 +51,14 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String email=edtemail.getText().toString().trim();
-                String username = edtusername.getText().toString().trim();
-                String password =edtpasswordlogin.getText().toString().trim();
+                String username = edtusername.getText().toString();
+                String password =edtpasswordlogin.getText().toString();
                 String confirmPassword = edtpassagainregister.getText().toString();
 
                 // Kiểm tra điều kiện nhập đầy đủ thông tin và mật khẩu khớp nhau
                 if (email.isEmpty() || username.isEmpty()||password.isEmpty()|| confirmPassword.isEmpty())
-                { Toast.makeText(Register.this,"Please fill in all fields",Toast.LENGTH_SHORT).show();
+                {
+                    Toast.makeText(Register.this,"Please fill in all fields",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!password.equals(confirmPassword)) {
