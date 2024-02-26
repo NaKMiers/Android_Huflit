@@ -95,25 +95,6 @@ public class ImageChat extends AppCompatActivity {
         btnDes = popupView.findViewById(R.id.btnDes);
         txtAmount = popupView.findViewById(R.id.txtAmount);
         txtSize = popupView.findViewById(R.id.txtSize);
-        btnSendImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String messageText = edtImgChat.getText().toString().trim();
-                if (!messageText.isEmpty()) {
-                    txtHelp2.setText("");
-                    ImageMessage sentMessage = new ImageMessage(messageText, true);
-                    messages.add(sentMessage);
-                    adapter.notifyItemInserted(messages.size() - 1);
-
-                    ImageMessage reivedMessage = new ImageMessage(false, R.drawable.boy);
-                    messages.add(reivedMessage);
-                    adapter.notifyItemInserted(messages.size() - 1);
-                    recyclerViewImage.scrollToPosition(messages.size() - 1);
-
-                    edtImgChat.setText("");
-                }
-            }
-        });
 
         toolbarImage.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -168,19 +149,39 @@ public class ImageChat extends AppCompatActivity {
         Size selectedSize = ImageSize[OptionSizeIndex];
         txtSize.setText(selectedSize.getWidth() + "x" + selectedSize.getHeight());
 
-        try {
-            GetUserPrompts("https://android-huflit-server.vercel.app/image/get-prompts");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+//        try {
+//            GetUserPrompts("https://android-huflit-server.vercel.app/image/get-prompts");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+    }
+
+    public void handleSentImagePrompt(View view) throws IOException {
+        String messageText = edtImgChat.getText().toString().trim();
+        if (!messageText.isEmpty()) {
+            txtHelp2.setText("");
+//            ImageMessage sentMessage = new ImageMessage(messageText, true);
+//            messages.add(sentMessage);
+//            adapter.notifyItemInserted(messages.size() - 1);
+
+//            ImageMessage reivedMessage = new ImageMessage(false, R.drawable.boy);
+//            messages.add(reivedMessage);
+//            adapter.notifyItemInserted(messages.size() - 1);
+//            recyclerViewImage.scrollToPosition(messages.size() - 1);
+
+//            edtImgChat.setText("");
+            CreatePrompt("https://android-huflit-server.vercel.app");
+            CreateImages("https://android-huflit-server.vercel.app");
         }
     }
+
     public void handleSendChatPrompt(View view) throws IOException {
         String messageText = edtImgChat.getText().toString().trim();
         if (!messageText.isEmpty()) {
             txtHelp2.setText("");
 
-            CreatePrompt("https://android-huflit-server.vercel.app/image/create-prompt");
-            CreateCompletion("https://android-huflit-server.vercel.app/image/create-images");
+            CreatePrompt("https://android-huflit-server.vercel.app");
+//            CreateCompletion("https://android-huflit-server.vercel.app");
         }
     }
     private void addNewMessage(String text, boolean isFromUser) {
@@ -266,11 +267,11 @@ public class ImageChat extends AppCompatActivity {
         RequestBody formBody = new FormBody.Builder()
 //                .add("chatId", "")
                 .add("prompt", edtImgChat.getText().toString().trim())
-                .add("password", "test")
+//                .add("password", "test")
                 .build();
 
         Request request = new Request.Builder()
-                .url(url + "image/create-prompt")
+                .url(url + "/image/create-prompt")
                 .post(formBody)
                 .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWQ1NmVmZWViZTdkNjA2MDk0MTBkNjgiLCJ1c2VybmFtZSI6ImdiYW8xMjMzIiwiZW1haWwiOiJnYmFvQGZhc2ZkYXMiLCJyb2xlIjoidXNlciIsInRoZW1lIjowLCJpYXQiOjE3MDg0ODY0NDN9.S31Nw2bqoH2YWkoc0YD-SC0fF4EKpvRiMOgjqPSDzl0") // Add the authorization header with bearer token
                 .build();
@@ -294,6 +295,7 @@ public class ImageChat extends AppCompatActivity {
                                 String type = prompt.optString("type");
                                 String from = prompt.optString("from");
                                 String text = prompt.optString("text");
+//                                String text = prompt.optString("text");
 
                                 // add new prompt to message list
                                 Prompt newPrompt = new Prompt(_id, userId, type, from, text);
@@ -319,20 +321,20 @@ public class ImageChat extends AppCompatActivity {
         });
     }
 
-    void CreateCompletion(String url) throws IOException {
+    void CreateImages(String url) throws IOException {
         // prevent empty prompt
         if (edtImgChat.getText().toString().trim() == "") return;
+        txtHelp2.setText("creating...");
 
         RequestBody formBody = new FormBody.Builder()
                 .add("prompt", edtImgChat.getText().toString().trim())
-                .add("model", "gpt-4")
                 .add("amount", "1")
-                .add("amount", "1024*1024")
+                .add("size", "256x256")
 //                .add("chatId", "")
                 .build();
 
         Request request = new Request.Builder()
-                .url(url + "/chat//image/create-images")
+                .url(url + "/image/create-images")
                 .post(formBody)
                 .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWQ1NmVmZWViZTdkNjA2MDk0MTBkNjgiLCJ1c2VybmFtZSI6ImdiYW8xMjMzIiwiZW1haWwiOiJnYmFvQGZhc2ZkYXMiLCJyb2xlIjoidXNlciIsInRoZW1lIjowLCJpYXQiOjE3MDg0ODY0NDN9.S31Nw2bqoH2YWkoc0YD-SC0fF4EKpvRiMOgjqPSDzl0") // Add the authorization header with bearer token
                 .build();
@@ -345,30 +347,31 @@ public class ImageChat extends AppCompatActivity {
                     ImageChat.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            try {
-                                JSONObject json = new JSONObject(myResponse);
-                                JSONObject completion = json.getJSONObject("completion");
-
-                                // get prompt values
-                                String _id = completion.optString("_id");
-                                String userId = completion.optString("userId");
-//                                    String chatId = prompt.optString("chatId");
-                                String type = completion.optString("type");
-                                String from = completion.optString("from");
-                                String text = completion.optString("text");
-
-                                // add new prompt to message list
-                                Prompt newPrompt = new Prompt(_id, userId, type, from, text);
-                                prompts.add(newPrompt);
-                                addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
-
-                                // clear text chat
-                                recyclerViewImage.scrollToPosition(messages.size() - 1);
-                                edtImgChat.setText("");
-
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
+                            txtHelp2.setText(myResponse);
+//                            try {
+//                                JSONObject json = new JSONObject(myResponse);
+//                                JSONObject completion = json.getJSONObject("completion");
+//
+//                                // get prompt values
+//                                String _id = completion.optString("_id");
+//                                String userId = completion.optString("userId");
+////                                    String chatId = prompt.optString("chatId");
+//                                String type = completion.optString("type");
+//                                String from = completion.optString("from");
+//                                String text = completion.optString("text");
+//
+//                                // add new prompt to message list
+//                                Prompt newPrompt = new Prompt(_id, userId, type, from, text);
+//                                prompts.add(newPrompt);
+//                                addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
+//
+//                                // clear text chat
+//                                recyclerViewImage.scrollToPosition(messages.size() - 1);
+//                                edtImgChat.setText("");
+//
+//                            } catch (JSONException e) {
+//                                throw new RuntimeException(e);
+//                            }
                         }
                     });
                 }
@@ -380,4 +383,6 @@ public class ImageChat extends AppCompatActivity {
             }
         });
     }
+
+
 }
