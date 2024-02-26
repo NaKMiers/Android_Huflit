@@ -160,11 +160,6 @@ public class ImageChat extends AppCompatActivity {
                 }
             }
         });
-        try {
-            GetUserPrompts("https://android-huflit-server.vercel.app/image/get-prompts");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 
