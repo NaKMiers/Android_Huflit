@@ -357,7 +357,7 @@ public class ImageChat extends AppCompatActivity {
 
                                 if (imagesArray.length() > 0) {
                                     String imageUrl = imagesArray.getString(0);
-                                    txtHelp2.setText(jsonString);
+                                    txtHelp2.setText(imageUrl);
 
                                     // Sử dụng Picasso để tải và hiển thị ảnh
                                     Picasso.get().load(imageUrl).into(receivedImage);
