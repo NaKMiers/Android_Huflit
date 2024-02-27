@@ -34,6 +34,7 @@ android {
 
 dependencies {
 
+    implementation ("androidx.drawerlayout:drawerlayout:1.1.1")
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation ("com.makeramen:roundedimageview:2.3.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -43,6 +44,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation ("com.google.android.material:material:<version>")
     // define a BOM and its version
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
 
