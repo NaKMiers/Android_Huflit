@@ -95,11 +95,11 @@ public class TextChat extends AppCompatActivity {
             }
         });
 
-//        try {
-//            GetUserPrompts("https://android-huflit-server.vercel.app");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            GetUserPrompts("https://android-huflit-server.vercel.app");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void handleSendChatPrompt(View view) throws IOException {
@@ -108,7 +108,7 @@ public class TextChat extends AppCompatActivity {
             txtHelp1.setText("");
 
             CreatePrompt("https://android-huflit-server.vercel.app");
-            CreateImages("https://android-huflit-server.vercel.app");
+            CreateCompletion("https://android-huflit-server.vercel.app");
         }
     }
 
@@ -123,7 +123,7 @@ public class TextChat extends AppCompatActivity {
 
     void GetUserPrompts(String url) throws IOException {
         Request request = new Request.Builder()
-                .url(url + "/image/get-prompts")
+                .url(url + "/chat/get-prompts")
                 .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWEyMWZlYWQyYjU0MTAzZDBkNmRiMjkiLCJ1c2VybmFtZSI6Im5ha21pZXJzIiwiZW1haWwiOiJkaXdhczExODE1MUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsInRoZW1lIjowLCJpYXQiOjE3MDUxMjM4MjJ9.DJkq9FG3xOxUFQTUYwpXP3cXaczpGwgC8xxSG0x77iw") // Add the authorization header with bearer token
                 .build();
         client.newCall(request).enqueue(new Callback() {
@@ -240,14 +240,15 @@ public class TextChat extends AppCompatActivity {
         });
     }
 
-    void CreateImages(String url) throws IOException {
+    void CreateCompletion(String url) throws IOException {
         // prevent empty prompt
         if (edtTextChat.getText().toString().trim() == "") return;
 
         RequestBody formBody = new FormBody.Builder()
                 .add("prompt", edtTextChat.getText().toString().trim())
-                .add("amount", "1")
-                .add("size", "256x256")
+                .add("model", "gpt-4")
+                .add("maxTokens", "1500")
+                .add("temperature", "1")
 //                .add("chatId", "")
                 .build();
 
