@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edtemailregister" />
 
     <EditText
-        android:id="@+id/edtnameregister"
+        android:id="@+id/edtusernameregister"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edtphoneregister" />
 
     <EditText
-        android:id="@+id/edtpasswordregistergg"
+        android:id="@+id/edtpasswordregister"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
@@ -83,13 +83,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.594"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtnameregister" />
+        app:layout_constraintTop_toBottomOf="@+id/edtusernameregister" />
 
     <EditText
         android:id="@+id/edtpassagainregister"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/custom_edt"
         android:drawableLeft="@drawable/icon_khoa"
         android:ems="10"
@@ -100,7 +100,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.594"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtpasswordregistergg" />
+        app:layout_constraintTop_toBottomOf="@+id/edtpasswordregister" />
 
     <Button
         android:id="@+id/btnregister"
