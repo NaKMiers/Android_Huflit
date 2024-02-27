@@ -42,28 +42,20 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ImageChat extends AppCompatActivity {
-
     private RecyclerView recyclerViewImage;
-
     private ImageMessageAdapter adapter;
-
     private List<ImageMessage> messages;
 
     TextView txtHelp2;
-
     EditText edtImgChat;
     ImageView receivedImage;
     ImageView btnSendImg;
     PopupWindow popupWindow;
-
     Toolbar toolbarImage;
-
     ImageButton btnPlus1, btnInCr, btnMinus1, btnDes;
-
     TextView txtAmount, txtSize;
     int currentValue = 1;
     Size[] ImageSize;
-
     int OptionSizeIndex = 0;
     ArrayList<Prompt> prompts = new ArrayList<>();
     OkHttpClient client = new OkHttpClient();
@@ -180,9 +172,10 @@ public class ImageChat extends AppCompatActivity {
             txtHelp2.setText("");
 
             CreatePrompt("https://android-huflit-server.vercel.app");
-//            CreateCompletion("https://android-huflit-server.vercel.app");
+            CreateImages("https://android-huflit-server.vercel.app");
         }
     }
+
     private void addNewMessage(String text, boolean isFromUser) {
         Message sentMessage = new Message(text, isFromUser);
         // Thêm tin nhắn gửi vào cuối danh sách
@@ -351,20 +344,19 @@ public class ImageChat extends AppCompatActivity {
 
                             try
                             {
-                                JSONObject jsonObject = new JSONObject(jsonString);
+                                JSONObject json = new JSONObject(jsonString);
+                                JSONObject response = json.getJSONObject("images");
+                                // lấy ra mảng image urls
+                                JSONArray images = response.getJSONArray("images");
 
-                                JSONArray imagesArray = jsonObject.getJSONArray("images");
+                                // ở chỗ này, thay vì chỉ dùng images[0] thì hãy dùng vòng lặp trong trường hợp có nhiều hơn 1 image
+                                if(Objects.requireNonNull(images).length() > 0) {
+                                    String imageUrl = images.optString(0);
 
-                                if (imagesArray.length() > 0) {
-                                    String imageUrl = imagesArray.getString(0);
-                                    txtHelp2.setText(imageUrl);
-
-                                    // Sử dụng Picasso để tải và hiển thị ảnh
-                                    Picasso.get().load(imageUrl).into(receivedImage);
-                                } else {
-                                    txtHelp2.setText("No image URL found.");
+                                    // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
+                                    ImageView tempImageView = findViewById(R.id.tempImageView);
+                                    Picasso.get().load(imageUrl).into(tempImageView);
                                 }
-
 
                             }
                             catch (JSONException e) {

@@ -55,6 +55,11 @@
             android:text="How can I help you today?"
             android:textSize="20sp" />
 
+        <ImageView
+            android:id="@+id/tempImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewImage"
             android:layout_width="match_parent"
