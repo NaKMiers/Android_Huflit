@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="start"
     android:orientation="vertical"
     tools:context=".ImageChat">
 
@@ -12,6 +11,7 @@
         android:id="@+id/toolbarImage"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_marginBottom="15dp"
         android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -44,7 +44,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="651dp">
+        android:layout_height="604dp"
+        android:layout_marginBottom="15dp">
 
         <TextView
             android:id="@+id/txtHelp2"
@@ -69,7 +70,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="40dp"
         android:orientation="horizontal"
 
         >

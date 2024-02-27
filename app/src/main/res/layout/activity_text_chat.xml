@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:visibility="gone"
         />
 
     <LinearLayout
@@ -25,6 +26,7 @@
             android:id="@+id/toolbarChat"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_marginBottom="15dp"
             android:background="@color/white"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
@@ -64,7 +66,8 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="653dp">
+            android:layout_height="604dp"
+            android:layout_marginBottom="15dp">
 
 
             <ImageView
@@ -101,7 +104,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <ImageView
