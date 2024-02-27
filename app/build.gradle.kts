@@ -54,5 +54,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.8")
 
     implementation ("com.squareup.okhttp3:okhttp:4.9.1")
+    // render image from link
+    implementation ("com.squareup.picasso:picasso:2.8")
 
 }
