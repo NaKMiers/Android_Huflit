@@ -5,8 +5,6 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="start"
-    android:gravity="bottom"
     android:orientation="vertical"
     tools:context=".ImageChat">
 
@@ -14,6 +12,7 @@
         android:id="@+id/toolbarChat"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -40,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="IMAGE"
+            android:text="AI CHAT"
             android:textColor="#FF9800"
             android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>
@@ -48,7 +47,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="653dp">
+        android:layout_height="613dp"
+        android:layout_marginTop="15dp">
 
 
         <ImageView
@@ -85,7 +85,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal">
 
         <ImageView

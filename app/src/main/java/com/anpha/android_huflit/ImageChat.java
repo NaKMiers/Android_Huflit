@@ -1,51 +1,64 @@
 package com.anpha.android_huflit;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
+import android.util.Log;
 import android.util.Size;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.PopupWindow;
-import android.view.View;
-import android.view.LayoutInflater;
 import android.widget.TextView;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.anpha.android_huflit.Message.ImageMessage;
 import com.anpha.android_huflit.Message.ImageMessageAdapter;
-import com.anpha.android_huflit.Message.MessageAdapter;
+import com.anpha.android_huflit.Message.Message;
+import com.anpha.android_huflit.Models.Prompt;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ImageChat extends AppCompatActivity {
-
     private RecyclerView recyclerViewImage;
-
     private ImageMessageAdapter adapter;
-
     private List<ImageMessage> messages;
 
     TextView txtHelp2;
-
     EditText edtImgChat;
-
+    ImageView receivedImage;
     ImageView btnSendImg;
     PopupWindow popupWindow;
-
     Toolbar toolbarImage;
-
     ImageButton btnPlus1, btnInCr, btnMinus1, btnDes;
-
     TextView txtAmount, txtSize;
     int currentValue = 1;
     Size[] ImageSize;
-
     int OptionSizeIndex = 0;
+    ArrayList<Prompt> prompts = new ArrayList<>();
+    OkHttpClient client = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,26 +87,6 @@ public class ImageChat extends AppCompatActivity {
         btnDes = popupView.findViewById(R.id.btnDes);
         txtAmount = popupView.findViewById(R.id.txtAmount);
         txtSize = popupView.findViewById(R.id.txtSize);
-        btnSendImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String messageText = edtImgChat.getText().toString().trim();
-                if(!messageText.isEmpty()){
-                    txtHelp2.setText("");
-                    ImageMessage sentMessage = new ImageMessage(messageText,true);
-                    messages.add(sentMessage);
-                    adapter.notifyItemInserted(messages.size() - 1);
-
-                    ImageMessage reivedMessage = new ImageMessage(false,R.drawable.boy);
-                    messages.add(reivedMessage);
-                    adapter.notifyItemInserted(messages.size() - 1);
-                    recyclerViewImage.scrollToPosition(messages.size() - 1);
-
-                    edtImgChat.setText("");
-                }
-            }
-        });
-
         toolbarImage.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -120,7 +113,7 @@ public class ImageChat extends AppCompatActivity {
                 updateTextView();
             }
         });
-        ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(104,1024)};
+        ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(104, 1024)};
         btnInCr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,11 +135,243 @@ public class ImageChat extends AppCompatActivity {
     }
 
 
-        private void updateTextView() {
-            txtAmount.setText(String.valueOf(currentValue));
-            Size selectedSize = ImageSize[OptionSizeIndex];
-            txtSize.setText( selectedSize.getWidth() + "x" + selectedSize.getHeight());
+    private void updateTextView() {
+        txtAmount.setText(String.valueOf(currentValue));
+        Size selectedSize = ImageSize[OptionSizeIndex];
+        txtSize.setText(selectedSize.getWidth() + "x" + selectedSize.getHeight());
+
+//        try {
+//            GetUserPrompts("https://android-huflit-server.vercel.app/image/get-prompts");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+    }
+
+    public void handleSentImagePrompt(View view) throws IOException {
+        String messageText = edtImgChat.getText().toString().trim();
+        if (!messageText.isEmpty()) {
+            txtHelp2.setText("");
+//            ImageMessage sentMessage = new ImageMessage(messageText, true);
+//            messages.add(sentMessage);
+//            adapter.notifyItemInserted(messages.size() - 1);
+
+//            ImageMessage reivedMessage = new ImageMessage(false, R.drawable.boy);
+//            messages.add(reivedMessage);
+//            adapter.notifyItemInserted(messages.size() - 1);
+//            recyclerViewImage.scrollToPosition(messages.size() - 1);
+
+//            edtImgChat.setText("");
+            CreatePrompt("https://android-huflit-server.vercel.app");
+            CreateImages("https://android-huflit-server.vercel.app");
         }
+    }
+
+    public void handleSendChatPrompt(View view) throws IOException {
+        String messageText = edtImgChat.getText().toString().trim();
+        if (!messageText.isEmpty()) {
+            txtHelp2.setText("");
+
+            CreatePrompt("https://android-huflit-server.vercel.app");
+            CreateImages("https://android-huflit-server.vercel.app");
+        }
+    }
+
+    private void addNewMessage(String text, boolean isFromUser) {
+        Message sentMessage = new Message(text, isFromUser);
+        // Thêm tin nhắn gửi vào cuối danh sách
+        messages.add(sentMessage);
+        // Thông báo cho Adapter biết rằng có một mục mới được thêm vào cuối danh sách
+        adapter.notifyItemInserted(messages.size() - 1);
+    }
+
+
+    private void GetUserPrompts(String url) throws IOException {
+        Request request = new Request.Builder()
+                .url(url + "/image/get-prompts")
+                .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWQ1NmVmZWViZTdkNjA2MDk0MTBkNjgiLCJ1c2VybmFtZSI6ImdiYW8xMjMzIiwiZW1haWwiOiJnYmFvQGZhc2ZkYXMiLCJyb2xlIjoidXNlciIsInRoZW1lIjowLCJpYXQiOjE3MDg0ODY0NDN9.S31Nw2bqoH2YWkoc0YD-SC0fF4EKpvRiMOgjqPSDzl0") // Add the authorization header with bearer token
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+
+                    ImageChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject json = new JSONObject(myResponse);
+                                JSONArray jsonArray = json.getJSONArray("prompts");
+//
+                                for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++){
+                                    JSONObject prompt = jsonArray.optJSONObject(i);
+
+                                    // get values
+                                    String _id = prompt.optString("_id");
+                                    String userId = prompt.optString("userId");
+                                    String type = prompt.optString("type");
+                                    String from = prompt.optString("from");
+                                    String text = prompt.optString("text");
+                                    String chatId = prompt.optString("chatId");
+                                    String createdAt = prompt.optString("createdAt");
+                                    String updatedAt = prompt.optString("updatedAt");
+                                    JSONArray imagesArray = prompt.optJSONArray("images");
+
+                                    // Convert JSONArray to List<String>
+                                    List<String> images = new ArrayList<>();
+                                    if (imagesArray != null) {
+                                        for (int j = 0; j < imagesArray.length(); j++) {
+                                            images.add(imagesArray.optString(j));
+                                        }
+                                    }
+
+                                    // add each prompt to prompt list
+                                    Prompt newPrompt = new Prompt(_id, userId, type, from, text);
+                                    prompts.add(newPrompt);
+                                }
+
+// show prompts after get
+                                for(Prompt prompt: prompts) {
+                                    Log.d("Type", prompt.type);
+                                    addNewMessage(prompt.text, Objects.equals(prompt.from, "user"));
+                                }
+
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    void CreatePrompt(String url) throws IOException {
+        // prevent empty prompt
+        if (edtImgChat.getText().toString().trim() == "") return;
+
+        RequestBody formBody = new FormBody.Builder()
+//                .add("chatId", "")
+                .add("prompt", edtImgChat.getText().toString().trim())
+//                .add("password", "test")
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url + "/image/create-prompt")
+                .post(formBody)
+                .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWQ1NmVmZWViZTdkNjA2MDk0MTBkNjgiLCJ1c2VybmFtZSI6ImdiYW8xMjMzIiwiZW1haWwiOiJnYmFvQGZhc2ZkYXMiLCJyb2xlIjoidXNlciIsInRoZW1lIjowLCJpYXQiOjE3MDg0ODY0NDN9.S31Nw2bqoH2YWkoc0YD-SC0fF4EKpvRiMOgjqPSDzl0") // Add the authorization header with bearer token
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+
+                    ImageChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject json = new JSONObject(myResponse);
+                                JSONObject prompt = json.getJSONObject("prompt");
+
+                                // get prompt values
+                                String _id = prompt.optString("_id");
+                                String userId = prompt.optString("userId");
+//                                    String chatId = prompt.optString("chatId");
+                                String type = prompt.optString("type");
+                                String from = prompt.optString("from");
+                                String text = prompt.optString("text");
+//                                String text = prompt.optString("text");
+
+                                // add new prompt to message list
+                                Prompt newPrompt = new Prompt(_id, userId, type, from, text);
+                                prompts.add(newPrompt);
+                                addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
+
+                                // clear text chat
+                                recyclerViewImage.scrollToPosition(messages.size() - 1);
+                                edtImgChat.setText("");
+
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    void CreateImages(String url) throws IOException {
+        // prevent empty prompt
+        if (edtImgChat.getText().toString().trim() == "") return;
+        txtHelp2.setText("creating...");
+
+        RequestBody formBody = new FormBody.Builder()
+                .add("prompt", edtImgChat.getText().toString().trim())
+                .add("amount", "1")
+                .add("size", "256x256")
+//                .add("chatId", "")
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url + "/image/create-images")
+                .post(formBody)
+                .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWQ1NmVmZWViZTdkNjA2MDk0MTBkNjgiLCJ1c2VybmFtZSI6ImdiYW8xMjMzIiwiZW1haWwiOiJnYmFvQGZhc2ZkYXMiLCJyb2xlIjoidXNlciIsInRoZW1lIjowLCJpYXQiOjE3MDg0ODY0NDN9.S31Nw2bqoH2YWkoc0YD-SC0fF4EKpvRiMOgjqPSDzl0") // Add the authorization header with bearer token
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+
+                    ImageChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String jsonString = myResponse;
+                            txtHelp2.setText(jsonString);
+
+                            try
+                            {
+                                JSONObject json = new JSONObject(jsonString);
+                                JSONObject response = json.getJSONObject("images");
+                                // lấy ra mảng image urls
+                                JSONArray images = response.getJSONArray("images");
+
+                                // ở chỗ này, thay vì chỉ dùng images[0] thì hãy dùng vòng lặp trong trường hợp có nhiều hơn 1 image
+                                if(Objects.requireNonNull(images).length() > 0) {
+                                    String imageUrl = images.optString(0);
+
+                                    // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
+                                    ImageView tempImageView = findViewById(R.id.tempImageView);
+                                    Picasso.get().load(imageUrl).into(tempImageView);
+                                }
+
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
 
 }
-

@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="CHAT ACTIVITY"
+            android:text="IMAGE"
             android:textColor="#FF9800"
             android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>
@@ -54,6 +54,11 @@
             android:gravity="center"
             android:text="How can I help you today?"
             android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/tempImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewImage"
@@ -112,7 +117,8 @@
                 android:layout_gravity="center|end"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/buttonlogout"
-                android:src="@drawable/send" />
+                android:src="@drawable/send"
+                android:onClick="handleSentImagePrompt"/>
         </FrameLayout>
 
 
