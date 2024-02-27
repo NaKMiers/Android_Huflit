@@ -56,7 +56,6 @@
         <activity
             android:name=".TextChat"
             android:exported="true">
-
         </activity>
         <activity
             android:name=".ImageChat"
