@@ -9,7 +9,7 @@
 
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/informationView"
         android:layout_width="84dp"
         android:layout_height="wrap_content"
         android:background="#9F9E9E" />

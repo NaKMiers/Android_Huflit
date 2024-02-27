@@ -18,9 +18,10 @@
         android:textSize="18sp" />
 
     <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="match_parent"
-        android:layout_height="108dp"
+        android:id="@+id/avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
         android:src="@drawable/boy" />
 
     <TextView
@@ -65,57 +66,62 @@
     <EditText
         android:id="@+id/edtSurName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="40dp"
         android:background="@drawable/edtprofile"
         android:hint="Họ:"
+        android:inputType="text"
         android:paddingLeft="15dp"
         android:textColor="#000000" />
 
     <EditText
         android:id="@+id/edtName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="40dp"
         android:background="@drawable/edtprofile"
         android:hint="Tên: "
+        android:inputType="text"
         android:paddingLeft="15dp" />
 
     <EditText
         android:id="@+id/edtBirthday"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="40dp"
         android:background="@drawable/edtprofile"
         android:hint="Ngày sinh:"
+        android:inputType="text"
         android:paddingLeft="15dp" />
 
     <EditText
         android:id="@+id/edtJob"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="40dp"
         android:background="@drawable/edtprofile"
         android:hint="Nghề nghiệp: "
+        android:inputType="text"
         android:paddingLeft="15dp" />
 
     <EditText
         android:id="@+id/edtAddress"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="40dp"
         android:background="@drawable/edtprofile"
         android:hint="Địa chỉ:"
+        android:inputType="text"
         android:paddingLeft="15dp" />
 
     <Button

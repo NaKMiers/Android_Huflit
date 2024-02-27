@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutProfile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Profile">
@@ -70,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/informationView"
         android:layout_width="250dp"
         android:layout_height="180dp"
         android:layout_marginTop="20dp"
@@ -88,10 +89,10 @@
         android:gravity="center_vertical"
         android:text="HỌ: "
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/informationView"
         app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+        app:layout_constraintStart_toStartOf="@+id/informationView"
+        app:layout_constraintTop_toTopOf="@+id/informationView" />
 
     <TextView
         android:id="@+id/txtName"
@@ -101,8 +102,8 @@
         android:gravity="center_vertical"
         android:text="TÊN: "
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/view"
-        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/informationView"
+        app:layout_constraintStart_toStartOf="@+id/informationView"
         app:layout_constraintTop_toBottomOf="@+id/txtSurName" />
 
     <TextView
@@ -113,8 +114,8 @@
         android:gravity="center_vertical"
         android:text="NGÀY SINH: "
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/view"
-        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/informationView"
+        app:layout_constraintStart_toStartOf="@+id/informationView"
         app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
     <TextView
@@ -125,8 +126,8 @@
         android:gravity="center_vertical"
         android:text="ĐỊA CHỈ: "
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/view"
-        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/informationView"
+        app:layout_constraintStart_toStartOf="@+id/informationView"
         app:layout_constraintTop_toBottomOf="@+id/txtBirthday" />
 
     <TextView
@@ -137,8 +138,8 @@
         android:gravity="center_vertical"
         android:text="NGHỀ NGHIỆP: "
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/view"
-        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/informationView"
+        app:layout_constraintStart_toStartOf="@+id/informationView"
         app:layout_constraintTop_toBottomOf="@+id/txtAddress" />
 
     <TextView

@@ -2,72 +2,82 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00000000"
     android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/imageView15"
-            android:layout_width="83dp"
-            android:layout_height="68dp"
-            android:src="@drawable/owl" />
-
-        <FrameLayout
-            android:layout_width="90dp"
-            android:layout_height="38dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/buttonlogout">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|start"
-                android:layout_marginLeft="15dp"
-                android:text="User"
-                android:textColor="#000000"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@+id/imageView16"
-                android:layout_width="34dp"
-                android:layout_height="23dp"
-                android:layout_gravity="center|end"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/user1" />
-        </FrameLayout>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="25dp"
-            android:text="Tài khoản của tôi"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:background="#F4F4F4"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
 
-        <ImageView
-            android:id="@+id/currentAvatar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
+            <ImageView
+                android:id="@+id/imageView15"
+                android:layout_width="83dp"
+                android:layout_height="68dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/owl" />
+
+            <FrameLayout
+                android:layout_width="90dp"
+                android:layout_height="38dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/buttonlogout">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|start"
+                    android:layout_marginLeft="15dp"
+                    android:text="User"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/imageView16"
+                    android:layout_width="34dp"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center|end"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/user1" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/boy" />
+            android:background="#FFFFFF"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Tài khoản của tôi"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/currentAvatar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/boy" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -90,9 +100,8 @@
                 android:layout_height="80dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/boy"
                 android:onClick="onNewAvatarSelected"
-                />
+                android:src="@drawable/boy" />
 
             <ImageView
                 android:id="@+id/imageView19"
