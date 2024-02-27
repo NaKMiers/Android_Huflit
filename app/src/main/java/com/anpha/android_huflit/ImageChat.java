@@ -1,32 +1,32 @@
 package com.anpha.android_huflit;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.content.ContentProviderOperation;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.PopupWindow;
-import android.view.View;
-import android.view.LayoutInflater;
 import android.widget.TextView;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.anpha.android_huflit.Message.ImageMessage;
 import com.anpha.android_huflit.Message.ImageMessageAdapter;
 import com.anpha.android_huflit.Message.Message;
-import com.anpha.android_huflit.Message.MessageAdapter;
 import com.anpha.android_huflit.Models.Prompt;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class ImageChat extends AppCompatActivity {
     TextView txtHelp2;
 
     EditText edtImgChat;
-
+    ImageView receivedImage;
     ImageView btnSendImg;
     PopupWindow popupWindow;
 
@@ -95,7 +95,6 @@ public class ImageChat extends AppCompatActivity {
         btnDes = popupView.findViewById(R.id.btnDes);
         txtAmount = popupView.findViewById(R.id.txtAmount);
         txtSize = popupView.findViewById(R.id.txtSize);
-
         toolbarImage.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -347,32 +346,30 @@ public class ImageChat extends AppCompatActivity {
                     ImageChat.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            txtHelp2.setText(myResponse);
-//                            try {
-//                                JSONObject json = new JSONObject(myResponse);
-//                                JSONObject completion = json.getJSONObject("completion");
-//
-//                                // get prompt values
-//                                String _id = completion.optString("_id");
-//                                String userId = completion.optString("userId");
-////                                    String chatId = prompt.optString("chatId");
-//                                String type = completion.optString("type");
-//                                String from = completion.optString("from");
-//                                String text = completion.optString("text");
-//
-//                                // add new prompt to message list
-//                                Prompt newPrompt = new Prompt(_id, userId, type, from, text);
-//                                prompts.add(newPrompt);
-//                                addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
-//
-//                                // clear text chat
-//                                recyclerViewImage.scrollToPosition(messages.size() - 1);
-//                                edtImgChat.setText("");
-//
-//                            } catch (JSONException e) {
-//                                throw new RuntimeException(e);
-//                            }
-                        }
+                            String jsonString = myResponse;
+                            txtHelp2.setText(jsonString);
+
+                            try
+                            {
+                                JSONObject jsonObject = new JSONObject(jsonString);
+
+                                JSONArray imagesArray = jsonObject.getJSONArray("images");
+
+                                if (imagesArray.length() > 0) {
+                                    String imageUrl = imagesArray.getString(0);
+                                    txtHelp2.setText(jsonString);
+
+                                    // Sử dụng Picasso để tải và hiển thị ảnh
+                                    Picasso.get().load(imageUrl).into(receivedImage);
+                                } else {
+                                    txtHelp2.setText("No image URL found.");
+                                }
+
+
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }                        }
                     });
                 }
             }
