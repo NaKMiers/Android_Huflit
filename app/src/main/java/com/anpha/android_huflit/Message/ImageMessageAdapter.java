@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 
@@ -82,7 +83,9 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         public void bind(ImageMessage message) {
-            imageViewMessage.setImageResource(message.getImageResource());
+            if(message.getImageURL() != null && !message.getImageURL().isEmpty()){
+                Picasso.get().load(message.getImageURL()).into(imageViewMessage);
+            }
         }
     }
 }

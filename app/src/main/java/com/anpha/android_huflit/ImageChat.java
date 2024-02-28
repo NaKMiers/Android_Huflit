@@ -177,13 +177,17 @@ public class ImageChat extends AppCompatActivity {
     }
 
     private void addNewMessage(String text, boolean isFromUser) {
-        Message sentMessage = new Message(text, isFromUser);
+        ImageMessage sentMessage = new ImageMessage(text, isFromUser);
         // Thêm tin nhắn gửi vào cuối danh sách
         messages.add(sentMessage);
         // Thông báo cho Adapter biết rằng có một mục mới được thêm vào cuối danh sách
         adapter.notifyItemInserted(messages.size() - 1);
     }
-
+    private void addnewAIMessage(boolean sentByUser, String imageURL){
+        ImageMessage receivedImage = new ImageMessage(false,imageURL);
+        messages.add(receivedImage);
+        adapter.notifyItemInserted(messages.size()-1);
+    }
 
     private void GetUserPrompts(String url) throws IOException {
         Request request = new Request.Builder()
@@ -340,7 +344,7 @@ public class ImageChat extends AppCompatActivity {
                         @Override
                         public void run() {
                             String jsonString = myResponse;
-                            txtHelp2.setText(jsonString);
+                            // txtHelp2.setText(jsonString);
 
                             try
                             {
@@ -355,7 +359,7 @@ public class ImageChat extends AppCompatActivity {
 
                                     // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
                                     ImageView tempImageView = findViewById(R.id.tempImageView);
-                                    Picasso.get().load(imageUrl).into(tempImageView);
+                                    addnewAIMessage(false,imageUrl);
                                 }
 
                             }

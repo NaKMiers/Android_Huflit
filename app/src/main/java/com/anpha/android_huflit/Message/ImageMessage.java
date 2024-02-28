@@ -4,12 +4,12 @@ public class ImageMessage {
     private String text;
     private boolean sentByUser;
 
-    private int imageResource;
+    private String imageURL;
 
     public ImageMessage() {
         this.text = text;
         this.sentByUser = sentByUser;
-        this.imageResource = imageResource;
+        this.imageURL =  imageURL;
     }
 
     public ImageMessage(String text, boolean sentByUser) {
@@ -17,9 +17,9 @@ public class ImageMessage {
         this.sentByUser = sentByUser;
     }
 
-    public ImageMessage(boolean sentByUser, int imageResource) {
+    public ImageMessage(boolean sentByUser, String imageURL) {
         this.sentByUser = sentByUser;
-        this.imageResource = imageResource;
+        this.imageURL = imageURL;
     }
 
     public String getText() {
@@ -38,11 +38,11 @@ public class ImageMessage {
         this.sentByUser = sentByUser;
     }
 
-    public int getImageResource() {
-        return imageResource;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImageResource(int imageResource) {
-        this.imageResource = imageResource;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }
