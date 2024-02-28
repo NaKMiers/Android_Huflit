@@ -66,12 +66,12 @@ import okhttp3.Response;
        String username = edtusername.getText().toString();
        String password = edtpasswordlogin.getText().toString();
        if (username.isEmpty()) {
-           edtusername.setError("Please enter your email");
+           edtusername.setError("Vui lòng nhập tên đăng nhập của bạn!!!");
            return;
        }
 
        if (password.isEmpty()) {
-           edtpasswordlogin.setError("Please enter your password");
+           edtpasswordlogin.setError("Vui lòng nhập mật khẩu của bạn !!!");
            return;
        }
 //                if (username.isEmpty() || password.isEmpty()) {
@@ -113,6 +113,7 @@ import okhttp3.Response;
                    Log.d("--------- Logined In RES -------", myResponse);
 
                    // lưu logined in user (muResponse) toàn cục
+//                   loggedInUsername = username;
 
                    // Đăng nhập thành công, chuyển sang màn hình text-chat
                    Intent intent = new Intent(Login.this, TextChat.class);
