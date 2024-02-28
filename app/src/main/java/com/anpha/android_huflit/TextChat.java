@@ -1,6 +1,8 @@
 package com.anpha.android_huflit;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import com.anpha.android_huflit.Message.Message;
 import com.anpha.android_huflit.Message.MessageAdapter;
 import com.anpha.android_huflit.Models.Prompt;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,10 +47,11 @@ public class TextChat extends AppCompatActivity {
     PopupWindow popupWindow;
     Toolbar toolbarChat;
 
-    ImageView btnSend;
+    ImageView btnSend, navigationIcon;
     EditText edtTextChat;
 
-    TextView txtHelp1,txtMode;
+    DrawerLayout drawerLayout;
+    TextView txtHelp1, txtMode;
 
     ArrayList<Prompt> prompts = new ArrayList<>();
 
@@ -64,8 +68,9 @@ public class TextChat extends AppCompatActivity {
         edtTextChat = findViewById(R.id.edtTextChat);
         txtHelp1 = findViewById(R.id.txtHelp1);
         recyclerView = findViewById(R.id.recyclerViewImage);
+        navigationIcon = findViewById(R.id.navigationIcon);
+        drawerLayout = findViewById(R.id.drawerLayout);
         txtMode = findViewById(R.id.txtMode);
-
         // initialize variables
         messages = new ArrayList<>();
         adapter = new MessageAdapter(messages);
@@ -75,7 +80,16 @@ public class TextChat extends AppCompatActivity {
         edtTextChat.requestFocus();
         edtTextChat.setSelection(edtTextChat.getText().length());
 
-
+        navigationIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(drawerLayout.isDrawerOpen(GravityCompat.START))
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                else {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_chat_menu, null);
         popupWindow = new PopupWindow(
                 popupView,
@@ -245,6 +259,8 @@ public class TextChat extends AppCompatActivity {
         // prevent empty prompt
         if (edtTextChat.getText().toString().trim() == "") return;
 
+        txtHelp1.setText("Generating...");
+
         RequestBody formBody = new FormBody.Builder()
                 .add("prompt", edtTextChat.getText().toString().trim())
                 .add("model", "gpt-4")
@@ -287,7 +303,7 @@ public class TextChat extends AppCompatActivity {
                                 // clear text chat
                                 recyclerView.scrollToPosition(messages.size() - 1);
                                 edtTextChat.setText("");
-
+                                txtHelp1.setText("");
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }

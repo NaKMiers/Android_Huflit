@@ -115,7 +115,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtpassagainregister" />
+        app:layout_constraintTop_toBottomOf="@+id/edtpassagainregister"
+        android:onClick="handleRegister"/>
 
     <TextView
         android:id="@+id/textView17"
