@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ import okhttp3.Response;
     EditText edtusername, edtpasswordlogin;
     TextView txtforgetpassword, txtloginwithgg;
     ImageView imgGG;
+   OkHttpClient client = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,74 +58,75 @@ import okhttp3.Response;
                 startActivity(forgotpassword);
             }
         });
+    }
 
-        btnlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Lấy thông tin đăng nhập từ các EditText
-                String username = edtusername.getText().toString();
-                String password = edtpasswordlogin.getText().toString();
-                if (username.isEmpty()) {
-                    edtusername.setError("Please enter your email");
-                    return;
-                }
 
-                if (password.isEmpty()) {
-                    edtpasswordlogin.setError("Please enter your password");
-                    return;
-                }
+   public void handleLogin(View view) {
+       // Lấy thông tin đăng nhập từ các EditText
+       String username = edtusername.getText().toString();
+       String password = edtpasswordlogin.getText().toString();
+       if (username.isEmpty()) {
+           edtusername.setError("Please enter your email");
+           return;
+       }
+
+       if (password.isEmpty()) {
+           edtpasswordlogin.setError("Please enter your password");
+           return;
+       }
 //                if (username.isEmpty() || password.isEmpty()) {
 //                    // Hiển thị thông báo nếu người dùng chưa nhập đủ thông tin
 //                    Toast.makeText(Login.this, "Please enter email and password", Toast.LENGTH_SHORT).show();
 //                    return;
 //                }
-                // Tạo request body với thông tin đăng nhập
-                RequestBody requestBody = new FormBody.Builder()
-                        .add("username",username)
-                        .add("password", password)
-                        .build();
+       // Tạo request body với thông tin đăng nhập
+       RequestBody requestBody = new FormBody.Builder()
+               .add("emailOrUsername",username)
+               .add("password", password)
+               .build();
 
-                // Tạo request POST
-                Request request = new Request.Builder()
-                        .url("https://android-huflit-server.vercel.app/auth/login")
-                        .post(requestBody)
-                        .build();
+       // Tạo request POST
+       Request request = new Request.Builder()
+               .url("https://android-huflit-server.vercel.app/auth/login")
+               .post(requestBody)
+               .build();
 
-                // Thực hiện request
-                OkHttpClient client = new OkHttpClient();
-                client.newCall(request).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                        // Xử lý khi request thất bại
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(Login.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
+       // Thực hiện request
+       client.newCall(request).enqueue(new Callback() {
+           @Override
+           public void onFailure(@NotNull Call call, @NotNull IOException e) {
+               // Xử lý khi request thất bại
+               runOnUiThread(new Runnable() {
+                   @Override
+                   public void run() {
+                       Toast.makeText(Login.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                   }
+               });
+           }
 
-                    @Override
-                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        // Xử lý khi nhận được response từ server
-                        if (response.isSuccessful()) {
-                            // Đăng nhập thành công, chuyển sang màn hình text-chat
-                            Intent intent = new Intent(Login.this, TextChat.class);
-                            startActivity(intent);
-                        } else {
-                            // Đăng nhập thất bại
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(Login.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        });
-    }
+           @Override
+           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+               // Xử lý khi nhận được response từ server
+               if (response.isSuccessful()) {
 
+                   final String myResponse = response.body().string();
+                   Log.d("--------- Logined In RES -------", myResponse);
 
+                   // lưu logined in user (muResponse) toàn cục
+
+                   // Đăng nhập thành công, chuyển sang màn hình text-chat
+                   Intent intent = new Intent(Login.this, TextChat.class);
+                   startActivity(intent);
+               } else {
+                   // Đăng nhập thất bại
+                   runOnUiThread(new Runnable() {
+                       @Override
+                       public void run() {
+                           Toast.makeText(Login.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                       }
+                   });
+               }
+           }
+       });
+   }
 }

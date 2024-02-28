@@ -35,9 +35,7 @@
             android:exported="false" />
         <activity
             android:name=".Register"
-            android:exported="false" /> <!-- <activity -->
-        <!-- android:name=".Profile" -->
-        <!-- android:exported="false" /> -->
+            android:exported="true" />
         <activity
             android:name=".ForgotPassword"
             android:exported="true" />
