@@ -34,6 +34,8 @@ android {
 
 dependencies {
 
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+    implementation ("com.makeramen:roundedimageview:2.3.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -41,4 +43,16 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // define a BOM and its version
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
+
+    // define any required OkHttp artifacts without version
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+    implementation("com.google.code.gson:gson:2.8.8")
+
+    implementation ("com.squareup.okhttp3:okhttp:4.9.1")
+    // render image from link
+    implementation ("com.squareup.picasso:picasso:2.8")
+
 }

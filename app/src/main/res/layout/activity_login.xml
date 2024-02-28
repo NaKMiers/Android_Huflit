@@ -17,7 +17,7 @@
         app:srcCompat="@drawable/owl" />
 
     <EditText
-        android:id="@+id/edtemaillogin"
+        android:id="@+id/edtusernameregister"
         android:layout_width="307dp"
         android:layout_height="67dp"
         android:layout_marginTop="24dp"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <EditText
-        android:id="@+id/edtpasswordlogin"
+        android:id="@+id/edtpasswordregister"
         android:layout_width="308dp"
         android:layout_height="67dp"
         android:layout_marginTop="12dp"
@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtemaillogin" />
+        app:layout_constraintTop_toBottomOf="@+id/edtusernameregister" />
 
     <Button
         android:id="@+id/btnlogin"
@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtpasswordlogin" />
+        app:layout_constraintTop_toBottomOf="@+id/edtpasswordregister" />
 
     <Button
         android:id="@+id/btnsignup"

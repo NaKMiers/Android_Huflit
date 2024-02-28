@@ -37,25 +37,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="CHAT ACTIVITY"
+            android:text="IMAGE"
             android:textColor="#FF9800"
             android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="651dp">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtHelp2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
             android:layout_marginTop="40dp"
             android:gravity="center"
             android:text="How can I help you today?"
             android:textSize="20sp" />
-    </ScrollView>
+
+        <ImageView
+            android:id="@+id/tempImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:stackFromEnd="true" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,6 +83,7 @@
             android:id="@+id/imageView"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:src="@drawable/voicesearch" />
 
@@ -75,10 +91,12 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <EditText
-                android:id="@+id/edtImageChat"
+                android:id="@+id/edtImgChat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -86,18 +104,21 @@
                 android:drawingCacheQuality="high"
                 android:ems="10"
                 android:hint="Nhập câu lệnh tại đây..."
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:paddingLeft="15dp"
-                android:scrollbarAlwaysDrawHorizontalTrack="false" />
+                android:paddingRight="50dp"
+                android:scrollbarAlwaysDrawHorizontalTrack="false"
+                android:scrollHorizontally="false" />
 
             <ImageView
-                android:id="@+id/imageButton"
+                android:id="@+id/btnSendImg"
                 android:layout_width="59dp"
                 android:layout_height="26dp"
                 android:layout_gravity="center|end"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/buttonlogout"
-                android:src="@drawable/send" />
+                android:src="@drawable/send"
+                android:onClick="handleSentImagePrompt"/>
         </FrameLayout>
 
 

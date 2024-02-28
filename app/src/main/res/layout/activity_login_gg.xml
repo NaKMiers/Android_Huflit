@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/google" />
 
     <EditText
-        android:id="@+id/edtemail"
+        android:id="@+id/edtemailregister"
         android:layout_width="307dp"
         android:layout_height="67dp"
         android:layout_marginTop="28dp"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     <EditText
-        android:id="@+id/edtpassword"
+        android:id="@+id/edtpasswordregister"
         android:layout_width="308dp"
         android:layout_height="67dp"
         android:layout_marginTop="24dp"
@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtemail" />
+        app:layout_constraintTop_toBottomOf="@+id/edtemailregister" />
 
     <Button
         android:id="@+id/btnsignupgg"
@@ -72,7 +72,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtpassword" />
+        app:layout_constraintTop_toBottomOf="@+id/edtpasswordregister" />
 
     <TextView
         android:id="@+id/textView20"
