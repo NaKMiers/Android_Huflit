@@ -144,6 +144,14 @@ Create prompt(post): /image/create-prompt
 Create Images(post): /image/create-images
 (chatId, prompt, amount, size)
 
+### ADMIN
+Get All Users(get): /admin/user/all
+
+Delete 1 User(delete): /admin/user/:id/delete
+
+Delete Many Users(delete): /admin/user/delete-many
+(data) -> data is list of userIds
+
 # Trình tự làm việc
 
 ## 1. Trước khi code
