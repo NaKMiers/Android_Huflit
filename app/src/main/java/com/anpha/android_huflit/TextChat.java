@@ -6,6 +6,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,7 +35,6 @@ import java.util.Objects;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -51,7 +51,7 @@ public class TextChat extends AppCompatActivity {
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
-    TextView txtHelp1;
+    TextView txtHelp1, txtMode;
 
     ArrayList<Prompt> prompts = new ArrayList<>();
 
@@ -70,6 +70,7 @@ public class TextChat extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewImage);
         navigationIcon = findViewById(R.id.navigationIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
+        txtMode = findViewById(R.id.txtMode);
         // initialize variables
         messages = new ArrayList<>();
         adapter = new MessageAdapter(messages);
@@ -258,6 +259,8 @@ public class TextChat extends AppCompatActivity {
         // prevent empty prompt
         if (edtTextChat.getText().toString().trim() == "") return;
 
+        txtHelp1.setText("Generating...");
+
         RequestBody formBody = new FormBody.Builder()
                 .add("prompt", edtTextChat.getText().toString().trim())
                 .add("model", "gpt-4")
@@ -300,7 +303,7 @@ public class TextChat extends AppCompatActivity {
                                 // clear text chat
                                 recyclerView.scrollToPosition(messages.size() - 1);
                                 edtTextChat.setText("");
-
+                                txtHelp1.setText("");
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -309,10 +312,16 @@ public class TextChat extends AppCompatActivity {
                 }
             }
 
+
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
             }
         });
+    }
+
+    public void handleChangeToImageMode(View view) {
+        Intent intent = new Intent(TextChat.this,ImageChat.class);
+        startActivity(intent);
     }
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.anpha.android_huflit.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        return messages.get(position).isSentByUser() ? 0 : 1;
+        return messages.get(position).getSentByUser() ? 0 : 1;
     }
 
     // ViewHolder cho tin nhắn gửi
@@ -82,7 +83,7 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         public void bind(ImageMessage message) {
-            imageViewMessage.setImageResource(message.getImageResource());
+            Picasso.get().load(message.getImageUrls().get(0)).into(imageViewMessage);
         }
     }
 }
