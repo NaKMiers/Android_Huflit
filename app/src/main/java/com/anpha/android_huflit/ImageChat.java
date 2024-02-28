@@ -362,7 +362,7 @@ public class ImageChat extends AppCompatActivity {
                                     ImageView tempImageView = findViewById(R.id.tempImageView);
                                     addnewAIMessage(false,imageUrl);
                                 }
-
+                              
                             }
                             catch (JSONException e) {
                                 e.printStackTrace();
