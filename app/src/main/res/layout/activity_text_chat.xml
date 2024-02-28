@@ -54,14 +54,15 @@
                 android:src="@drawable/chat" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/txtMode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="AI CHAT"
                 android:textColor="#FF9800"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:onClick="handleChangeToImageMode"/>
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout

@@ -1,8 +1,10 @@
 package com.anpha.android_huflit.Message;
 
-    public class Message extends ImageMessage {
+    public class Message {
         private String text;
         private boolean sentByUser;
+
+
     
         public Message(String text, boolean sentByUser) {
             super();
