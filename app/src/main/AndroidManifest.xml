@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".ListUser"
+            android:exported="false" />
+        <activity
             android:name=".Profile"
             android:exported="true" />
         <activity
@@ -37,12 +40,13 @@
             android:exported="true" />
         <activity
             android:name=".TextChat"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".ImageChat"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
