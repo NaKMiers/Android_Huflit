@@ -1,27 +1,27 @@
 package com.anpha.android_huflit.Message;
 
+import com.anpha.android_huflit.Models.Image;
+
+import java.util.ArrayList;
+
 public class ImageMessage {
+    // attributes
     private String text;
-    private boolean sentByUser;
+    private Boolean sentByUser;
+    private ArrayList<String> imageUrls;
 
-    private int imageResource;
-
-    public ImageMessage() {
-        this.text = text;
+    // constructors
+    public ImageMessage(String text, Boolean sentByUser, ArrayList<String> imageUrls) {
+        if(text != null && text.trim() != "") {
+            this.text = text;
+        }
         this.sentByUser = sentByUser;
-        this.imageResource = imageResource;
+        if(!imageUrls.isEmpty()) {
+            this.imageUrls = imageUrls;
+        }
     }
 
-    public ImageMessage(String text, boolean sentByUser) {
-        this.text = text;
-        this.sentByUser = sentByUser;
-    }
-
-    public ImageMessage(boolean sentByUser, int imageResource) {
-        this.sentByUser = sentByUser;
-        this.imageResource = imageResource;
-    }
-
+    // methods
     public String getText() {
         return text;
     }
@@ -30,19 +30,19 @@ public class ImageMessage {
         this.text = text;
     }
 
-    public boolean isSentByUser() {
+    public Boolean getSentByUser() {
         return sentByUser;
     }
 
-    public void setSentByUser(boolean sentByUser) {
+    public void setSentByUser(Boolean sentByUser) {
         this.sentByUser = sentByUser;
     }
 
-    public int getImageResource() {
-        return imageResource;
+    public ArrayList<String> getImageUrls() {
+        return imageUrls;
     }
 
-    public void setImageResource(int imageResource) {
-        this.imageResource = imageResource;
+    public void setImageUrls(ArrayList<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 }

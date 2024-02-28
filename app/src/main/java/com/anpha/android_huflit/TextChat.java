@@ -4,6 +4,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,7 +32,6 @@ import java.util.Objects;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -47,7 +47,7 @@ public class TextChat extends AppCompatActivity {
     ImageView btnSend;
     EditText edtTextChat;
 
-    TextView txtHelp1;
+    TextView txtHelp1,txtMode;
 
     ArrayList<Prompt> prompts = new ArrayList<>();
 
@@ -64,6 +64,7 @@ public class TextChat extends AppCompatActivity {
         edtTextChat = findViewById(R.id.edtTextChat);
         txtHelp1 = findViewById(R.id.txtHelp1);
         recyclerView = findViewById(R.id.recyclerViewImage);
+        txtMode = findViewById(R.id.txtMode);
 
         // initialize variables
         messages = new ArrayList<>();
@@ -295,10 +296,16 @@ public class TextChat extends AppCompatActivity {
                 }
             }
 
+
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
             }
         });
+    }
+
+    public void handleChangeToImageMode(View view) {
+        Intent intent = new Intent(TextChat.this,ImageChat.class);
+        startActivity(intent);
     }
 }

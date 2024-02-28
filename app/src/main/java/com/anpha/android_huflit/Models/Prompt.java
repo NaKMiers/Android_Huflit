@@ -3,6 +3,7 @@ package com.anpha.android_huflit.Models;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,7 @@ public class Prompt {
     public String type;
     public String from;
     public String text;
-    public List<String> images;
+    public ArrayList<String> images;
     public Date createdAt;
     public Date updatedAt;
 
@@ -33,4 +34,17 @@ public class Prompt {
 //            this.images.add(src);
 //        }
     }
+
+    public Prompt(String _id, String userId, String type, String from, String text, ArrayList<String> images) {
+        this._id = _id;
+        this.userId = userId;
+        this.type = type;
+        this.from = from;
+        this.text = text;
+
+        if (!images.isEmpty()) {
+            this.images = images;
+        }
+    }
+
 }
