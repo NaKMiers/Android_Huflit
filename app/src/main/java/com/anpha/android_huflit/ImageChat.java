@@ -1,5 +1,6 @@
 package com.anpha.android_huflit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
@@ -361,7 +362,7 @@ public class ImageChat extends AppCompatActivity {
                                     ImageView tempImageView = findViewById(R.id.tempImageView);
                                     addnewAIMessage(false,imageUrl);
                                 }
-
+                              
                             }
                             catch (JSONException e) {
                                 e.printStackTrace();
@@ -378,5 +379,8 @@ public class ImageChat extends AppCompatActivity {
     }
 
 
-
+    public void handleChangeChatMode(View view) {
+        Intent intent = new Intent(ImageChat.this,TextChat.class);
+        startActivity(intent);
+    }
 }
