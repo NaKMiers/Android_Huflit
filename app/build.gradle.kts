@@ -45,6 +45,9 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    
+    //thư viện chỉnh độ tròn của ảnh
+    implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.android.material:material:<version>")
     // define a BOM and its version
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
@@ -57,5 +60,4 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.9.1")
     // render image from link
     implementation ("com.squareup.picasso:picasso:2.8")
-
 }

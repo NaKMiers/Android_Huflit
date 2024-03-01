@@ -12,7 +12,7 @@
         android:label=""
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         tools:targetApi="31">
       
 <!--         <activity
@@ -26,13 +26,37 @@
         </activity> -->
       
         <activity
+            android:name=".PopupOption"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".ThemeView"
+            android:exported="false">
+
+        </activity>
+      
+        <activity
+            android:name=".ProfileView"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+      
+        <activity
+            android:name=".Login"
+            android:exported="false" />
+                  
+        <activity
             android:name=".ListUser"
             android:exported="false" />
       
         <activity
             android:name=".Profile"
             android:exported="true" />
-      
         <activity
             android:name=".Login"
             android:exported="true" />
@@ -44,8 +68,8 @@
         <activity
             android:name=".Register"
             android:exported="true" />
-      
-        <activity
+
+      <activity
             android:name=".ForgotPassword"
             android:exported="true" />
       
