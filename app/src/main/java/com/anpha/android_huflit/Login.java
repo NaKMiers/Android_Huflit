@@ -2,13 +2,132 @@ package com.anpha.android_huflit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class Login extends AppCompatActivity {
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+   public class Login extends AppCompatActivity {
+    Button btnsignin, btnlogin;
+    EditText edtusername, edtpasswordlogin;
+    TextView txtforgetpassword, txtloginwithgg;
+    ImageView imgGG;
+   OkHttpClient client = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        btnlogin = findViewById(R.id.btnlogin);
+        btnsignin = findViewById(R.id.btnsignup);
+       edtusername = findViewById(R.id.edtusernameregister);
+        edtpasswordlogin = findViewById(R.id.edtpasswordregister);
+        txtforgetpassword = findViewById(R.id.txtforgetpassword);
+        txtloginwithgg = findViewById(R.id.txtloginwithgg);
+        imgGG = findViewById(R.id.imgGG);
+
+        btnsignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signin = new Intent(Login.this, Register.class);
+                startActivity(signin);
+            }
+        });
+
+        txtforgetpassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent forgotpassword = new Intent(Login.this, ForgotPassword.class);
+                startActivity(forgotpassword);
+            }
+        });
     }
+
+
+   public void handleLogin(View view) {
+       // Lấy thông tin đăng nhập từ các EditText
+       String username = edtusername.getText().toString();
+       String password = edtpasswordlogin.getText().toString();
+       if (username.isEmpty()) {
+           edtusername.setError("Vui lòng nhập tên đăng nhập của bạn!!!");
+           return;
+       }
+
+       if (password.isEmpty()) {
+           edtpasswordlogin.setError("Vui lòng nhập mật khẩu của bạn !!!");
+           return;
+       }
+//                if (username.isEmpty() || password.isEmpty()) {
+//                    // Hiển thị thông báo nếu người dùng chưa nhập đủ thông tin
+//                    Toast.makeText(Login.this, "Please enter email and password", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+       // Tạo request body với thông tin đăng nhập
+       RequestBody requestBody = new FormBody.Builder()
+               .add("emailOrUsername",username)
+               .add("password", password)
+               .build();
+
+       // Tạo request POST
+       Request request = new Request.Builder()
+               .url("https://android-huflit-server.vercel.app/auth/login")
+               .post(requestBody)
+               .build();
+
+       // Thực hiện request
+       client.newCall(request).enqueue(new Callback() {
+           @Override
+           public void onFailure(@NotNull Call call, @NotNull IOException e) {
+               // Xử lý khi request thất bại
+               runOnUiThread(new Runnable() {
+                   @Override
+                   public void run() {
+                       Toast.makeText(Login.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                   }
+               });
+           }
+
+           @Override
+           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+               // Xử lý khi nhận được response từ server
+               if (response.isSuccessful()) {
+
+                   final String myResponse = response.body().string();
+                   Log.d("--------- Logined In RES -------", myResponse);
+
+                   // lưu logined in user (muResponse) toàn cục
+//                   loggedInUsername = username;
+
+                   // Đăng nhập thành công, chuyển sang màn hình text-chat
+                   Intent intent = new Intent(Login.this, TextChat.class);
+                   startActivity(intent);
+               } else {
+                   // Đăng nhập thất bại
+                   runOnUiThread(new Runnable() {
+                       @Override
+                       public void run() {
+                           Toast.makeText(Login.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                       }
+                   });
+               }
+           }
+       });
+   }
 }

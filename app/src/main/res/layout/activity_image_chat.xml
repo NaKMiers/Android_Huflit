@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".ImageChat">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarImage"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginBottom="15dp"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:menu="@menu/menu_image">
+
+        <ImageView
+            android:id="@+id/userIcon"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_gravity="start"
+            android:src="@drawable/user" />
+
+        <ImageView
+            android:id="@+id/chatIcon"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_gravity="start"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/chat" />
+
+        <TextView
+            android:id="@+id/txtMode2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="IMAGE"
+            android:textColor="#FF9800"
+            android:textSize="20sp"
+            android:onClick="handleChangeChatMode"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="604dp"
+        android:layout_marginBottom="15dp">
+
+        <TextView
+            android:id="@+id/txtHelp2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:text="How can I help you today?"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/tempImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:stackFromEnd="true" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+
+        >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/voicesearch" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <EditText
+                android:id="@+id/edtImgChat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/edtcustom"
+                android:drawingCacheQuality="high"
+                android:ems="10"
+                android:hint="Nhập câu lệnh tại đây..."
+                android:inputType="textMultiLine"
+                android:paddingLeft="15dp"
+                android:paddingRight="50dp"
+                android:scrollbarAlwaysDrawHorizontalTrack="false"
+                android:scrollHorizontally="false" />
+
+            <ImageView
+                android:id="@+id/btnSendImg"
+                android:layout_width="59dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center|end"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/buttonlogout"
+                android:src="@drawable/send"
+                android:onClick="handleSentImagePrompt"/>
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

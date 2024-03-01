@@ -10,54 +10,56 @@
         android:id="@+id/imageView2"
         android:layout_width="167dp"
         android:layout_height="190dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/owl" />
 
     <EditText
-        android:id="@+id/edtemaillogin"
+        android:id="@+id/edtusernameregister"
         android:layout_width="307dp"
         android:layout_height="67dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/custom_edt"
-        android:drawableLeft="@drawable/icon_mail"
+        android:drawableLeft="@drawable/icon_user"
         android:ems="10"
+        android:hint=" Username"
         android:paddingLeft="20dp"
-        android:hint=" Email: "
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <EditText
-        android:id="@+id/edtpasswordlogin"
+        android:id="@+id/edtpasswordregister"
         android:layout_width="308dp"
         android:layout_height="67dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:inputType="text"
+        android:layout_marginTop="12dp"
         android:background="@drawable/custom_edt"
         android:drawableLeft="@drawable/icon_khoa"
-        android:paddingLeft="20dp"
+        android:ems="10"
         android:hint=" Password: "
+        android:inputType="textPassword"
+        android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtemaillogin" />
+        app:layout_constraintTop_toBottomOf="@+id/edtusernameregister" />
 
     <Button
         android:id="@+id/btnlogin"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:backgroundTint="@null"
-        android:text="LOGIN"
+        android:layout_marginTop="16dp"
         android:background="@drawable/custom_btn"
+        android:text="LOGIN"
+        app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtpasswordlogin" />
+        app:layout_constraintTop_toBottomOf="@+id/edtpasswordregister"
+        android:onClick="handleLogin"/>
 
     <Button
         android:id="@+id/btnsignup"
@@ -70,5 +72,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnlogin" />
+
+    <ImageView
+        android:id="@+id/imgGG"
+        android:layout_width="56dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.185"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnsignup"
+        app:srcCompat="@drawable/google" />
+
+    <TextView
+        android:id="@+id/txtloginwithgg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Đăng nhập với google"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.073"
+        app:layout_constraintStart_toEndOf="@+id/imgGG"
+        app:layout_constraintTop_toBottomOf="@+id/btnsignup" />
+
+    <TextView
+        android:id="@+id/txtforgetpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Forget password ?"
+        android:textColor="#3F51B5"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtloginwithgg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
