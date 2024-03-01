@@ -14,41 +14,54 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
-        <activity
+      
+<!--         <activity
             android:name=".RegisterGG"
             android:exported="true">
-
-        </activity>
-        <activity
+        </activity> -->
+      
+<!--         <activity
             android:name=".LoginGG"
             android:exported="true">
-
-        </activity>
+        </activity> -->
+      
+        <activity
+            android:name=".ListUser"
+            android:exported="false" />
+      
         <activity
             android:name=".Profile"
             android:exported="true" />
+      
         <activity
             android:name=".Login"
             android:exported="true" />
+      
         <activity
             android:name=".ResetPassword"
             android:exported="false" />
+      
         <activity
             android:name=".Register"
             android:exported="true" />
+      
         <activity
             android:name=".ForgotPassword"
             android:exported="true" />
+      
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+      
         <activity
             android:name=".DevInfo"
             android:exported="true" />
+      
         <activity
             android:name=".TextChat"
             android:exported="true">
         </activity>
+
         <activity
             android:name=".ImageChat"
             android:exported="true">
