@@ -88,6 +88,7 @@ public class ImageChat extends AppCompatActivity {
         btnDes = popupView.findViewById(R.id.btnDes);
         txtAmount = popupView.findViewById(R.id.txtAmount);
         txtSize = popupView.findViewById(R.id.txtSize);
+        edtImgChat.setText("Give a picture of a cute dog");
         toolbarImage.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

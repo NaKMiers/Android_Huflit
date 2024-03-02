@@ -1,10 +1,15 @@
 package com.anpha.android_huflit.Message;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
@@ -34,7 +39,7 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else {
             // Tin nhắn nhận
             view = inflater.inflate(R.layout.item_container_received_image, parent, false);
-            return new ReceivedImageMessageViewHolder(view);
+            return new ReceivedImageMessageViewHolder(view, parent.getContext());
         }
     }
 
@@ -76,10 +81,37 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     // ViewHolder cho tin nhắn nhận với hình ảnh
     public static class ReceivedImageMessageViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageViewMessage;
+        private Context context;
 
-        public ReceivedImageMessageViewHolder(@NonNull View itemView) {
+        public ReceivedImageMessageViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             imageViewMessage = itemView.findViewById(R.id.receivedImage);
+            this.context = context;
+            ImageView imageOption = itemView.findViewById(R.id.imageOption);
+            imageOption.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showPopupMenu(v);
+                }
+            });
+        }
+
+        private void showPopupMenu(View v) {
+            PopupMenu popupMenu = new PopupMenu(context, v);
+            popupMenu.getMenu().add("Save image");
+            popupMenu.getMenu().add("Copy image");
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    String option = ((String) item.getTitle()).toString();
+                    if (option.equals("Save image"));
+
+                    else if (option.equals("Copy image"));
+
+                    return true;
+                }
+            });
+            popupMenu.show();
         }
 
         public void bind(ImageMessage message) {
