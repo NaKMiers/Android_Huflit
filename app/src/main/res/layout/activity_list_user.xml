@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ListUser">
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        app:srcCompat="@drawable/owl" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:text="Danh sách người dùng  "
+        android:textColor="#232222"
+        android:textSize="20sp" />
+
+    <ListView
+        android:id="@+id/ListUser"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class RegisterGG extends AppCompatActivity {
+public class ListUser extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_gg);
+        setContentView(R.layout.activity_list_user);
     }
 }

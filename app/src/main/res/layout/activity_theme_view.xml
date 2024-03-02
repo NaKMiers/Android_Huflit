@@ -4,6 +4,112 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
     tools:context=".ThemeView">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custom_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/thanh"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/hinhuser" />
+
+        <ImageView
+            android:id="@+id/imageView13"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/wallclock" />
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/khien" />
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.5"
+            android:src="@drawable/icon_out" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:srcCompat="@drawable/owl" />
+
+    <ImageView
+
+        android:id="@+id/imageView15"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="148dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.708"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:srcCompat="@drawable/settings" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="140dp"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:text="Select Themes: "
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.166"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView14" />
+
+    <Button
+        android:id="@+id/btnoption"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/btn_option"
+        android:gravity="center_vertical"
+        android:text="OPTION THEME"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
