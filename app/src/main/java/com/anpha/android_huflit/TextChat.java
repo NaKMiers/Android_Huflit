@@ -6,8 +6,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -52,7 +55,7 @@ public class TextChat extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     TextView txtHelp1, txtMode;
-
+     Button btnLogOut;
     ArrayList<Prompt> prompts = new ArrayList<>();
 
     OkHttpClient client = new OkHttpClient();
@@ -76,6 +79,14 @@ public class TextChat extends AppCompatActivity {
         adapter = new MessageAdapter(messages);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        View popupView = LayoutInflater.from(this).inflate(R.layout.popup_chat_menu, null);
+        popupWindow = new PopupWindow(
+                popupView,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                true
+        );
+        btnLogOut=popupView.findViewById(R.id.btnLogOut);
 
         edtTextChat.requestFocus();
         edtTextChat.setSelection(edtTextChat.getText().length());
@@ -90,13 +101,12 @@ public class TextChat extends AppCompatActivity {
                 }
             }
         });
-        View popupView = LayoutInflater.from(this).inflate(R.layout.popup_chat_menu, null);
-        popupWindow = new PopupWindow(
-                popupView,
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                true
-        );
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogOutUser();
+            }
+        });
 
         toolbarChat.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -115,6 +125,17 @@ public class TextChat extends AppCompatActivity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void LogOutUser() {
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit(); // Sửa lỗi gán lại biến preferences
+        editor.remove("token");
+        editor.apply();
+        Intent intent = new Intent(TextChat.this, Login.class);
+        // Xóa tất cả các hoạt động trước đó khỏi ngăn xếp và chuyển người dùng đến màn hình đăng nhập
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     public void handleSendChatPrompt(View view) throws IOException {
