@@ -40,6 +40,11 @@
             android:name=".ProfileView"
             android:exported="true">
         </activity>
+      
+        <activity
+            android:name=".Login"
+            android:exported="true" />
+
         <activity
             android:name=".ListUser"
             android:exported="false" />
@@ -47,9 +52,7 @@
         <activity
             android:name=".Profile"
             android:exported="true" />
-        <activity
-            android:name=".Login"
-            android:exported="true" />
+
       
         <activity
             android:name=".ResetPassword"
