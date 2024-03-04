@@ -149,12 +149,12 @@
         android:layout_marginTop="48dp"
         android:text="DF8634"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/textView5"
+        app:layout_constraintEnd_toStartOf="@+id/txtusername"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnoption" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/txtusername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="43dp"
@@ -174,7 +174,7 @@
         android:text="000000"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintStart_toEndOf="@+id/txtusername"
         app:layout_constraintTop_toBottomOf="@+id/btnoption" />
 
     <TextView
@@ -199,7 +199,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/textView9"
         app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/txtusername" />
 
     <TextView
         android:id="@+id/textView9"

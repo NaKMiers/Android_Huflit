@@ -24,7 +24,6 @@ import android.widget.TextView;
 import com.anpha.android_huflit.Message.Message;
 import com.anpha.android_huflit.Message.MessageAdapter;
 import com.anpha.android_huflit.Models.Prompt;
-import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,7 +53,7 @@ public class TextChat extends AppCompatActivity {
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
-    TextView txtHelp1, txtMode;
+    TextView txtHelp1, txtMode,txtusername;
      Button btnLogOut;
     ArrayList<Prompt> prompts = new ArrayList<>();
 
@@ -74,6 +73,10 @@ public class TextChat extends AppCompatActivity {
         navigationIcon = findViewById(R.id.navigationIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
         txtMode = findViewById(R.id.txtMode);
+        //
+
+
+
         // initialize variables
         messages = new ArrayList<>();
         adapter = new MessageAdapter(messages);
@@ -87,9 +90,12 @@ public class TextChat extends AppCompatActivity {
                 true
         );
         btnLogOut=popupView.findViewById(R.id.btnLogOut);
+        txtusername=popupView.findViewById(R.id.txtusername);
+
 
         edtTextChat.requestFocus();
         edtTextChat.setSelection(edtTextChat.getText().length());
+
 
         navigationIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +113,17 @@ public class TextChat extends AppCompatActivity {
                 LogOutUser();
             }
         });
-
+       txtusername.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+              Intent intent = new Intent(TextChat.this, ProfileView.class);
+              startActivity(intent);
+           }
+       });
+       // lấy dữ liệu từ SharedPreferces
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String username = preferences.getString("username", ""); //lưu trữ tên người dùng
+        txtusername.setText(username); // đặt tên người dùng trong textview
         toolbarChat.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -276,8 +292,7 @@ public class TextChat extends AppCompatActivity {
         });
     }
 
-    void CreateCompletion(String url) throws IOException {
-        // prevent empty prompt
+    void CreateCompletion(String url) throws IOException {        // prevent empty prompt
         if (edtTextChat.getText().toString().trim() == "") return;
 
         txtHelp1.setText("Generating...");
@@ -339,6 +354,7 @@ public class TextChat extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
+
     }
 
     public void handleChangeToImageMode(View view) {
