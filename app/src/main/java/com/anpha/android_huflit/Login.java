@@ -2,7 +2,9 @@ package com.anpha.android_huflit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -112,9 +114,11 @@ import okhttp3.Response;
                    final String myResponse = response.body().string();
                    Log.d("--------- Logined In RES -------", myResponse);
 
-                   // lưu logined in user (muResponse) toàn cục
-//                   loggedInUsername = username;
-
+                   // Lưu username vào SharedPreferences
+                   SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+                   SharedPreferences.Editor editor = preferences.edit();
+                   editor.putString("username",username);
+                   editor.apply();
                    // Đăng nhập thành công, chuyển sang màn hình text-chat
                    Intent intent = new Intent(Login.this, TextChat.class);
                    startActivity(intent);
