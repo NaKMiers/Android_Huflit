@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anpha.android_huflit.Message.ImageMessage;
@@ -50,9 +52,11 @@ public class ImageChat extends AppCompatActivity {
     TextView txtHelp2;
     EditText edtImgChat;
     ImageView receivedImage;
-    ImageView btnSendImg;
+    ImageView btnSendImg, navigationIcon;
     PopupWindow popupWindow;
     Toolbar toolbarImage;
+
+    DrawerLayout drawerLayout;
     ImageButton btnPlus1, btnInCr, btnMinus1, btnDes;
     TextView txtAmount, txtSize;
     int currentValue = 1;
@@ -88,7 +92,19 @@ public class ImageChat extends AppCompatActivity {
         btnDes = popupView.findViewById(R.id.btnDes);
         txtAmount = popupView.findViewById(R.id.txtAmount);
         txtSize = popupView.findViewById(R.id.txtSize);
-        edtImgChat.setText("Give a picture of a cute dog");
+        drawerLayout = findViewById(R.id.drawerLayout);
+        navigationIcon = findViewById(R.id.navigationIcon);
+
+        navigationIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(drawerLayout.isDrawerOpen(GravityCompat.START))
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                else {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
         toolbarImage.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
