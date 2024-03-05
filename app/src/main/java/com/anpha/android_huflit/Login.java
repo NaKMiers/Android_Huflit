@@ -45,6 +45,7 @@ import okhttp3.Response;
         txtloginwithgg = findViewById(R.id.txtloginwithgg);
         imgGG = findViewById(R.id.imgGG);
 
+
         btnsignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +115,7 @@ import okhttp3.Response;
                    final String myResponse = response.body().string();
                    Log.d("--------- Logined In RES -------", myResponse);
 
-                   // Lưu username vào SharedPreferences
+//                    Lưu username vào SharedPreferences
                    SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
                    SharedPreferences.Editor editor = preferences.edit();
                    editor.putString("username",username);

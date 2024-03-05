@@ -56,11 +56,19 @@ public class Register extends AppCompatActivity {
         });
     }
 
+
+
+
     public void handleRegister(View view) {
         String email = edtemail.getText().toString();
         String username = edtusername.getText().toString();
         String password = edtpasswordlogin.getText().toString();
         String confirmPassword = edtpassagainregister.getText().toString();
+        saveUserData(email,username,password);
+        SharedPreferences preferences1 = getSharedPreferences("mypreferences1", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences1.edit();
+        editor.putString("email", email);
+        editor.apply(); // Di chuyển phần này xuống dưới
 
         //thông báo yêu cầu nhập thông tin của người dùng
         if(email.isEmpty())
@@ -135,7 +143,9 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
+
     }
+
 
     private void saveUserData(String email, String username, String password) {
         SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);

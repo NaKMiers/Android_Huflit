@@ -117,14 +117,16 @@
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
     <TextView
-        android:id="@+id/txtmailprofile"
+        android:id="@+id/txtemailprofile"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="3dp"
         android:text="EMAIL: luuhonghuu530@gmail.com"
         android:textColor="@color/black"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.877"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
 
@@ -138,7 +140,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtmailprofile" />
+        app:layout_constraintTop_toBottomOf="@+id/txtemailprofile" />
 
     <LinearLayout
         android:id="@+id/thanhtext"
@@ -200,7 +202,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="Họ: Lưu"
+            android:text="Họ: "
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -209,7 +211,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="Tên: Hữu"
+            android:text="Tên:"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -218,7 +220,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="NGÀY SINH: 25/11/2004"
+            android:text="NGÀY SINH: "
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -227,7 +229,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="ĐỊA CHỈ: TPHCM"
+            android:text="ĐỊA CHỈ: "
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -236,7 +238,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="NGHỀ NGHIỆP: SINH VIÊN"
+            android:text="NGHỀ NGHIỆP: "
             android:textColor="@color/black"
             android:textSize="15sp" />
     </LinearLayout>
@@ -342,5 +344,20 @@
             android:text="Thanh toán nhanh chóng"
             android:textColor="@color/black"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="1dp"
+        android:text="EMAIL:"
+        android:textColor="#201F1F"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/txtemailprofile"
+        app:layout_constraintHorizontal_bias="0.918"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
