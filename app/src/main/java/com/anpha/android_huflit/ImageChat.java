@@ -7,6 +7,7 @@ import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -56,11 +57,15 @@ public class ImageChat extends AppCompatActivity {
     PopupWindow popupWindow;
     Toolbar toolbarImage;
 
+    Button btnSave;
     DrawerLayout drawerLayout;
     ImageButton btnPlus1, btnInCr, btnMinus1, btnDes;
     TextView txtAmount, txtSize;
     int currentValue = 1;
     Size[] ImageSize;
+    String amount = "1";
+
+    String size="256x256";
     int OptionSizeIndex = 0;
     ArrayList<Prompt> prompts = new ArrayList<>();
     OkHttpClient client = new OkHttpClient();
@@ -92,6 +97,7 @@ public class ImageChat extends AppCompatActivity {
         btnDes = popupView.findViewById(R.id.btnDes);
         txtAmount = popupView.findViewById(R.id.txtAmount);
         txtSize = popupView.findViewById(R.id.txtSize);
+        btnSave = popupView.findViewById(R.id.btnSave);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationIcon = findViewById(R.id.navigationIcon);
 
@@ -150,6 +156,20 @@ public class ImageChat extends AppCompatActivity {
                 }
             }
         });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    // Lấy giá trị từ txtAmount và txtSize
+                    amount = txtAmount.getText().toString();
+                    size = txtSize.getText().toString();
+                    CreateImages("https://android-huflit-server.vercel.app");
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 
@@ -169,15 +189,6 @@ public class ImageChat extends AppCompatActivity {
         String messageText = edtImgChat.getText().toString().trim();
         if (!messageText.isEmpty()) {
             txtHelp2.setText("");
-//            ImageMessage sentMessage = new ImageMessage(messageText, true);
-//            messages.add(sentMessage);
-//            adapter.notifyItemInserted(messages.size() - 1);
-
-//            ImageMessage reivedMessage = new ImageMessage(false, R.drawable.boy);
-//            messages.add(reivedMessage);
-//            adapter.notifyItemInserted(messages.size() - 1);
-//            recyclerViewImage.scrollToPosition(messages.size() - 1);
-
 //            edtImgChat.setText("");
             CreatePrompt("https://android-huflit-server.vercel.app");
             CreateImages("https://android-huflit-server.vercel.app");
@@ -342,8 +353,8 @@ public class ImageChat extends AppCompatActivity {
 
         RequestBody formBody = new FormBody.Builder()
                 .add("prompt", edtImgChat.getText().toString().trim())
-                .add("amount", "1")
-                .add("size", "256x256")
+                .add("amount", amount)
+                .add("size", size)
 //                .add("chatId", "")
                 .build();
 
@@ -376,7 +387,6 @@ public class ImageChat extends AppCompatActivity {
                                     String imageUrl = images.optString(0);
 
                                     // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
-                                    ImageView tempImageView = findViewById(R.id.tempImageView);
                                     addnewAIMessage(false,imageUrl);
                                 }
                               

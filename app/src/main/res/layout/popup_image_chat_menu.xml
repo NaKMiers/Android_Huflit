@@ -243,9 +243,9 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/btnSave"
             android:layout_width="75dp"
-            android:layout_height="30dp"
+            android:layout_height="21dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/buttonlogout"
