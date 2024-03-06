@@ -39,6 +39,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        //ánh xạ
         edtemail=findViewById(R.id.edtemailregister);
         edtphone=findViewById(R.id.edtphoneregister);
         edtpasswordlogin =findViewById(R.id.edtpasswordregister);
@@ -56,6 +57,9 @@ public class Register extends AppCompatActivity {
         });
     }
 
+
+
+
     public void handleRegister(View view) {
         String email = edtemail.getText().toString();
         String username = edtusername.getText().toString();
@@ -64,6 +68,13 @@ public class Register extends AppCompatActivity {
         saveUserData(email,username,password);
 
 
+
+        saveUserData(email,username,password);
+
+        SharedPreferences preferences1 = getSharedPreferences("mypreferences1", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences1.edit();
+        editor.putString("email", email);
+        editor.apply();
 
         //thông báo yêu cầu nhập thông tin của người dùng
         if(email.isEmpty())
@@ -144,6 +155,7 @@ public class Register extends AppCompatActivity {
         });
 
     }
+
 
     private void saveUserData(String email, String username, String password) {
         SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);

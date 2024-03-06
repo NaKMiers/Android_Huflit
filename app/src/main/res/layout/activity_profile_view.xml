@@ -117,17 +117,17 @@
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
     <TextView
-        android:id="@+id/txtmailprofile"
+        android:id="@+id/txtemailprofile"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
+
         android:layout_marginTop="12dp"
-        android:text="EMAIL: luuhonghuu530@gmail.com"
-        android:textColor="@color/black"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+
+
         app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
+
+        app:layout_constraintHorizontal_bias="0.877"
+
 
     <TextView
         android:id="@+id/txtphoneprofile"
@@ -139,7 +139,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtmailprofile" />
+        app:layout_constraintTop_toBottomOf="@+id/txtemailprofile" />
 
     <LinearLayout
         android:id="@+id/thanhtext"
@@ -201,7 +201,9 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
+
             android:text="Họ:"
+
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -343,5 +345,20 @@
             android:text="Thanh toán nhanh chóng"
             android:textColor="@color/black"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="1dp"
+        android:text="EMAIL:"
+        android:textColor="#201F1F"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/txtemailprofile"
+        app:layout_constraintHorizontal_bias="0.918"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

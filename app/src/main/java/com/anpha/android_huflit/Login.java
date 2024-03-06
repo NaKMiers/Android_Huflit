@@ -37,6 +37,7 @@ import okhttp3.Response;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        // ánh xạ id
         btnlogin = findViewById(R.id.btnlogin);
         btnsignin = findViewById(R.id.btnsignup);
        edtusername = findViewById(R.id.edtusernameregister);
@@ -44,6 +45,7 @@ import okhttp3.Response;
         txtforgetpassword = findViewById(R.id.txtforgetpassword);
         txtloginwithgg = findViewById(R.id.txtloginwithgg);
         imgGG = findViewById(R.id.imgGG);
+
 
         btnsignin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +69,7 @@ import okhttp3.Response;
        // Lấy thông tin đăng nhập từ các EditText
        String username = edtusername.getText().toString();
        String password = edtpasswordlogin.getText().toString();
+       //thông báo khi người dùng bỏ trống
        if (username.isEmpty()) {
            edtusername.setError("Vui lòng nhập tên đăng nhập của bạn!!!");
            return;
@@ -76,11 +79,7 @@ import okhttp3.Response;
            edtpasswordlogin.setError("Vui lòng nhập mật khẩu của bạn !!!");
            return;
        }
-//                if (username.isEmpty() || password.isEmpty()) {
-//                    // Hiển thị thông báo nếu người dùng chưa nhập đủ thông tin
-//                    Toast.makeText(Login.this, "Please enter email and password", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
+
        // Tạo request body với thông tin đăng nhập
        RequestBody requestBody = new FormBody.Builder()
                .add("emailOrUsername",username)
@@ -108,17 +107,18 @@ import okhttp3.Response;
 
            @Override
            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-               // Xử lý khi nhận được response từ server
+               // Xử lý khi nhận được phản hồi từ server
                if (response.isSuccessful()) {
 
                    final String myResponse = response.body().string();
                    Log.d("--------- Logined In RES -------", myResponse);
 
-                   // Lưu username vào SharedPreferences
+//                    Lưu username vào SharedPreferences
                    SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
                    SharedPreferences.Editor editor = preferences.edit();
                    editor.putString("username",username);
                    editor.apply();
+
                    // Đăng nhập thành công, chuyển sang màn hình text-chat
                    Intent intent = new Intent(Login.this, TextChat.class);
                    startActivity(intent);

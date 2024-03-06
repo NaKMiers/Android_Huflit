@@ -18,7 +18,7 @@
 
     <EditText
         android:id="@+id/edtusernameregister"
-        android:layout_width="307dp"
+        android:layout_width="320dp"
         android:layout_height="67dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/custom_edt"
@@ -33,7 +33,7 @@
 
     <EditText
         android:id="@+id/edtpasswordregister"
-        android:layout_width="308dp"
+        android:layout_width="320dp"
         android:layout_height="67dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/custom_edt"
