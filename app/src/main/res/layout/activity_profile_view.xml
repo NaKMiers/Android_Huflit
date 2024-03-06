@@ -120,15 +120,14 @@
         android:id="@+id/txtemailprofile"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="3dp"
-        android:text="EMAIL: luuhonghuu530@gmail.com"
-        android:textColor="@color/black"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+
+        android:layout_marginTop="12dp"
+
+
+        app:layout_constraintHorizontal_bias="0.496"
+
         app:layout_constraintHorizontal_bias="0.877"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
+
 
     <TextView
         android:id="@+id/txtphoneprofile"
@@ -202,7 +201,9 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="Họ: "
+
+            android:text="Họ:"
+
             android:textColor="@color/black"
             android:textSize="15sp" />
 

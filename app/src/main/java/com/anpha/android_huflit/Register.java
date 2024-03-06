@@ -65,6 +65,9 @@ public class Register extends AppCompatActivity {
         String username = edtusername.getText().toString();
         String password = edtpasswordlogin.getText().toString();
         String confirmPassword = edtpassagainregister.getText().toString();
+        saveUserData(email,username,password);
+
+
 
         saveUserData(email,username,password);
 
@@ -133,6 +136,10 @@ public class Register extends AppCompatActivity {
 
                     // lưu dữ liệu registed user toàn cục
                        saveUserData(email,username,password);
+                    SharedPreferences preferences1 = getSharedPreferences("mypreferences1", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences1.edit();
+                    editor.putString("email", email);
+                    editor.apply();
                 }
                 else
                 {

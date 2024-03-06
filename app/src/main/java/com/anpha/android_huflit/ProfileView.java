@@ -21,10 +21,13 @@ public class ProfileView extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); // Retrieve username
        txtnameuser.setText(username);
-       //lay du lieu trong Shared ra
+
+
        SharedPreferences preferences1 = getSharedPreferences("mypreferences1",Context.MODE_PRIVATE);
        String email = preferences1.getString("email","");
-       txtemailprofile.setText(email);
+       txtmailprofile.setText("EMAIL: " +email);
+
+      
 
 
 
