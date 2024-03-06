@@ -383,13 +383,20 @@ public class ImageChat extends AppCompatActivity {
                                 JSONArray images = response.getJSONArray("images");
 
                                 // ở chỗ này, thay vì chỉ dùng images[0] thì hãy dùng vòng lặp trong trường hợp có nhiều hơn 1 image
-                                if(Objects.requireNonNull(images).length() > 0) {
-                                    String imageUrl = images.optString(0);
+//                                if(Objects.requireNonNull(images).length() > 0) {
+//                                    String imageUrl = images.optString(0);
+//
+//                                    // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
+//                                    addnewAIMessage(false,imageUrl);
+//                                }
+                                if (Objects.requireNonNull(images).length() > 0) {
+                                    for (int i = 0; i < images.length(); i++) {
+                                        String imageUrl = images.optString(i);
 
-                                    // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
-                                    addnewAIMessage(false,imageUrl);
+                                        // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
+                                        addnewAIMessage(false, imageUrl);
+                                    }
                                 }
-                              
                             }
                             catch (JSONException e) {
                                 e.printStackTrace();
