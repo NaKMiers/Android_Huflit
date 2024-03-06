@@ -120,11 +120,12 @@
         android:id="@+id/txtmailprofile"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:text="EMAIL: luuhonghuu530@gmail.com"
         android:textColor="@color/black"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
 
@@ -200,7 +201,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="Họ: Lưu"
+            android:text="Họ:"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -209,7 +210,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="Tên: Hữu"
+            android:text="Tên:"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -218,7 +219,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="NGÀY SINH: 25/11/2004"
+            android:text="NGÀY SINH: "
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -227,7 +228,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="ĐỊA CHỈ: TPHCM"
+            android:text="ĐỊA CHỈ: "
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -236,7 +237,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="NGHỀ NGHIỆP: SINH VIÊN"
+            android:text="NGHỀ NGHIỆP: "
             android:textColor="@color/black"
             android:textSize="15sp" />
     </LinearLayout>
