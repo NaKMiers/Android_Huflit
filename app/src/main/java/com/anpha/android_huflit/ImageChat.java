@@ -1,6 +1,7 @@
 package com.anpha.android_huflit;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
@@ -50,13 +51,12 @@ public class ImageChat extends AppCompatActivity {
     private ImageMessageAdapter adapter;
     private List<ImageMessage> messages;
 
-    TextView txtHelp2;
     EditText edtImgChat;
     ImageView receivedImage;
     ImageView btnSendImg, navigationIcon;
     PopupWindow popupWindow;
     Toolbar toolbarImage;
-
+    TextView txtHelp2;
     Button btnSave;
     DrawerLayout drawerLayout;
     ImageButton btnPlus1, btnInCr, btnMinus1, btnDes;
@@ -74,9 +74,8 @@ public class ImageChat extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_chat);
-
         toolbarImage = findViewById(R.id.toolbarImage);
-
+        
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_image_chat_menu, null);
         popupWindow = new PopupWindow(
                 popupView,
@@ -84,6 +83,8 @@ public class ImageChat extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 true
         );
+
+
         recyclerViewImage = findViewById(R.id.recyclerViewImage);
         messages = new ArrayList<>();
         adapter = new ImageMessageAdapter(messages);
@@ -100,6 +101,7 @@ public class ImageChat extends AppCompatActivity {
         btnSave = popupView.findViewById(R.id.btnSave);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationIcon = findViewById(R.id.navigationIcon);
+        restoreValuesFromSharedPreferences();
 
         navigationIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +139,7 @@ public class ImageChat extends AppCompatActivity {
                 updateTextView();
             }
         });
-        ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(104, 1024)};
+        ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(1024, 1024)};
         btnInCr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,26 +166,49 @@ public class ImageChat extends AppCompatActivity {
                     amount = txtAmount.getText().toString();
                     size = txtSize.getText().toString();
                     CreateImages("https://android-huflit-server.vercel.app");
+                    saveValuesToSharedPreferences();
                 }
                 catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+
     }
 
 
+
+    private void saveValuesToSharedPreferences () {
+        SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putString("amount", txtAmount.getText().toString());
+        editor.putString("size", txtSize.getText().toString());
+
+        // Lưu thay đổi
+        editor.apply();
+    }
+    private void restoreValuesFromSharedPreferences() {
+        SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        String savedAmount = preferences.getString("amount", "");
+        String savedSize = preferences.getString("size", "");
+
+        // Set giá trị cho txtAmount và txtSize
+        txtAmount.setText(savedAmount);
+        txtSize.setText(savedSize);
+    }
     private void updateTextView() {
         txtAmount.setText(String.valueOf(currentValue));
         Size selectedSize = ImageSize[OptionSizeIndex];
         txtSize.setText(selectedSize.getWidth() + "x" + selectedSize.getHeight());
-
 //        try {
 //            GetUserPrompts("https://android-huflit-server.vercel.app/image/get-prompts");
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
     }
+
+
 
     public void handleSentImagePrompt(View view) throws IOException {
         String messageText = edtImgChat.getText().toString().trim();
@@ -392,7 +417,9 @@ public class ImageChat extends AppCompatActivity {
                                 if (Objects.requireNonNull(images).length() > 0) {
                                     for (int i = 0; i < images.length(); i++) {
                                         String imageUrl = images.optString(i);
-
+                                        if(i>=0){
+                                            txtHelp2.setText("");;
+                                        }
                                         // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
                                         addnewAIMessage(false, imageUrl);
                                     }
