@@ -108,38 +108,40 @@
         android:id="@+id/txtnameuser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="8dp"
         android:text="Username"
-        android:textSize="18dp"
         android:textColor="@color/black"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
+
     <TextView
-        android:id="@+id/txtemailprofile"
+        android:id="@+id/txtprofileemail"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-
-        android:layout_marginTop="12dp"
-
-
-        app:layout_constraintHorizontal_bias="0.496"
-
-        app:layout_constraintHorizontal_bias="0.877"
-
+        android:layout_marginTop="4dp"
+        android:paddingLeft="1dp"
+        android:text="EMAIL:"
+        android:textColor="#201F1F"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
 
     <TextView
         android:id="@+id/txtphoneprofile"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="48dp"
         android:text="PHONE: 0923663654"
-        android:textSize="16dp"
         android:textColor="@color/black"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtemailprofile" />
+        app:layout_constraintTop_toTopOf="@+id/txtnameuser" />
 
     <LinearLayout
         android:id="@+id/thanhtext"
@@ -289,13 +291,6 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            app:srcCompat="@drawable/icon_tick" />
-
-        <ImageView
             android:id="@+id/imageView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -304,6 +299,13 @@
 
         <ImageView
             android:id="@+id/imageView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            app:srcCompat="@drawable/icon_tick" />
+
+        <ImageView
+            android:id="@+id/imageView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
@@ -345,20 +347,5 @@
             android:text="Thanh toán nhanh chóng"
             android:textColor="@color/black"/>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="1dp"
-        android:text="EMAIL:"
-        android:textColor="#201F1F"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/txtemailprofile"
-        app:layout_constraintHorizontal_bias="0.918"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

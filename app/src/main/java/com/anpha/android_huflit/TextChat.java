@@ -53,7 +53,7 @@ public class TextChat extends AppCompatActivity {
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
-    TextView txtHelp1, txtMode,txtusername;
+    TextView txtHelp1, txtMode,txtUserName;
      Button btnLogOut;
     ArrayList<Prompt> prompts = new ArrayList<>();
 
@@ -90,7 +90,7 @@ public class TextChat extends AppCompatActivity {
                 true
         );
         btnLogOut=popupView.findViewById(R.id.btnLogOut);
-        txtusername=popupView.findViewById(R.id.txtusername);
+        txtUserName=popupView.findViewById(R.id.txtusername);
 
 
         edtTextChat.requestFocus();
@@ -113,7 +113,7 @@ public class TextChat extends AppCompatActivity {
                 LogOutUser();
             }
         });
-       txtusername.setOnClickListener(new View.OnClickListener() {
+       txtUserName.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
               Intent intent = new Intent(TextChat.this, ProfileView.class);
@@ -123,7 +123,7 @@ public class TextChat extends AppCompatActivity {
        // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
-        txtusername.setText(username); // đặt tên người dùng trong textview
+        txtUserName.setText(username); // đặt tên người dùng trong textview
         toolbarChat.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
