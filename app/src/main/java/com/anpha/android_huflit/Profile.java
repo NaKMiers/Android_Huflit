@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -61,12 +60,11 @@ public class Profile extends AppCompatActivity {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                 // Chuyển đổi ByteArrayOutputStream thành mảng byte
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
-                Intent i = new Intent (Profile.this, profileChange.class);
+                Intent i = new Intent (Profile.this, ProfileChange.class);
                 i.putExtra("currentAvatar", byteArray);
                 startActivityForResult(i,1);
             }
         });
-
     }
 
     private void showAvatarSelectionPopup() {
@@ -104,13 +102,11 @@ public class Profile extends AppCompatActivity {
             String job = data.getStringExtra("job");
             String address = data.getStringExtra("address");
 
-            txtSurName.setText("HỌ: " +surname);
-            txtName.setText("TÊN: " +name);
-            txtBirthday.setText("NGÀY SINH: " +birthday);
-            txtJob.setText("NGHỀ NGHIỆP: " +job);
-            txtAddress.setText("ĐỊA CHỈ: " +address);
+            txtSurName.setText("HỌ: " + surname);
+            txtName.setText("TÊN: " + name);
+            txtBirthday.setText("NGÀY SINH: " + birthday);
+            txtJob.setText("NGHỀ NGHIỆP: " + job);
+            txtAddress.setText("ĐỊA CHỈ: " + address);
         }
     }
-
-
 }
