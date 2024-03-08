@@ -26,6 +26,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.anpha.android_huflit.Message.ChatBox;
 import com.anpha.android_huflit.Message.ImageMessage;
 import com.anpha.android_huflit.Message.ImageMessageAdapter;
 import com.anpha.android_huflit.Message.Message;
@@ -61,7 +62,7 @@ public class ImageChat extends AppCompatActivity {
     TextView txtHelp2,txtusername, txtAmount, txtSize;
     EditText edtImgChat;
     NavigationView navigationView;
-    ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon, receivedImage;
+    ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon, receivedImage, CrChat;
     PopupWindow popupWindow;
     Toolbar toolbarImage;
     Button btnSave;
@@ -107,6 +108,15 @@ public class ImageChat extends AppCompatActivity {
         navigationIcon = findViewById(R.id.navigationIcon);
         imgavatar =popupView.findViewById(R.id.imgavatar);
         txtusername=popupView.findViewById(R.id.txtusername);
+        txtAmount = findViewById(R.id.txtAmount);
+        txtSize = findViewById(R.id.txtSize);
+        btnDes = findViewById(R.id.btnDes);
+        btnSave = findViewById(R.id.btnSave);
+        btnInCr = findViewById(R.id.btnInCr);
+        btnMinus1 = findViewById(R.id.btnMinus1);
+        btnPlus1 = findViewById(R.id.btnPlus1);
+        CrChat = findViewById(R.id.CrChat);
+        restoreValuesFromSharedPreferences();
 
         navigationIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,48 +155,124 @@ public class ImageChat extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-//        btnMinus1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (currentValue > 1) {
-//                    currentValue--;
-//                    updateTextView();
-//                }
-//            }
-//        });
-//        btnPlus1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                currentValue++;
-//                updateTextView();
-//            }
-//        });
-//        ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(104, 1024)};
-//        btnInCr.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (OptionSizeIndex < ImageSize.length - 1) {
-//                    OptionSizeIndex = (OptionSizeIndex + 1) % ImageSize.length;
-//                    updateTextView();
-//                }
-//            }
-//        });
-//        txtusername.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ImageChat.this, ProfileView.class);
-//                startActivity(intent);
-//            }
-//        });
-//        btnDes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (OptionSizeIndex > 0) {
-//                    OptionSizeIndex = (OptionSizeIndex - 1) % ImageSize.length;
-//                    updateTextView();
-//                }
-//            }
-//        });
+        btnMinus1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentValue > 1) {
+                    currentValue--;
+                    updateTextView();
+                }
+            }
+        });
+        btnPlus1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentValue++;
+                updateTextView();
+            }
+        });
+
+        ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(1024, 1024)};
+        btnInCr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (OptionSizeIndex < ImageSize.length - 1) {
+                    OptionSizeIndex = (OptionSizeIndex + 1) % ImageSize.length;
+                    updateTextView();
+                }
+            }
+        });
+        txtusername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageChat.this, ProfileView.class);
+                startActivity(intent);
+            }
+        });
+        btnDes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (OptionSizeIndex > 0) {
+                    OptionSizeIndex = (OptionSizeIndex - 1) % ImageSize.length;
+                    updateTextView();
+                }
+            }
+        });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    // Lấy giá trị từ txtAmount và txtSize
+                    amount = txtAmount.getText().toString();
+                    size = txtSize.getText().toString();
+                    CreateImages("https://android-huflit-server.vercel.app");
+                    saveValuesToSharedPreferences();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        CrChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreatChat();
+            }
+        });
+    }
+    private void getBox(String type){
+        OkHttpClient client = new OkHttpClient();
+
+        String url ="https://android-huflit-server.vercel.app/box/get-box/" +type;
+
+        Request request = new Request.Builder()
+                .url(url).get().build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    String responseData = response.body().string();
+                }
+                else {
+
+                }
+            }
+        });
+    }
+    private void CreatChat(){
+        OkHttpClient client = new OkHttpClient();
+
+        String url ="https://android-huflit-server.vercel.app/box/create-box/:type";
+
+        RequestBody requestBody = RequestBody.create(null, new byte[0]);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody).build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    ChatBox newChatBox = new ChatBox();
+                }
+                else {
+
+                }
+            }
+        });
+
         // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
