@@ -54,7 +54,7 @@ public class TextChat extends AppCompatActivity {
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
-    TextView txtHelp1, txtMode, txtUserName;
+    TextView txtHelp1, txtMode, txtusername;
      Button btnLogOut;
     ArrayList<Prompt> prompts = new ArrayList<>();
 
@@ -96,7 +96,7 @@ public class TextChat extends AppCompatActivity {
                 true
         );
         btnLogOut=popupView.findViewById(R.id.btnLogOut);
-//        txtusername=popupView.findViewById(R.id.txtusername);
+        txtusername = popupView.findViewById(R.id.txtusername);
         imgavatar=popupView.findViewById(R.id.imgavatar);
 
 
@@ -129,17 +129,17 @@ public class TextChat extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//       txtusername.setOnClickListener(new View.OnClickListener() {
-//           @Override
-//           public void onClick(View v) {
-//              Intent intent = new Intent(TextChat.this, ProfileView.class);
-//              startActivity(intent);
-//           }
-//       });
+       txtusername.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+              Intent intent = new Intent(TextChat.this, ProfileView.class);
+              startActivity(intent);
+           }
+       });
        // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
-        txtUserName.setText(username); // đặt tên người dùng trong textview
+        txtusername.setText(username); // đặt tên người dùng trong textview
 
         //Mở popupWindow (chỉ set sự kiện được trong java)
         toolbarChat.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

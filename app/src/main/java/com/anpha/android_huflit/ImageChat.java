@@ -98,6 +98,7 @@ public class ImageChat extends AppCompatActivity {
         );
 
         recyclerViewImage = findViewById(R.id.recyclerViewImage);
+
         //Khởi tạo các biến
         messages = new ArrayList<>();
         adapter = new ImageMessageAdapter(messages);
@@ -109,8 +110,8 @@ public class ImageChat extends AppCompatActivity {
         navigationIcon = findViewById(R.id.navigationIcon);
         imgavatar =popupView.findViewById(R.id.imgavatar);
         txtusername=popupView.findViewById(R.id.txtusername);
-
-
+//
+//
         navigationIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,7 +129,7 @@ public class ImageChat extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+//
         toolbarImage.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -141,48 +142,49 @@ public class ImageChat extends AppCompatActivity {
                 return false;
             }
         });
-        btnMinus1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentValue > 1) {
-                    currentValue--;
-                    updateTextView();
-                }
-            }
-        });
-        btnPlus1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentValue++;
-                updateTextView();
-            }
-        });
-        ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(104, 1024)};
-        btnInCr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (OptionSizeIndex < ImageSize.length - 1) {
-                    OptionSizeIndex = (OptionSizeIndex + 1) % ImageSize.length;
-                    updateTextView();
-                }
-            }
-        });
-        txtusername.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ImageChat.this, ProfileView.class);
-                startActivity(intent);
-            }
-        });
-        btnDes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (OptionSizeIndex > 0) {
-                    OptionSizeIndex = (OptionSizeIndex - 1) % ImageSize.length;
-                    updateTextView();
-                }
-            }
-        });
+
+//        btnMinus1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (currentValue > 1) {
+//                    currentValue--;
+//                    updateTextView();
+//                }
+//            }
+//        });
+//        btnPlus1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                currentValue++;
+//                updateTextView();
+//            }
+//        });
+//        ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(104, 1024)};
+//        btnInCr.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (OptionSizeIndex < ImageSize.length - 1) {
+//                    OptionSizeIndex = (OptionSizeIndex + 1) % ImageSize.length;
+//                    updateTextView();
+//                }
+//            }
+//        });
+//        txtusername.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(ImageChat.this, ProfileView.class);
+//                startActivity(intent);
+//            }
+//        });
+//        btnDes.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (OptionSizeIndex > 0) {
+//                    OptionSizeIndex = (OptionSizeIndex - 1) % ImageSize.length;
+//                    updateTextView();
+//                }
+//            }
+//        });
         // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
