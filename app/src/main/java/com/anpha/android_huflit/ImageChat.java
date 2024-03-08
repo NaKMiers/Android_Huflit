@@ -26,6 +26,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.anpha.android_huflit.Message.ChatBox;
 import com.anpha.android_huflit.Message.ImageMessage;
 import com.anpha.android_huflit.Message.ImageMessageAdapter;
 import com.anpha.android_huflit.Message.Message;
@@ -62,7 +63,7 @@ public class ImageChat extends AppCompatActivity {
     EditText edtImgChat;
     ImageView receivedImage;
     NavigationView navigationView;
-    ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon;
+    ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon,CrChat;
     PopupWindow popupWindow;
     Toolbar toolbarImage;
     Button btnSave;
@@ -117,6 +118,7 @@ public class ImageChat extends AppCompatActivity {
         btnInCr = findViewById(R.id.btnInCr);
         btnMinus1 = findViewById(R.id.btnMinus1);
         btnPlus1 = findViewById(R.id.btnPlus1);
+        CrChat = findViewById(R.id.CrChat);
         restoreValuesFromSharedPreferences();
 //
 //
@@ -167,6 +169,7 @@ public class ImageChat extends AppCompatActivity {
                 updateTextView();
             }
         });
+
         ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(1024, 1024)};
         btnInCr.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,6 +211,67 @@ public class ImageChat extends AppCompatActivity {
                 }
             }
         });
+
+        CrChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreatChat();
+            }
+        });
+    }
+    private void getBox(String type){
+        OkHttpClient client = new OkHttpClient();
+
+        String url ="https://android-huflit-server.vercel.app/box/get-box/" +type;
+
+        Request request = new Request.Builder()
+                .url(url).get().build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    String responseData = response.body().string();
+                }
+                else {
+
+                }
+            }
+        });
+    }
+    private void CreatChat(){
+        OkHttpClient client = new OkHttpClient();
+
+        String url ="https://android-huflit-server.vercel.app/box/create-box/:type";
+
+        RequestBody requestBody = RequestBody.create(null, new byte[0]);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody).build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    ChatBox newChatBox = new ChatBox();
+                }
+                else {
+
+                }
+            }
+        });
+
+
         // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
