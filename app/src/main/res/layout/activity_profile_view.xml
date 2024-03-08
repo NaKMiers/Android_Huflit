@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView10"
+            android:id="@+id/pinIcon"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
@@ -52,7 +52,7 @@
             android:src="@drawable/khien" />
 
         <ImageView
-            android:id="@+id/imageView11"
+            android:id="@+id/gitIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -108,21 +108,19 @@
         android:id="@+id/txtnameuser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="8dp"
         android:text="Username"
-        android:textSize="18dp"
         android:textColor="@color/black"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
-
 
     <TextView
         android:id="@+id/txtphoneprofile"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="PHONE: 0923663654"
         android:textColor="@color/black"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -161,7 +159,9 @@
             android:text="(Thay đổi)"
             android:textColor="@color/blue"
             android:textSize="15dp"
-            tools:ignore="TextSizeCheck" />
+            tools:ignore="TextSizeCheck"
+            android:onClick=""
+            />
     </LinearLayout>
 
     <TextView
@@ -272,9 +272,22 @@
         android:layout_marginTop="200dp"
         android:layout_marginEnd="370dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            app:srcCompat="@drawable/icon_tick" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            app:srcCompat="@drawable/icon_tick" />
 
         <ImageView
             android:id="@+id/imageView7"
@@ -282,23 +295,10 @@
             android:layout_height="wrap_content"
             android:padding="3dp"
             app:srcCompat="@drawable/icon_tick" />
-
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            app:srcCompat="@drawable/icon_tick" />
-
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            app:srcCompat="@drawable/icon_tick" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="357dp"
         android:layout_height="91dp"
         android:layout_marginStart="1dp"

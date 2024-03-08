@@ -3,12 +3,14 @@ package com.anpha.android_huflit;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,6 +19,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -31,6 +34,8 @@ import com.anpha.android_huflit.Models.Prompt;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -48,21 +53,28 @@ import okhttp3.Response;
 
 public class ImageChat extends AppCompatActivity {
     private RecyclerView recyclerViewImage;
+    //Khởi tạo adapter
     private ImageMessageAdapter adapter;
+    //Khởi tạo List tin nhắn
     private List<ImageMessage> messages;
 
     TextView txtHelp2,txtusername;
     EditText edtImgChat;
     ImageView receivedImage;
-    ImageView btnSendImg, navigationIcon,imgavatar;
+    NavigationView navigationView;
+    ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon;
     PopupWindow popupWindow;
     Toolbar toolbarImage;
-
+    TextView txtHelp2;
+    Button btnSave;
     DrawerLayout drawerLayout;
     ImageButton btnPlus1, btnInCr, btnMinus1, btnDes;
     TextView txtAmount, txtSize;
     int currentValue = 1;
     Size[] ImageSize;
+    String amount = "1";
+
+    String size = "256x256";
     int OptionSizeIndex = 0;
     ArrayList<Prompt> prompts = new ArrayList<>();
     OkHttpClient client = new OkHttpClient();
@@ -71,30 +83,29 @@ public class ImageChat extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_chat);
-
         toolbarImage = findViewById(R.id.toolbarImage);
 
+        //Nạp layout từ tệp popup_image_chat_menu
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_image_chat_menu, null);
+        //Tạo popupWindow
         popupWindow = new PopupWindow(
                 popupView,
+                //Độ rộng
                 LinearLayout.LayoutParams.MATCH_PARENT,
+                //Độ cao
                 LinearLayout.LayoutParams.WRAP_CONTENT,
+                //Cho phép tương tác với các phần tử khác trên màn hình
                 true
         );
 
         recyclerViewImage = findViewById(R.id.recyclerViewImage);
+        //Khởi tạo các biến
         messages = new ArrayList<>();
         adapter = new ImageMessageAdapter(messages);
         recyclerViewImage.setAdapter(adapter);
         txtHelp2 = findViewById(R.id.txtHelp2);
         edtImgChat = findViewById(R.id.edtImgChat);
         btnSendImg = findViewById(R.id.btnSendImg);
-        btnMinus1 = popupView.findViewById(R.id.btnMinus1);
-        btnInCr = popupView.findViewById(R.id.btnInCr);
-        btnPlus1 = popupView.findViewById(R.id.btnPlus1);
-        btnDes = popupView.findViewById(R.id.btnDes);
-        txtAmount = popupView.findViewById(R.id.txtAmount);
-        txtSize = popupView.findViewById(R.id.txtSize);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationIcon = findViewById(R.id.navigationIcon);
         imgavatar =popupView.findViewById(R.id.imgavatar);
@@ -122,7 +133,9 @@ public class ImageChat extends AppCompatActivity {
         toolbarImage.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                // Nếu nhấn vào item có id iconMenu
                 if (item.getItemId() == R.id.iconMenu) {
+                    // Mở popupWindow ngay dưới iconMenu
                     popupWindow.showAsDropDown(toolbarImage.findViewById(R.id.iconMenu));
                     return true;
                 }
@@ -178,11 +191,32 @@ public class ImageChat extends AppCompatActivity {
     }
 
 
+    private void saveValuesToSharedPreferences() {
+        SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putString("amount", txtAmount.getText().toString());
+        editor.putString("size", txtSize.getText().toString());
+
+        // Lưu thay đổi
+        editor.apply();
+    }
+
+    private void restoreValuesFromSharedPreferences() {
+        SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        String savedAmount = preferences.getString("amount", "");
+        String savedSize = preferences.getString("size", "");
+
+        // Set giá trị cho txtAmount và txtSize
+        txtAmount.setText(savedAmount);
+        txtSize.setText(savedSize);
+    }
+
+    //Update lại số lượng và size ảnh
     private void updateTextView() {
         txtAmount.setText(String.valueOf(currentValue));
         Size selectedSize = ImageSize[OptionSizeIndex];
         txtSize.setText(selectedSize.getWidth() + "x" + selectedSize.getHeight());
-
 //        try {
 //            GetUserPrompts("https://android-huflit-server.vercel.app/image/get-prompts");
 //        } catch (IOException e) {
@@ -190,19 +224,11 @@ public class ImageChat extends AppCompatActivity {
 //        }
     }
 
+
     public void handleSentImagePrompt(View view) throws IOException {
         String messageText = edtImgChat.getText().toString().trim();
         if (!messageText.isEmpty()) {
             txtHelp2.setText("");
-//            ImageMessage sentMessage = new ImageMessage(messageText, true);
-//            messages.add(sentMessage);
-//            adapter.notifyItemInserted(messages.size() - 1);
-
-//            ImageMessage reivedMessage = new ImageMessage(false, R.drawable.boy);
-//            messages.add(reivedMessage);
-//            adapter.notifyItemInserted(messages.size() - 1);
-//            recyclerViewImage.scrollToPosition(messages.size() - 1);
-
 //            edtImgChat.setText("");
             CreatePrompt("https://android-huflit-server.vercel.app");
             CreateImages("https://android-huflit-server.vercel.app");
@@ -220,16 +246,21 @@ public class ImageChat extends AppCompatActivity {
     }
 
     private void addNewMessage(String text, boolean isFromUser) {
+        // Khởi tạo tin nhắn gửi với constructor 2 tham số là text (chữ) và isFromUser (Do người dùng gửi)
         ImageMessage sentMessage = new ImageMessage(text, isFromUser);
         // Thêm tin nhắn gửi vào cuối danh sách
         messages.add(sentMessage);
         // Thông báo cho Adapter biết rằng có một mục mới được thêm vào cuối danh sách
         adapter.notifyItemInserted(messages.size() - 1);
     }
-    private void addnewAIMessage(boolean sentByUser, String imageURL){
-        ImageMessage receivedImage = new ImageMessage(false,imageURL);
+
+    private void addnewAIMessage(boolean sentByUser, String imageURL) {
+        //Khởi tạo tin nhắn nhận từ AI với senbyUser là false (không do người dùng gửi) và link ảnh kiểu String
+        ImageMessage receivedImage = new ImageMessage(false, imageURL);
+        // Thêm tin nhắn nhận vào cuối danh sách
         messages.add(receivedImage);
-        adapter.notifyItemInserted(messages.size()-1);
+        // Thông báo cho Adapter biết rằng có một mục mới được thêm vào cuối danh sách
+        adapter.notifyItemInserted(messages.size() - 1);
     }
 
     private void GetUserPrompts(String url) throws IOException {
@@ -251,7 +282,7 @@ public class ImageChat extends AppCompatActivity {
                                 JSONObject json = new JSONObject(myResponse);
                                 JSONArray jsonArray = json.getJSONArray("prompts");
 //
-                                for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++){
+                                for (int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++) {
                                     JSONObject prompt = jsonArray.optJSONObject(i);
 
                                     // get values
@@ -278,8 +309,8 @@ public class ImageChat extends AppCompatActivity {
                                     prompts.add(newPrompt);
                                 }
 
-// show prompts after get
-                                for(Prompt prompt: prompts) {
+                                // show prompts after get
+                                for (Prompt prompt : prompts) {
                                     Log.d("Type", prompt.type);
                                     addNewMessage(prompt.text, Objects.equals(prompt.from, "user"));
                                 }
@@ -341,8 +372,9 @@ public class ImageChat extends AppCompatActivity {
                                 prompts.add(newPrompt);
                                 addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
 
-                                // clear text chat
+                                // Cuộn xuống dưới cùng khi có tin nhắn mới
                                 recyclerViewImage.scrollToPosition(messages.size() - 1);
+                                // clear text chat
                                 edtImgChat.setText("");
 
                             } catch (JSONException e) {
@@ -367,8 +399,8 @@ public class ImageChat extends AppCompatActivity {
 
         RequestBody formBody = new FormBody.Builder()
                 .add("prompt", edtImgChat.getText().toString().trim())
-                .add("amount", "1")
-                .add("size", "256x256")
+                .add("amount", amount)
+                .add("size", size)
 //                .add("chatId", "")
                 .build();
 
@@ -389,26 +421,34 @@ public class ImageChat extends AppCompatActivity {
                             String jsonString = myResponse;
                             // txtHelp2.setText(jsonString);
 
-                            try
-                            {
+                            try {
                                 JSONObject json = new JSONObject(jsonString);
                                 JSONObject response = json.getJSONObject("images");
                                 // lấy ra mảng image urls
                                 JSONArray images = response.getJSONArray("images");
 
                                 // ở chỗ này, thay vì chỉ dùng images[0] thì hãy dùng vòng lặp trong trường hợp có nhiều hơn 1 image
-                                if(Objects.requireNonNull(images).length() > 0) {
-                                    String imageUrl = images.optString(0);
-
-                                    // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
-                                    ImageView tempImageView = findViewById(R.id.tempImageView);
-                                    addnewAIMessage(false,imageUrl);
+//                                if(Objects.requireNonNull(images).length() > 0) {
+//                                    String imageUrl = images.optString(0);
+//
+//                                    // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
+//                                    addnewAIMessage(false,imageUrl);
+//                                }
+                                if (Objects.requireNonNull(images).length() > 0) {
+                                    for (int i = 0; i < images.length(); i++) {
+                                        String imageUrl = images.optString(i);
+                                        if (i >= 0) {
+                                            txtHelp2.setText("");
+                                            ;
+                                        }
+                                        // sentByUser false là do AI gửi, link ảnh kiểu String imageUrl
+                                        addnewAIMessage(false, imageUrl);
+                                    }
                                 }
-                              
-                            }
-                            catch (JSONException e) {
+                            } catch (JSONException e) {
                                 e.printStackTrace();
-                            }                        }
+                            }
+                        }
                     });
                 }
             }
@@ -421,8 +461,96 @@ public class ImageChat extends AppCompatActivity {
     }
 
 
+    //Chuyển qua Textchat
     public void handleChangeChatMode(View view) {
-        Intent intent = new Intent(ImageChat.this,TextChat.class);
+        Intent intent = new Intent(ImageChat.this, TextChat.class);
         startActivity(intent);
+    }
+
+    //Mở sidebar
+    public void openSidebarImage(View view) {
+        //Nếu đang mở rồi
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+            //đóng sidebar
+            drawerLayout.closeDrawer(GravityCompat.START);
+        else
+            // Ngược lại mở sidebar
+            drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    //Giảm số lượng ảnh
+    public void desAmount(View view) {
+        if (currentValue > 1) {
+            currentValue--;
+            updateTextView();
+        }
+    }
+
+    //Tăng số lượng ảnh
+    public void incrAmount(View view) {
+        currentValue++;
+        updateTextView();
+    }
+
+    //Giảm size ảnh
+    public void decSize(View view) {
+        if (OptionSizeIndex > 0) {
+            OptionSizeIndex = (OptionSizeIndex - 1) % ImageSize.length;
+            updateTextView();
+        }
+    }
+
+    //Tăng size ảnh
+    public void incrSize(View view) {
+        if (OptionSizeIndex < ImageSize.length - 1) {
+            OptionSizeIndex = (OptionSizeIndex + 1) % ImageSize.length;
+            updateTextView();
+        }
+    }
+
+    //Lưu thuộc tính của ảnh
+    public void saveImageAttribute(View view) {
+        try {
+            // Lấy giá trị từ txtAmount và txtSize
+            amount = txtAmount.getText().toString();
+            size = txtSize.getText().toString();
+            CreateImages("https://android-huflit-server.vercel.app");
+            saveValuesToSharedPreferences();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Nhấn vào icon Facebook
+    public void fbLink(View view) {
+        openWebPage("https://facebook.com");
+    }
+    //Nhấn vào icon Instagram
+    public void insLink(View view) {
+        openWebPage("https://instagram.com");
+    }
+    //Nhấn vào icon Twitter
+    public void twLink(View view) {
+        openWebPage("https://twitter.com");
+    }
+    //Nhấn vào icon Pinterest
+    public void pinLink(View view) {
+        openWebPage("https://pinterest.com");
+    }
+    //Nhấn vào icon Github
+    public void gitLink(View view) {
+        openWebPage("https://github.com");
+    }
+    //Hàm mở trang web tương ứng
+    private void openWebPage(String url) {
+        //Tạp Uri từ địa chỉ url (Uri là chuỗi đại diện cho địa chỉ hoặc tài nguyên Internet)
+        Uri webpage = Uri.parse(url);
+        //Yêu cầu hệ thống mở dữ liệu bằng cách sử dụng ứng dụng mặc định của hệ thống (trình duyệt web)
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        //Kiểm tra xem có ứng dụng nào để mở dữ liệu được cung cấp hay không
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            //Nếu có thì sẽ gửi intent và mở trang web
+            startActivity(intent);
+        }
     }
 }

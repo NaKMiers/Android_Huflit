@@ -33,7 +33,6 @@ android {
 }
 
 dependencies {
-
     implementation  ("com.squareup.picasso:picasso:2.71828")
     implementation ("androidx.drawerlayout:drawerlayout:1.1.1")
     implementation ("androidx.recyclerview:recyclerview:1.2.1")

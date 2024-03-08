@@ -152,7 +152,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.769"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtusername" />
+        app:layout_constraintTop_toBottomOf="@+id/txtusername"
+        android:onClick="infoChange"
+        />
 
     <ImageView
         android:id="@+id/mainAvatar"
@@ -162,5 +164,7 @@
         android:src="@drawable/boy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        android:onClick="changeAvatar"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
