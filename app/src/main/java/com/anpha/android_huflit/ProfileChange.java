@@ -16,6 +16,8 @@ public class ProfileChange extends AppCompatActivity {
     EditText edtSurname, edtName, edtBirthday, edtJob, edtAddress;
 
     Button btnSaveInfo;
+
+    Intent i = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,27 +30,29 @@ public class ProfileChange extends AppCompatActivity {
         edtAddress = findViewById(R.id.edtAddress);
         btnSaveInfo = findViewById(R.id.btnSaveInfo);
         avatarProfileChange = findViewById(R.id.avatar);
-        Intent i = getIntent();
+        i = getIntent();
         // Nhận mảng byte chứa hình ảnh từ Intent
         byte[] byteArray = getIntent().getByteArrayExtra("currentAvatar");
-
         if (byteArray != null) {
             // Chuyển đổi mảng byte thành Bitmap
             Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            // Set avatar bên profileChange thành hình ảnh Bitmap
             avatarProfileChange.setImageBitmap(bitmap);
         }
+    }
 
-        btnSaveInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                i.putExtra("surName",edtSurname.getText().toString());
-                i.putExtra("name",edtName.getText().toString());
-                i.putExtra("birthday",edtBirthday.getText().toString());
-                i.putExtra("job",edtJob.getText().toString());
-                i.putExtra("address",edtAddress.getText().toString());
-                setResult(2,i);
-                finish();
-            }
-        });
+    public void saveInfo(View view) {
+        //Đẩy các thông tin đã thay đổi vào intent
+        i.putExtra("surName",edtSurname.getText().toString());
+        i.putExtra("name",edtName.getText().toString());
+        i.putExtra("birthday",edtBirthday.getText().toString());
+        i.putExtra("job",edtJob.getText().toString());
+        i.putExtra("address",edtAddress.getText().toString());
+        //Biến setResult để trả các thông tin về Profile
+        setResult(2,i);
+        finish();
+
+
+
     }
 }

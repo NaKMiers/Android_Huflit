@@ -18,21 +18,34 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextText2"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/plaintextcustom"
-            android:drawableLeft="@drawable/search1"
-            android:drawablePadding="10dp"
-            android:ems="10"
-            android:hint="Search"
-            android:inputType="text"
-            android:paddingLeft="10dp"
-            android:singleLine="false"
-            android:textSize="20sp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/editTextText2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/plaintextcustom"
+                android:drawableLeft="@drawable/search1"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Search"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:singleLine="false"
+                android:textSize="20sp" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center|right"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/altsend" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +69,9 @@
                 android:hint="Username"
                 android:paddingLeft="5dp"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:onClick="toProfileView"
+                />
 
         </LinearLayout>
 
@@ -174,13 +189,15 @@
             android:background="@drawable/buttonlogout"
             android:text="Log out"
             android:textAllCaps="false"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:onClick="logOutUser"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="27dp"
             android:layout_gravity="center"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="320dp"
             android:text="Các trang Social khác"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -204,44 +221,54 @@
             </TextView>
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/fbIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/fb" />
+                android:src="@drawable/fb"
+                android:onClick="toFb"
+                />
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/insIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="90dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/ins" />
+                android:src="@drawable/ins"
+                android:onClick="toIns"
+                />
 
             <ImageView
-                android:id="@+id/imageView9"
+                android:id="@+id/twIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="165dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/tt" />
+                android:src="@drawable/tt"
+                android:onClick="toTw"
+                />
 
             <ImageView
-                android:id="@+id/imageView10"
+                android:id="@+id/pinIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="230dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/pin" />
+                android:src="@drawable/pin"
+                android:onClick="toPin"
+                />
 
             <ImageView
-                android:id="@+id/imageView11"
+                android:id="@+id/gitIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="60dp"
-                android:src="@drawable/git" />
+                android:src="@drawable/git"
+                android:onClick="toGit"
+                />
 
         </FrameLayout>
 

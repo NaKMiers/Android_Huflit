@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,7 +50,7 @@ public class TextChat extends AppCompatActivity {
     PopupWindow popupWindow;
     Toolbar toolbarChat;
 
-    ImageView btnSend, navigationIcon;
+    ImageView btnSend, navigationIcon, fbIcon, insIcon, twIcon, pinIcon, gitIcon;
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
@@ -73,62 +74,54 @@ public class TextChat extends AppCompatActivity {
         navigationIcon = findViewById(R.id.navigationIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
         txtMode = findViewById(R.id.txtMode);
-        //
 
-
-
-        // initialize variables
+        // Khởi tạo danh sách tin nhắn
         messages = new ArrayList<>();
+        // Khởi tạo adapter mới kết nối dữ liệu từ danh sách tin nhắn
         adapter = new MessageAdapter(messages);
+        // Gán adapter vào recyclerView
         recyclerView.setAdapter(adapter);
+        // Sắp xếp các mục tin nhắn dọc
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        //Nạp layout từ tệp popup_chat_menu
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_chat_menu, null);
+        //Tạo popupWindow
         popupWindow = new PopupWindow(
                 popupView,
+                //Độ rộng
                 LinearLayout.LayoutParams.MATCH_PARENT,
+                //Độ cao
                 LinearLayout.LayoutParams.WRAP_CONTENT,
+                //Cho phép tương tác với các phần tử khác trên màn hình
                 true
         );
         btnLogOut=popupView.findViewById(R.id.btnLogOut);
         txtUserName=popupView.findViewById(R.id.txtusername);
+        fbIcon = popupView.findViewById(R.id.fbIcon);
+        insIcon = popupView.findViewById(R.id.insIcon);
+        twIcon = popupView.findViewById(R.id.twIcon);
+        pinIcon = popupView.findViewById(R.id.pinIcon);
+        gitIcon = popupView.findViewById(R.id.gitIcon);
 
 
+        //Nhận sự kiện nhập liệu
         edtTextChat.requestFocus();
+        //Thiết lập con trỏ ở cuối văn bản EditText
         edtTextChat.setSelection(edtTextChat.getText().length());
 
-
-        navigationIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(drawerLayout.isDrawerOpen(GravityCompat.START))
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                else {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-            }
-        });
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogOutUser();
-            }
-        });
-       txtUserName.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-              Intent intent = new Intent(TextChat.this, ProfileView.class);
-              startActivity(intent);
-           }
-       });
        // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
         txtUserName.setText(username); // đặt tên người dùng trong textview
+
+        //Mở popupWindow (chỉ set sự kiện được trong java)
         toolbarChat.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                // Nếu nhấn vào item có id iconMenu
                 if(item.getItemId() == R.id.iconMenu)
                 {
+                    // Mở popupWindow ngay dưới iconMenu
                     popupWindow.showAsDropDown(toolbarChat.findViewById(R.id.iconMenu));
                     return true;
                 }
@@ -165,6 +158,7 @@ public class TextChat extends AppCompatActivity {
     }
 
     private void addNewMessage(String text, boolean isFromUser) {
+        //Khởi tạo lớp Message sentMessage với tham số là text kiểu chuỗi và isFromUser(do người dùng gửi)
         Message sentMessage = new Message(text, isFromUser);
         // Thêm tin nhắn gửi vào cuối danh sách
         messages.add(sentMessage);
@@ -273,8 +267,10 @@ public class TextChat extends AppCompatActivity {
                                 prompts.add(newPrompt);
                                 addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
 
-                                // clear text chat
+
+                                // Cuộn xuống dưới cùng khi có tin nhắn mới
                                 recyclerView.scrollToPosition(messages.size() - 1);
+                                // clear text chat
                                 edtTextChat.setText("");
 
                             } catch (JSONException e) {
@@ -336,9 +332,11 @@ public class TextChat extends AppCompatActivity {
                                 prompts.add(newPrompt);
                                 addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
 
-                                // clear text chat
+                                //Cuộn xuống khi có tin nhắn mới
                                 recyclerView.scrollToPosition(messages.size() - 1);
+                                // clear text chat
                                 edtTextChat.setText("");
+                                // clear dòng chữ "How can I help you?"
                                 txtHelp1.setText("");
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
@@ -357,8 +355,65 @@ public class TextChat extends AppCompatActivity {
 
     }
 
+    //Chuyển qua ImageChat
     public void handleChangeToImageMode(View view) {
         Intent intent = new Intent(TextChat.this,ImageChat.class);
         startActivity(intent);
+    }
+
+    //Mở sidebar
+    public void openSidebar(View view) {
+        //Nếu sidebar đang mở
+        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+            // Đóng lại
+            drawerLayout.closeDrawer(GravityCompat.START);
+        else {
+            // Còn không thì mở sidebar
+            drawerLayout.openDrawer(GravityCompat.START);
+        }
+    }
+
+    //Đăng xuất
+    public void logOutUser(View view) {
+        LogOutUser();
+    }
+
+    //Đi tới profileView
+    public void toProfileView(View view) {
+        Intent intent = new Intent(TextChat.this, ProfileView.class);
+        startActivity(intent);
+    }
+
+    //Nhấn vào icon Facebook
+    public void toFb(View view) {
+        openWebPage("https://facebook.com");
+    }
+    //Nhấn vào icon Instagram
+    public void toIns(View view) {
+        openWebPage("https://instagram.com");
+    }
+    //Nhấn vào icon Tw
+    public void toTw(View view) {
+        openWebPage("https://twitter.com");
+    }
+    //Nhấn vào icon Pinterest
+    public void toPin(View view) {
+        openWebPage("https://pinterest.com");
+    }
+    //Nhấn vào icon Github
+    public void toGit(View view) {
+        openWebPage("https://github.com");
+    }
+    //Hàm mở trang web tương ứng
+    private void openWebPage(String url) {
+        //Tạp Uri từ địa chỉ url (Uri là chuỗi đại diện cho địa chỉ hoặc tài nguyên Internet)
+        Uri webpage = Uri.parse(url);
+        //Yêu cầu hệ thống mở dữ liệu bằng cách sử dụng ứng dụng mặc định của hệ thống (trình duyệt web)
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        //Kiểm tra xem có ứng dụng nào để mở dữ liệu được cung cấp hay không
+        if (intent.resolveActivity(getPackageManager()) != null) {
+        //Nếu có thì sẽ gửi intent và mở trang web
+            startActivity(intent);
+        }
     }
 }

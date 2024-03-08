@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView10"
+            android:id="@+id/pinIcon"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
@@ -52,7 +52,7 @@
             android:src="@drawable/khien" />
 
         <ImageView
-            android:id="@+id/imageView11"
+            android:id="@+id/gitIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -174,7 +174,9 @@
             android:text="(Thay đổi)"
             android:textColor="@color/blue"
             android:textSize="15dp"
-            tools:ignore="TextSizeCheck" />
+            tools:ignore="TextSizeCheck"
+            android:onClick=""
+            />
     </LinearLayout>
 
     <TextView
@@ -255,7 +257,7 @@
         android:layout_marginEnd="210dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView21">
 
@@ -282,23 +284,21 @@
         android:id="@+id/linearLayout2"
         android:layout_width="37dp"
         android:layout_height="91dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="370dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <ImageView
-            android:id="@+id/imageView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
             app:srcCompat="@drawable/icon_tick" />
 
         <ImageView
-            android:id="@+id/imageView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
@@ -313,11 +313,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="357dp"
         android:layout_height="91dp"
-        android:layout_marginStart="1dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="1dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/linearLayout2"
@@ -329,7 +328,7 @@
             android:layout_height="30dp"
             android:gravity="center_vertical"
             android:text="Đưa ra câu trả lời nhanh và chính xác"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/textView29"
@@ -337,7 +336,7 @@
             android:layout_height="30dp"
             android:gravity="center_vertical"
             android:text="Đầy đủ tính năng"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/textView30"
@@ -345,7 +344,7 @@
             android:layout_height="30dp"
             android:gravity="center_vertical"
             android:text="Thanh toán nhanh chóng"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
