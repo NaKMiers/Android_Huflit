@@ -29,12 +29,12 @@
       
         <activity
             android:name=".ProfileView"
-            android:exported="false">
+            android:exported="true">
         </activity>
       
         <activity
             android:name=".Login"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".ListUser"
@@ -42,7 +42,7 @@
       
         <activity
             android:name=".Profile"
-            android:exported="false" />
+            android:exported="true" />
 
       
         <activity
@@ -51,19 +51,19 @@
       
         <activity
             android:name=".Register"
-            android:exported="false" />
+            android:exported="true" />
 
       <activity
             android:name=".ForgotPassword"
-            android:exported="false" />
+            android:exported="true" />
       
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="true" />
       
         <activity
             android:name=".DevInfo"
-            android:exported="false" />
+            android:exported="true" />
       
         <activity
             android:name=".TextChat"
@@ -77,10 +77,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".profileChange"
-            android:exported="false" />
+            android:name=".ProfileChange"
+            android:exported="true" />
+
     </application>
 
 </manifest>

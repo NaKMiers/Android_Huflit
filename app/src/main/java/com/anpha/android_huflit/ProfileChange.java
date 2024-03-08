@@ -11,10 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import androidx.core.content.IntentSanitizer;
-
-public class profileChange extends AppCompatActivity {
-
+public class ProfileChange extends AppCompatActivity {
     ImageView avatarProfileChange;
     EditText edtSurname, edtName, edtBirthday, edtJob, edtAddress;
 
@@ -36,10 +33,12 @@ public class profileChange extends AppCompatActivity {
         i = getIntent();
         // Nhận mảng byte chứa hình ảnh từ Intent
         byte[] byteArray = getIntent().getByteArrayExtra("currentAvatar");
-        // Chuyển đổi mảng byte thành Bitmap
-        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-        // Set avatar bên profileChange thành hình ảnh Bitmap
-        avatarProfileChange.setImageBitmap(bitmap);
+        if (byteArray != null) {
+            // Chuyển đổi mảng byte thành Bitmap
+            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            // Set avatar bên profileChange thành hình ảnh Bitmap
+            avatarProfileChange.setImageBitmap(bitmap);
+        }
     }
 
     public void saveInfo(View view) {
@@ -52,5 +51,8 @@ public class profileChange extends AppCompatActivity {
         //Biến setResult để trả các thông tin về Profile
         setResult(2,i);
         finish();
+
+
+
     }
 }
