@@ -65,7 +65,6 @@ public class ImageChat extends AppCompatActivity {
     ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon;
     PopupWindow popupWindow;
     Toolbar toolbarImage;
-    TextView txtHelp2;
     Button btnSave;
     DrawerLayout drawerLayout;
     ImageButton btnPlus1, btnInCr, btnMinus1, btnDes;
