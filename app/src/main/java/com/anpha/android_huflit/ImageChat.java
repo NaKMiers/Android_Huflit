@@ -117,6 +117,7 @@ public class ImageChat extends AppCompatActivity {
         btnInCr = findViewById(R.id.btnInCr);
         btnMinus1 = findViewById(R.id.btnMinus1);
         btnPlus1 = findViewById(R.id.btnPlus1);
+        restoreValuesFromSharedPreferences();
 //
 //
         navigationIcon.setOnClickListener(new View.OnClickListener() {
