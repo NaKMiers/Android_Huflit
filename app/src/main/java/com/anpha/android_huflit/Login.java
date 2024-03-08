@@ -127,7 +127,7 @@ import okhttp3.Response;
                        SharedPreferences.Editor editor = preferences.edit();
                        editor.putString("username",username);
                        editor.putString("avatar",avatar);
-                       editor.putString("token",token);
+                       editor.putString("token",username);
                        editor.apply();
 
                        // Đăng nhập thành công, chuyển sang màn hình text-chat
