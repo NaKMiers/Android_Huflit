@@ -49,7 +49,7 @@ public class TextChat extends AppCompatActivity {
     PopupWindow popupWindow;
     Toolbar toolbarChat;
 
-    ImageView btnSend, navigationIcon;
+    ImageView btnSend, navigationIcon,imgavatar;
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
@@ -73,6 +73,7 @@ public class TextChat extends AppCompatActivity {
         navigationIcon = findViewById(R.id.navigationIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
         txtMode = findViewById(R.id.txtMode);
+
         //
 
 
@@ -91,6 +92,7 @@ public class TextChat extends AppCompatActivity {
         );
         btnLogOut=popupView.findViewById(R.id.btnLogOut);
         txtusername=popupView.findViewById(R.id.txtusername);
+        imgavatar=popupView.findViewById(R.id.imgavatar);
 
 
         edtTextChat.requestFocus();
@@ -111,6 +113,13 @@ public class TextChat extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 LogOutUser();
+            }
+        });
+        imgavatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TextChat.this,ProfileView.class);
+                startActivity(intent);
             }
         });
        txtusername.setOnClickListener(new View.OnClickListener() {

@@ -89,7 +89,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:padding="5dp"
-            android:src="@drawable/cam" />
+            android:src="@drawable/boy" />
     </RelativeLayout>
 
     <ImageView
@@ -116,30 +116,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
-    <TextView
-        android:id="@+id/txtemailprofile"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="12dp"
-
-
-        app:layout_constraintHorizontal_bias="0.496"
-
-        app:layout_constraintHorizontal_bias="0.877"
-
 
     <TextView
         android:id="@+id/txtphoneprofile"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="28dp"
         android:text="PHONE: 0923663654"
-        android:textSize="16dp"
         android:textColor="@color/black"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtemailprofile" />
+        app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
 
     <LinearLayout
         android:id="@+id/thanhtext"
@@ -249,11 +238,10 @@
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="11dp"
         android:layout_marginEnd="210dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView21">
 
@@ -281,7 +269,7 @@
         android:layout_width="37dp"
         android:layout_height="91dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="200dp"
         android:layout_marginEnd="370dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -314,7 +302,6 @@
         android:layout_width="357dp"
         android:layout_height="91dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="1dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -327,7 +314,7 @@
             android:layout_height="30dp"
             android:gravity="center_vertical"
             android:text="Đưa ra câu trả lời nhanh và chính xác"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/textView29"
@@ -335,7 +322,7 @@
             android:layout_height="30dp"
             android:gravity="center_vertical"
             android:text="Đầy đủ tính năng"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/textView30"
@@ -343,21 +330,20 @@
             android:layout_height="30dp"
             android:gravity="center_vertical"
             android:text="Thanh toán nhanh chóng"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/txtEmailProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="4dp"
         android:paddingLeft="1dp"
         android:text="EMAIL:"
         android:textColor="#201F1F"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/txtemailprofile"
-        app:layout_constraintHorizontal_bias="0.918"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.181"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
 

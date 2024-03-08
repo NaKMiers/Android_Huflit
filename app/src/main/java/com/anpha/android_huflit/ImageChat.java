@@ -1,6 +1,8 @@
 package com.anpha.android_huflit;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
@@ -49,10 +51,10 @@ public class ImageChat extends AppCompatActivity {
     private ImageMessageAdapter adapter;
     private List<ImageMessage> messages;
 
-    TextView txtHelp2;
+    TextView txtHelp2,txtusername;
     EditText edtImgChat;
     ImageView receivedImage;
-    ImageView btnSendImg, navigationIcon;
+    ImageView btnSendImg, navigationIcon,imgavatar;
     PopupWindow popupWindow;
     Toolbar toolbarImage;
 
@@ -79,6 +81,7 @@ public class ImageChat extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 true
         );
+
         recyclerViewImage = findViewById(R.id.recyclerViewImage);
         messages = new ArrayList<>();
         adapter = new ImageMessageAdapter(messages);
@@ -94,6 +97,9 @@ public class ImageChat extends AppCompatActivity {
         txtSize = popupView.findViewById(R.id.txtSize);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationIcon = findViewById(R.id.navigationIcon);
+        imgavatar =popupView.findViewById(R.id.imgavatar);
+        txtusername=popupView.findViewById(R.id.txtusername);
+
 
         navigationIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +111,14 @@ public class ImageChat extends AppCompatActivity {
                 }
             }
         });
+        imgavatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageChat.this, ProfileView.class);
+                startActivity(intent);
+            }
+        });
+
         toolbarImage.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -141,6 +155,13 @@ public class ImageChat extends AppCompatActivity {
                 }
             }
         });
+        txtusername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageChat.this, ProfileView.class);
+                startActivity(intent);
+            }
+        });
         btnDes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,6 +171,10 @@ public class ImageChat extends AppCompatActivity {
                 }
             }
         });
+        // lấy dữ liệu từ SharedPreferces
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String username = preferences.getString("username", ""); //lưu trữ tên người dùng
+        txtusername.setText(username); // đặt tên người dùng trong textview
     }
 
 
