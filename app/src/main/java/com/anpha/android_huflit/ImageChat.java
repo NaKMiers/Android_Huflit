@@ -1,5 +1,6 @@
 package com.anpha.android_huflit;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -57,11 +58,11 @@ public class ImageChat extends AppCompatActivity {
     //Khởi tạo List tin nhắn
     private List<ImageMessage> messages;
 
-    NavigationView navigationView;
-
+    TextView txtHelp2,txtusername;
     EditText edtImgChat;
     ImageView receivedImage;
-    ImageView btnSendImg, navigationIcon, fbIcon, insIcon, twIcon, pinIcon, gitIcon;
+    NavigationView navigationView;
+    ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon;
     PopupWindow popupWindow;
     Toolbar toolbarImage;
     TextView txtHelp2;
@@ -96,6 +97,7 @@ public class ImageChat extends AppCompatActivity {
                 //Cho phép tương tác với các phần tử khác trên màn hình
                 true
         );
+
         recyclerViewImage = findViewById(R.id.recyclerViewImage);
         //Khởi tạo các biến
         messages = new ArrayList<>();
@@ -106,25 +108,28 @@ public class ImageChat extends AppCompatActivity {
         btnSendImg = findViewById(R.id.btnSendImg);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationIcon = findViewById(R.id.navigationIcon);
-        navigationView = findViewById(R.id.navigationView);
-        btnMinus1 = findViewById(R.id.btnMinus1);
-        btnInCr = findViewById(R.id.btnInCr);
-        btnPlus1 = findViewById(R.id.btnPlus1);
-        btnDes = findViewById(R.id.btnDes);
-        txtAmount = findViewById(R.id.txtAmount);
-        txtSize = findViewById(R.id.txtSize);
-        btnSave = findViewById(R.id.btnSave);
-        restoreValuesFromSharedPreferences();
-        fbIcon = popupView.findViewById(R.id.fbIcon);
-        insIcon = popupView.findViewById(R.id.insIcon);
-        twIcon = popupView.findViewById(R.id.twIcon);
-        pinIcon = popupView.findViewById(R.id.pinIcon);
-        gitIcon = popupView.findViewById(R.id.gitIcon);
-        //Set giá trị mặc định cho số lượng và size ảnh là 1 và 256x256
-        txtAmount.setText(amount);
-        txtSize.setText(size);
+        imgavatar =popupView.findViewById(R.id.imgavatar);
+        txtusername=popupView.findViewById(R.id.txtusername);
 
-        //Mở popupWindow (chỉ set sự kiện trong java được)
+
+        navigationIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(drawerLayout.isDrawerOpen(GravityCompat.START))
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                else {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+        imgavatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageChat.this, ProfileView.class);
+                startActivity(intent);
+            }
+        });
+
         toolbarImage.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -137,9 +142,52 @@ public class ImageChat extends AppCompatActivity {
                 return false;
             }
         });
-        // Mảng gồm 3 size ảnh
-        ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(1024, 1024)};
-
+        btnMinus1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentValue > 1) {
+                    currentValue--;
+                    updateTextView();
+                }
+            }
+        });
+        btnPlus1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentValue++;
+                updateTextView();
+            }
+        });
+        ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(104, 1024)};
+        btnInCr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (OptionSizeIndex < ImageSize.length - 1) {
+                    OptionSizeIndex = (OptionSizeIndex + 1) % ImageSize.length;
+                    updateTextView();
+                }
+            }
+        });
+        txtusername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageChat.this, ProfileView.class);
+                startActivity(intent);
+            }
+        });
+        btnDes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (OptionSizeIndex > 0) {
+                    OptionSizeIndex = (OptionSizeIndex - 1) % ImageSize.length;
+                    updateTextView();
+                }
+            }
+        });
+        // lấy dữ liệu từ SharedPreferces
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String username = preferences.getString("username", ""); //lưu trữ tên người dùng
+        txtusername.setText(username); // đặt tên người dùng trong textview
     }
 
 

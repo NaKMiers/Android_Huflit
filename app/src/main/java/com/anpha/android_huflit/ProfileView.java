@@ -10,20 +10,21 @@ import android.view.MenuInflater;
 import android.widget.TextView;
 
 public class ProfileView extends AppCompatActivity {
-    TextView txtnameuser,txtprofileemail;
+    TextView txtnameuser,txtEmailProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
         txtnameuser = findViewById(R.id.txtnameuser);
-         txtprofileemail = findViewById(R.id.txtprofileemail);
+        txtEmailProfile= findViewById(R.id.txtEmailProfile);
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); // Retrieve username
        txtnameuser.setText(username);
 
-       SharedPreferences preferences1 =getSharedPreferences("mypreferences1",Context.MODE_PRIVATE);
-       String email = preferences1.getString("email"," ");
-       txtprofileemail.setText(" Email " + email);
+//       SharedPreferences preferences = getSharedPreferences("mypreferences",Context.MODE_PRIVATE);
+//       String email = preferences.getString("email","");
+//        txtEmailProfile.setText("EMAIL: " +email);
+
 
 
 

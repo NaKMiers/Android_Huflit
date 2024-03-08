@@ -50,7 +50,7 @@ public class TextChat extends AppCompatActivity {
     PopupWindow popupWindow;
     Toolbar toolbarChat;
 
-    ImageView btnSend, navigationIcon, fbIcon, insIcon, twIcon, pinIcon, gitIcon;
+    ImageView btnSend, navigationIcon,imgavatar;
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
@@ -96,12 +96,9 @@ public class TextChat extends AppCompatActivity {
                 true
         );
         btnLogOut=popupView.findViewById(R.id.btnLogOut);
-        txtUserName=popupView.findViewById(R.id.txtusername);
-        fbIcon = popupView.findViewById(R.id.fbIcon);
-        insIcon = popupView.findViewById(R.id.insIcon);
-        twIcon = popupView.findViewById(R.id.twIcon);
-        pinIcon = popupView.findViewById(R.id.pinIcon);
-        gitIcon = popupView.findViewById(R.id.gitIcon);
+        txtusername=popupView.findViewById(R.id.txtusername);
+        imgavatar=popupView.findViewById(R.id.imgavatar);
+
 
 
         //Nhận sự kiện nhập liệu
@@ -109,6 +106,36 @@ public class TextChat extends AppCompatActivity {
         //Thiết lập con trỏ ở cuối văn bản EditText
         edtTextChat.setSelection(edtTextChat.getText().length());
 
+        navigationIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(drawerLayout.isDrawerOpen(GravityCompat.START))
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                else {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogOutUser();
+            }
+        });
+        imgavatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TextChat.this,ProfileView.class);
+                startActivity(intent);
+            }
+        });
+       txtusername.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+              Intent intent = new Intent(TextChat.this, ProfileView.class);
+              startActivity(intent);
+           }
+       });
        // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
