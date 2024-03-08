@@ -70,7 +70,7 @@
                 android:layout_width="257dp"
                 android:layout_height="257dp"
                 android:layout_gravity="center"
-                android:alpha="0.5"
+                android:alpha="0.7"
 
                 android:src="@drawable/owl" />
 

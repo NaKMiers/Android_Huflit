@@ -58,21 +58,18 @@ public class ImageChat extends AppCompatActivity {
     //Khởi tạo List tin nhắn
     private List<ImageMessage> messages;
 
-    TextView txtHelp2,txtusername;
+    TextView txtHelp2,txtusername, txtAmount, txtSize;
     EditText edtImgChat;
-    ImageView receivedImage;
     NavigationView navigationView;
-    ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon;
+    ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon, receivedImage;
     PopupWindow popupWindow;
     Toolbar toolbarImage;
     Button btnSave;
     DrawerLayout drawerLayout;
     ImageButton btnPlus1, btnInCr, btnMinus1, btnDes;
-    TextView txtAmount, txtSize;
     int currentValue = 1;
     Size[] ImageSize;
     String amount = "1";
-
     String size = "256x256";
     int OptionSizeIndex = 0;
     ArrayList<Prompt> prompts = new ArrayList<>();
@@ -110,8 +107,7 @@ public class ImageChat extends AppCompatActivity {
         navigationIcon = findViewById(R.id.navigationIcon);
         imgavatar =popupView.findViewById(R.id.imgavatar);
         txtusername=popupView.findViewById(R.id.txtusername);
-//
-//
+
         navigationIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,6 +138,12 @@ public class ImageChat extends AppCompatActivity {
                 return false;
             }
         });
+
+        try {
+            GetUserPrompts("https://android-huflit-server.vercel.app");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 //        btnMinus1.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -218,11 +220,12 @@ public class ImageChat extends AppCompatActivity {
         txtAmount.setText(String.valueOf(currentValue));
         Size selectedSize = ImageSize[OptionSizeIndex];
         txtSize.setText(selectedSize.getWidth() + "x" + selectedSize.getHeight());
-//        try {
-//            GetUserPrompts("https://android-huflit-server.vercel.app/image/get-prompts");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+
+        try {
+            GetUserPrompts("https://android-huflit-server.vercel.app");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -271,6 +274,8 @@ public class ImageChat extends AppCompatActivity {
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
+
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
@@ -298,7 +303,7 @@ public class ImageChat extends AppCompatActivity {
                                     JSONArray imagesArray = prompt.optJSONArray("images");
 
                                     // Convert JSONArray to List<String>
-                                    List<String> images = new ArrayList<>();
+                                    ArrayList<String> images = new ArrayList<>();
                                     if (imagesArray != null) {
                                         for (int j = 0; j < imagesArray.length(); j++) {
                                             images.add(imagesArray.optString(j));
@@ -306,14 +311,19 @@ public class ImageChat extends AppCompatActivity {
                                     }
 
                                     // add each prompt to prompt list
-                                    Prompt newPrompt = new Prompt(_id, userId, type, from, text);
+                                    Prompt newPrompt = new Prompt(_id, userId, type, from, text, images);
                                     prompts.add(newPrompt);
                                 }
 
                                 // show prompts after get
                                 for (Prompt prompt : prompts) {
                                     Log.d("Type", prompt.type);
-                                    addNewMessage(prompt.text, Objects.equals(prompt.from, "user"));
+                                    if (Objects.equals(prompt.from, "user")) {
+                                        addNewMessage(prompt.text, true);
+                                    } else {
+                                        Log.d("Image: ", prompt.images.get(0));
+                                        addnewAIMessage(false, "https://image.lexica.art/full_webp/2a010649-554e-4628-90b7-919165968082");
+                                    }
                                 }
 
                             } catch (JSONException e) {
