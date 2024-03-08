@@ -110,6 +110,13 @@ public class ImageChat extends AppCompatActivity {
         navigationIcon = findViewById(R.id.navigationIcon);
         imgavatar =popupView.findViewById(R.id.imgavatar);
         txtusername=popupView.findViewById(R.id.txtusername);
+        txtAmount = findViewById(R.id.txtAmount);
+        txtSize = findViewById(R.id.txtSize);
+        btnDes = findViewById(R.id.btnDes);
+        btnSave = findViewById(R.id.btnSave);
+        btnInCr = findViewById(R.id.btnInCr);
+        btnMinus1 = findViewById(R.id.btnMinus1);
+        btnPlus1 = findViewById(R.id.btnPlus1);
 //
 //
         navigationIcon.setOnClickListener(new View.OnClickListener() {
@@ -143,48 +150,48 @@ public class ImageChat extends AppCompatActivity {
             }
         });
 
-//        btnMinus1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (currentValue > 1) {
-//                    currentValue--;
-//                    updateTextView();
-//                }
-//            }
-//        });
-//        btnPlus1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                currentValue++;
-//                updateTextView();
-//            }
-//        });
-//        ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(104, 1024)};
-//        btnInCr.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (OptionSizeIndex < ImageSize.length - 1) {
-//                    OptionSizeIndex = (OptionSizeIndex + 1) % ImageSize.length;
-//                    updateTextView();
-//                }
-//            }
-//        });
-//        txtusername.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ImageChat.this, ProfileView.class);
-//                startActivity(intent);
-//            }
-//        });
-//        btnDes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (OptionSizeIndex > 0) {
-//                    OptionSizeIndex = (OptionSizeIndex - 1) % ImageSize.length;
-//                    updateTextView();
-//                }
-//            }
-//        });
+        btnMinus1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentValue > 1) {
+                    currentValue--;
+                    updateTextView();
+                }
+            }
+        });
+        btnPlus1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentValue++;
+                updateTextView();
+            }
+        });
+        ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(1024, 1024)};
+        btnInCr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (OptionSizeIndex < ImageSize.length - 1) {
+                    OptionSizeIndex = (OptionSizeIndex + 1) % ImageSize.length;
+                    updateTextView();
+                }
+            }
+        });
+        txtusername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageChat.this, ProfileView.class);
+                startActivity(intent);
+            }
+        });
+        btnDes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (OptionSizeIndex > 0) {
+                    OptionSizeIndex = (OptionSizeIndex - 1) % ImageSize.length;
+                    updateTextView();
+                }
+            }
+        });
         // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
