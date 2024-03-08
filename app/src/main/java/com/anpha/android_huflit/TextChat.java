@@ -60,6 +60,8 @@ public class TextChat extends AppCompatActivity {
 
     OkHttpClient client = new OkHttpClient();
 
+    String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +141,7 @@ public class TextChat extends AppCompatActivity {
        // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
+        token = preferences.getString("token", ""); //lưu trữ tên người dùng
         txtusername.setText(username); // đặt tên người dùng trong textview
 
         //Mở popupWindow (chỉ set sự kiện được trong java)
@@ -197,7 +200,7 @@ public class TextChat extends AppCompatActivity {
     void GetUserPrompts(String url) throws IOException {
         Request request = new Request.Builder()
                 .url(url + "/chat/get-prompts")
-                .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWEyMWZlYWQyYjU0MTAzZDBkNmRiMjkiLCJ1c2VybmFtZSI6Im5ha21pZXJzIiwiZW1haWwiOiJkaXdhczExODE1MUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsInRoZW1lIjowLCJpYXQiOjE3MDUxMjM4MjJ9.DJkq9FG3xOxUFQTUYwpXP3cXaczpGwgC8xxSG0x77iw") // Add the authorization header with bearer token
+                .addHeader("Authorization", "Bearer " + token)
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -266,7 +269,7 @@ public class TextChat extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(url + "/chat/create-prompt")
                 .post(formBody)
-                .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWEyMWZlYWQyYjU0MTAzZDBkNmRiMjkiLCJ1c2VybmFtZSI6Im5ha21pZXJzIiwiZW1haWwiOiJkaXdhczExODE1MUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsInRoZW1lIjowLCJpYXQiOjE3MDUxMjM4MjJ9.DJkq9FG3xOxUFQTUYwpXP3cXaczpGwgC8xxSG0x77iw") // Add the authorization header with bearer token
+                .addHeader("Authorization", "Bearer " + token)
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -331,7 +334,7 @@ public class TextChat extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(url + "/chat/create-completion")
                 .post(formBody)
-                .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWEyMWZlYWQyYjU0MTAzZDBkNmRiMjkiLCJ1c2VybmFtZSI6Im5ha21pZXJzIiwiZW1haWwiOiJkaXdhczExODE1MUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsInRoZW1lIjowLCJpYXQiOjE3MDUxMjM4MjJ9.DJkq9FG3xOxUFQTUYwpXP3cXaczpGwgC8xxSG0x77iw") // Add the authorization header with bearer token
+                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override

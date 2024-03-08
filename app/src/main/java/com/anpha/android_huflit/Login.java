@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -111,17 +113,29 @@ import okhttp3.Response;
                if (response.isSuccessful()) {
 
                    final String myResponse = response.body().string();
-                   Log.d("--------- Logined In RES -------", myResponse);
+                   try {
+                       Log.d("--------- Logined In RES -------", myResponse);
+                       JSONObject json = new JSONObject(myResponse);
+                       JSONObject userJson = json.optJSONObject("user");
+                       String token = json.optString("token");
 
-//                    Lưu username vào SharedPreferences
-                   SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-                   SharedPreferences.Editor editor = preferences.edit();
-                   editor.putString("username",username);
-                   editor.apply();
+                       String username = userJson.optString("username");
+                       String avatar = userJson.optString("avatar");
 
-                   // Đăng nhập thành công, chuyển sang màn hình text-chat
-                   Intent intent = new Intent(Login.this, TextChat.class);
-                   startActivity(intent);
+    //                    Lưu username vào SharedPreferences
+                       SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+                       SharedPreferences.Editor editor = preferences.edit();
+                       editor.putString("username",username);
+                       editor.putString("avatar",avatar);
+                       editor.putString("token",token);
+                       editor.apply();
+
+                       // Đăng nhập thành công, chuyển sang màn hình text-chat
+                       Intent intent = new Intent(Login.this, TextChat.class);
+                       startActivity(intent);
+                   } catch (JSONException e) {
+                       throw new RuntimeException(e);
+                   }
                } else {
                    // Đăng nhập thất bại
                    runOnUiThread(new Runnable() {
