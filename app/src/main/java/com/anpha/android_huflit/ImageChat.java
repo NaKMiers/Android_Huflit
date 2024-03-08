@@ -193,6 +193,21 @@ public class ImageChat extends AppCompatActivity {
                 }
             }
         });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    // Lấy giá trị từ txtAmount và txtSize
+                    amount = txtAmount.getText().toString();
+                    size = txtSize.getText().toString();
+                    CreateImages("https://android-huflit-server.vercel.app");
+                    saveValuesToSharedPreferences();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
