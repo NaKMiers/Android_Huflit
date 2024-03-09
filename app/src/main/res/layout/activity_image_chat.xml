@@ -30,20 +30,20 @@
                 android:layout_height="25dp"
                 android:layout_gravity="start"
                 android:onClick="openSidebarImage"
-                android:src="@drawable/sidebar" />
+                android:src="@drawable/altsidebar" />
 
             <ImageView
                 android:id="@+id/userIcon"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="30dp"
-                android:src="@drawable/user" />
+                android:src="@drawable/user1" />
 
             <ImageView
                 android:id="@+id/chatIcon"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="15dp"
                 android:src="@drawable/chat" />
 
             <TextView
@@ -215,7 +215,7 @@
                         android:id="@+id/btnMinus1"
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="50dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:backgroundTint="#E3E3E3"
                         android:onClick="desAmount"
@@ -225,7 +225,6 @@
                         android:id="@+id/txtAmount"
                         android:layout_width="123dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:background="@drawable/buttonlogout"
                         android:gravity="center"
                         android:text="1"
@@ -235,7 +234,7 @@
                         android:id="@+id/btnPlus1"
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="50dp"
+                        android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:backgroundTint="#E3E3E3"
                         android:cropToPadding="false"
@@ -263,7 +262,7 @@
                         android:id="@+id/btnDes"
                         android:layout_width="45dp"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="50dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:backgroundTint="#E3E3E3"
                         android:onClick="decSize"
@@ -283,7 +282,7 @@
                         android:id="@+id/btnInCr"
                         android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="50dp"
+                        android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:backgroundTint="#E3E3E3"
                         android:cropToPadding="false"
@@ -304,10 +303,26 @@
                 android:text="SAVE"
                 android:textSize="14sp" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <TextView
+                android:id="@+id/textView5"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Chat Boxes" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/imageChatBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp" />
+
+            <ImageView
+                android:id="@+id/clearImageBox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/broom" />
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 

@@ -29,9 +29,7 @@
       
         <activity
             android:name=".ProfileView"
-            android:exported="true">
-        </activity>
-      
+            android:exported="true"/>
         <activity
             android:name=".Login"
             android:exported="true" />
@@ -40,9 +38,9 @@
             android:name=".ListUser"
             android:exported="true" />
       
-        <activity
-            android:name=".Profile"
-            android:exported="true" />
+<!--        <activity-->
+<!--            android:name=".Profile"-->
+<!--            android:exported="true" />-->
 
       
         <activity
@@ -77,6 +75,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ProfileChange"
             android:exported="true" />
