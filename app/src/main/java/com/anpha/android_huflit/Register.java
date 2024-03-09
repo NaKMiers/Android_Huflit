@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -124,22 +126,28 @@ public class Register extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful())
-                {
+                if (response.isSuccessful()) {
                     final String myResponse = response.body().string();
-                    Log.d("--------- Register RES -------", myResponse);
-
-
-                    // Đăng ký thành công, chuyển sang màn hình đăng nhập
-                    Intent intent = new Intent(Register.this, Login.class);
-                    startActivity(intent);
-
-                    // lưu dữ liệu registed user toàn cục
-                       saveUserData(email,username,password);
-                    SharedPreferences preferences1 = getSharedPreferences("mypreferences1", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences1.edit();
-                    editor.putString("email", email);
-                    editor.apply();
+                    try {
+                        Log.d("--------- Register RES -------", myResponse);
+                        JSONObject json = new JSONObject(myResponse);
+                        JSONObject userJson = json.optJSONObject("user");
+                        String token = json.optString("token");
+                        String username = userJson.optString("username");
+                        String avatar = userJson.optString("avatar");
+//                        Lưu username vào SharedPreferences
+                        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("username", username);
+                        editor.putString("avatar", avatar);
+                        editor.putString("token", username);
+                        editor.apply();
+                        // Đăng nhập thành công, chuyển sang màn hình text-chat
+                        Intent intent = new Intent(Register.this, Login.class);
+                        startActivity(intent);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 else
                 {
