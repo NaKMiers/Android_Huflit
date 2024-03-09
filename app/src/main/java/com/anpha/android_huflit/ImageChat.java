@@ -24,12 +24,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.anpha.android_huflit.Message.ChatBox;
+import com.anpha.android_huflit.Message.Box;
+import com.anpha.android_huflit.Message.BoxAdapter;
 import com.anpha.android_huflit.Message.ImageMessage;
 import com.anpha.android_huflit.Message.ImageMessageAdapter;
-import com.anpha.android_huflit.Message.Message;
 import com.anpha.android_huflit.Models.Prompt;
 
 import org.json.JSONArray;
@@ -37,7 +38,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.material.navigation.NavigationView;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,8 +58,10 @@ public class ImageChat extends AppCompatActivity {
     private ImageMessageAdapter adapter;
     //Khởi tạo List tin nhắn
     private List<ImageMessage> messages;
-
-    TextView txtHelp2,txtusername, txtAmount, txtSize;
+    private RecyclerView boxRecyclerView;
+    private BoxAdapter boxAdapter;
+    private List<Box> boxes;
+    TextView txtHelp2, txtusername, txtAmount, txtSize;
     EditText edtImgChat;
     NavigationView navigationView;
     ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon, receivedImage, CrChat;
@@ -106,8 +108,8 @@ public class ImageChat extends AppCompatActivity {
         btnSendImg = findViewById(R.id.btnSendImg);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationIcon = findViewById(R.id.navigationIcon);
-        imgavatar =popupView.findViewById(R.id.imgavatar);
-        txtusername=popupView.findViewById(R.id.txtusername);
+        imgavatar = popupView.findViewById(R.id.imgavatar);
+        txtusername = popupView.findViewById(R.id.txtusername);
         txtAmount = findViewById(R.id.txtAmount);
         txtSize = findViewById(R.id.txtSize);
         btnDes = findViewById(R.id.btnDes);
@@ -116,12 +118,20 @@ public class ImageChat extends AppCompatActivity {
         btnMinus1 = findViewById(R.id.btnMinus1);
         btnPlus1 = findViewById(R.id.btnPlus1);
         CrChat = findViewById(R.id.CrChat);
+        boxRecyclerView = findViewById(R.id.box_chat);
+        boxes = new ArrayList<>();
+        boxAdapter = new BoxAdapter(boxes);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        boxRecyclerView.setLayoutManager(layoutManager);
+        boxRecyclerView.setAdapter(boxAdapter);
+        
+        getBoxData();
         restoreValuesFromSharedPreferences();
 
         navigationIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(drawerLayout.isDrawerOpen(GravityCompat.START))
+                if (drawerLayout.isDrawerOpen(GravityCompat.START))
                     drawerLayout.closeDrawer(GravityCompat.START);
                 else {
                     drawerLayout.openDrawer(GravityCompat.START);
@@ -207,27 +217,27 @@ public class ImageChat extends AppCompatActivity {
                     size = txtSize.getText().toString();
                     CreateImages("https://android-huflit-server.vercel.app");
                     saveValuesToSharedPreferences();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        CrChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CreatChat();
-            }
-        });
+//        CrChat.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                CreatChat();
+//            }
+//        });
     }
-    private void getBox(String type){
+    private  void CreatChat(){
         OkHttpClient client = new OkHttpClient();
 
-        String url ="https://android-huflit-server.vercel.app/box/get-box/" +type;
-
+        String url = "https://android-huflit-server.vercel.app/box/create-box/";
+        RequestBody requestBody = RequestBody.create(null, new byte[0]);
         Request request = new Request.Builder()
-                .url(url).get().build();
+                .url(url)
+                .post(requestBody).build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -239,39 +249,65 @@ public class ImageChat extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()){
                     String responseData = response.body().string();
-                }
-                else {
 
+                    
                 }
             }
         });
     }
-    private void CreatChat(){
+    private void getBoxData() {
+        getBox("");
+    }
+
+    private void getBox(String type) {
         OkHttpClient client = new OkHttpClient();
 
-        String url ="https://android-huflit-server.vercel.app/box/create-box/:type";
-
-        RequestBody requestBody = RequestBody.create(null, new byte[0]);
+        String url = "https://android-huflit-server.vercel.app/box/get-box/" + type;
 
         Request request = new Request.Builder()
                 .url(url)
-                .post(requestBody).build();
+                .get()
+                .build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()){
-                    ChatBox newChatBox = new ChatBox();
-                }
-                else {
+                if (response.isSuccessful()) {
+                    String responseData = response.body().string();
 
+                    // Xử lý dữ liệu JSON từ responseData để tạo danh sách boxes
+                    try {
+                        JSONArray jsonArray = new JSONArray(responseData);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String boxId = jsonObject.getString("boxId");
+                            String boxName = jsonObject.getString("boxName");
+                            // Thêm dữ liệu vào danh sách boxes
+                            boxes.add(new Box(boxId, boxName));
+                        }
+
+                        // Cập nhật RecyclerView trong UI thread
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                boxAdapter.notifyDataSetChanged();
+                            }
+                        });
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
+    
+
+    
 
         // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
@@ -344,14 +380,12 @@ public class ImageChat extends AppCompatActivity {
         adapter.notifyItemInserted(messages.size() - 1);
     }
 
-    private void addnewAIMessage(boolean sentByUser, String imageURL) {
-        //Khởi tạo tin nhắn nhận từ AI với senbyUser là false (không do người dùng gửi) và link ảnh kiểu String
-        ImageMessage receivedImage = new ImageMessage(false, imageURL);
-        // Thêm tin nhắn nhận vào cuối danh sách
+    private void addnewAIMessage(boolean sentByUser, List<String> imageUrls) {
+        ImageMessage receivedImage = new ImageMessage(false, imageUrls);
         messages.add(receivedImage);
-        // Thông báo cho Adapter biết rằng có một mục mới được thêm vào cuối danh sách
         adapter.notifyItemInserted(messages.size() - 1);
     }
+
 
     private void GetUserPrompts(String url) throws IOException {
         Request request = new Request.Builder()
@@ -408,7 +442,8 @@ public class ImageChat extends AppCompatActivity {
                                         addNewMessage(prompt.text, true);
                                     } else {
                                         Log.d("Image: ", prompt.images.get(0));
-                                        addnewAIMessage(false, "https://image.lexica.art/full_webp/2a010649-554e-4628-90b7-919165968082");
+                                        // Assuming prompt.images is a list of image URLs
+                                        addnewAIMessage(false, prompt.images);
                                     }
                                 }
 
@@ -521,28 +556,19 @@ public class ImageChat extends AppCompatActivity {
                             try {
                                 JSONObject json = new JSONObject(jsonString);
                                 JSONObject response = json.getJSONObject("images");
-                                // lấy ra mảng image urls
                                 JSONArray images = response.getJSONArray("images");
 
-                                // ở chỗ này, thay vì chỉ dùng images[0] thì hãy dùng vòng lặp trong trường hợp có nhiều hơn 1 image
-//                                if(Objects.requireNonNull(images).length() > 0) {
-//                                    String imageUrl = images.optString(0);
-//
-//                                    // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
-//                                    addnewAIMessage(false,imageUrl);
-//                                }
                                 if (Objects.requireNonNull(images).length() > 0) {
+                                    List<String> imageUrls = new ArrayList<>();
                                     for (int i = 0; i < images.length(); i++) {
                                         String imageUrl = images.optString(i);
-                                        if (i >= 0) {
-                                            txtHelp2.setText("");
-                                            ;
-                                        }
-                                        // sentByUser false là do AI gửi, link ảnh kiểu String imageUrl
-                                        addnewAIMessage(false, imageUrl);
+                                        imageUrls.add(imageUrl);
                                     }
+
+                                    addnewAIMessage(false, imageUrls);
                                 }
-                            } catch (JSONException e) {
+                            }
+                             catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }

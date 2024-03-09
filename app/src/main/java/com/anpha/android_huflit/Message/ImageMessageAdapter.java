@@ -3,6 +3,7 @@ package com.anpha.android_huflit.Message;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -148,9 +149,9 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public void bind(ImageMessage message) {
             //Nếu link ảnh không phải null và không trống
-            if(message.getImageURL() != null && !message.getImageURL().isEmpty()){
+            if(message.getImageUrls() != null && !message.getImageUrls().isEmpty()){
                 //Dùng thư viện Picasso và tải ảnh vào imageViewMessage
-                Picasso.get().load(message.getImageURL()).into(imageViewMessage);
+                Picasso.get().load((Uri) message.getImageUrls()).into(imageViewMessage);
             }
         }
     }

@@ -305,9 +305,12 @@
                 android:textSize="14sp" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/box_chat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp" >
+
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 
