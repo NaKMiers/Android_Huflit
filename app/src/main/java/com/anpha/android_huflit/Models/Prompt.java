@@ -1,12 +1,9 @@
 package com.anpha.android_huflit.Models;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 public class Prompt {
     public String _id;
@@ -19,7 +16,7 @@ public class Prompt {
     public Date createdAt;
     public Date updatedAt;
 
-    public Prompt(String _id, String userId, String type, String from, String text) {
+    public Prompt(String _id, String userId, String type, String from, String text, JSONArray images) {
         this._id = _id;
         this.userId = userId;
 //        this.chatId = chatId;

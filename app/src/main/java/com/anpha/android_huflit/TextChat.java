@@ -230,7 +230,7 @@ public class TextChat extends AppCompatActivity {
 //                                    JSONArray images = prompt.optJSONArray("images");
 
                                     // add each prompt to prompt list
-                                    Prompt newPrompt = new Prompt(_id, userId, type, from, text);
+                                    Prompt newPrompt = new Prompt(_id, userId, type, from, text, images);
                                     prompts.add(newPrompt);
                                 }
 
@@ -293,7 +293,7 @@ public class TextChat extends AppCompatActivity {
                                 String text = prompt.optString("text");
 
                                 // add new prompt to message list
-                                Prompt newPrompt = new Prompt(_id, userId, type, from, text);
+                                Prompt newPrompt = new Prompt(_id, userId, type, from, text, images);
                                 prompts.add(newPrompt);
                                 addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
 
@@ -358,7 +358,7 @@ public class TextChat extends AppCompatActivity {
                                 String text = completion.optString("text");
 
                                 // add new prompt to message list
-                                Prompt newPrompt = new Prompt(_id, userId, type, from, text);
+                                Prompt newPrompt = new Prompt(_id, userId, type, from, text, images);
                                 prompts.add(newPrompt);
                                 addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
 

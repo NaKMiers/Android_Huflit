@@ -29,7 +29,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.anpha.android_huflit.Message.ChatBox;
 import com.anpha.android_huflit.Message.ImageMessage;
 import com.anpha.android_huflit.Message.ImageMessageAdapter;
-import com.anpha.android_huflit.Message.Message;
 import com.anpha.android_huflit.Models.Prompt;
 
 import org.json.JSONArray;
@@ -37,7 +36,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.material.navigation.NavigationView;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,9 +70,11 @@ public class ImageChat extends AppCompatActivity {
     Size[] ImageSize;
     String amount = "1";
     String size = "256x256";
+    String token;
     int OptionSizeIndex = 0;
     ArrayList<Prompt> prompts = new ArrayList<>();
     OkHttpClient client = new OkHttpClient();
+    private ArrayList<String> images;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +96,7 @@ public class ImageChat extends AppCompatActivity {
         );
 
         recyclerViewImage = findViewById(R.id.recyclerViewImage);
+        txtusername=popupView.findViewById(R.id.txtusername);
 
         //Khởi tạo các biến
         messages = new ArrayList<>();
@@ -220,7 +221,13 @@ public class ImageChat extends AppCompatActivity {
                 CreatChat();
             }
         });
+        // lấy dữ liệu từ SharedPreferces
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String username = preferences.getString("username", ""); //lưu trữ tên người dùng
+        token= preferences.getString("token", ""); //lưu trữ tên người dùng
+        txtusername.setText(username); // đặt tên người dùng trong textview
     }
+
     private void getBox(String type){
         OkHttpClient client = new OkHttpClient();
 
@@ -239,6 +246,44 @@ public class ImageChat extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()){
                     String responseData = response.body().string();
+                   final  String myResponse = response.body().string();
+                   ImageChat.this.runOnUiThread(new Runnable() {
+                       @Override
+                       public void run() {
+                           try {
+                               JSONObject json = new JSONObject(myResponse);
+                               JSONArray jsonArray = json.getJSONArray("prompts");
+                               for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++){
+                                   JSONObject prompt = jsonArray.optJSONObject(i);
+
+                                   // get values
+                                   String _id = prompt.optString("_id");
+                                   String userId = prompt.optString("userId");
+                                    String chatId = prompt.optString("chatId");
+//                                   String type = prompt.optString("type");
+//                                   String from = prompt.optString("from");
+//                                   String text = prompt.optString("text");
+                                    String createdAt = prompt.optString("createdAt");
+                                    String updatedAt = prompt.optString("updatedAt");
+                                    JSONArray images = prompt.optJSONArray("images");
+
+                                   // add each prompt to prompt list
+                                   Prompt newPrompt = new Prompt(_id,chatId, userId, createdAt, updatedAt,images);
+                                   prompts.add(newPrompt);
+                               }
+                               // show prompts after get
+                               for(Prompt prompt: prompts) {
+                                   Log.d("Type", prompt.type);
+                                   addNewMessage(prompt.text, Objects.equals(prompt.from, "user"));
+                               }
+
+                           }catch (JSONException e)
+                           {
+                               throw new RuntimeException(e);
+                           }
+                       }
+                   });
+
                 }
                 else {
 
@@ -465,7 +510,8 @@ public class ImageChat extends AppCompatActivity {
 //                                String text = prompt.optString("text");
 
                                 // add new prompt to message list
-                                Prompt newPrompt = new Prompt(_id, userId, type, from, text);
+                             
+                                Prompt newPrompt = new Prompt(_id, userId, type, from, text, images);
                                 prompts.add(newPrompt);
                                 addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
 
