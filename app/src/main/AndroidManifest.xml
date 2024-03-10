@@ -37,7 +37,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".ListUser"
+            android:name=".AdminUser"
             android:exported="true" />
       
         <activity

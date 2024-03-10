@@ -3,10 +3,12 @@ package com.anpha.android_huflit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.widget.TextView;
 
 public class ProfileView extends AppCompatActivity {
@@ -17,17 +19,12 @@ public class ProfileView extends AppCompatActivity {
         setContentView(R.layout.activity_profile_view);
         txtnameuser = findViewById(R.id.txtnameuser);
         txtEmailProfile= findViewById(R.id.txtEmailProfile);
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        String username = preferences.getString("username", ""); // Retrieve username
-       txtnameuser.setText(username);
+        SharedPreferences preferences = getSharedPreferences("mypreferences",MODE_PRIVATE);
+        String username= preferences.getString("username","");
 
-//       SharedPreferences preferences = getSharedPreferences("mypreferences",Context.MODE_PRIVATE);
-//       String email = preferences.getString("email","");
-//        txtEmailProfile.setText("EMAIL: " +email);
-
-
-
-
+        txtnameuser.setText(username);
+        String email = preferences.getString("email", "");
+        txtEmailProfile.setText("Email:"+email);
 
     }
 
@@ -36,5 +33,10 @@ public class ProfileView extends AppCompatActivity {
         MenuInflater mnu=getMenuInflater();
         mnu.inflate(R.menu.profile_menu,menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public void handleChangeProfileChange(View view) {
+        Intent intent = new Intent(ProfileView.this, ProfileChange.class);
+        startActivity(intent);
     }
 }

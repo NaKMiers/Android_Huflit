@@ -58,26 +58,11 @@ public class Register extends AppCompatActivity {
             }
         });
     }
-
-
-
-
     public void handleRegister(View view) {
         String email = edtemail.getText().toString();
         String username = edtusername.getText().toString();
         String password = edtpasswordlogin.getText().toString();
         String confirmPassword = edtpassagainregister.getText().toString();
-        saveUserData(email,username,password);
-
-
-
-        saveUserData(email,username,password);
-
-        SharedPreferences preferences1 = getSharedPreferences("mypreferences1", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences1.edit();
-        editor.putString("email", email);
-        editor.apply();
-
         //thông báo yêu cầu nhập thông tin của người dùng
         if(email.isEmpty())
         {
@@ -99,6 +84,12 @@ public class Register extends AppCompatActivity {
             edtpassagainregister.setError("Vui lòng nhập lại mật khẩu của bạn !!! ");
             return;
         }
+
+        saveUserData(email,username,password);
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("email", email);
+        editor.apply();
 
         // tạo request body với thông tin đăng ký
         RequestBody requestBody = new FormBody.Builder()
@@ -173,4 +164,6 @@ public class Register extends AppCompatActivity {
         editor.putString("password",password);
         editor.apply();
     }
+
+
 }

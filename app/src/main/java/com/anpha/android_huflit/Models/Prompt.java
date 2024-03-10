@@ -44,4 +44,6 @@ public class Prompt {
         }
     }
 
+    public Prompt(String id, String userId, String type, String from, String text) {
+    }
 }
