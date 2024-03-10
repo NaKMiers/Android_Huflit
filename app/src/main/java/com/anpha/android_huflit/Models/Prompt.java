@@ -32,7 +32,7 @@ public class Prompt {
 //        }
     }
 
-    public Prompt(String _id, String userId, String type, String from, String text, ArrayList<String> images) {
+    public Prompt(String _id, String userId, String type, String from, String text) {
         this._id = _id;
         this.userId = userId;
         this.type = type;
@@ -44,6 +44,5 @@ public class Prompt {
         }
     }
 
-    public Prompt(String id, String userId, String type, String from, String text) {
-    }
+
 }

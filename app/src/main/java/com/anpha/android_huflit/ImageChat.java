@@ -442,7 +442,7 @@ public class ImageChat extends AppCompatActivity {
                                     }
 
                                     // add each prompt to prompt list
-                                    Prompt newPrompt = new Prompt(_id, userId, type, from, text, images);
+                                    Prompt newPrompt = new Prompt(_id, userId, type, from, text);
                                     prompts.add(newPrompt);
                                 }
 
@@ -511,7 +511,7 @@ public class ImageChat extends AppCompatActivity {
 
                                 // add new prompt to message list
                              
-                                Prompt newPrompt = new Prompt(_id, userId, type, from, text, images);
+                                Prompt newPrompt = new Prompt(_id, userId, type, from, text);
                                 prompts.add(newPrompt);
                                 addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
 
