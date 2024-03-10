@@ -3,6 +3,7 @@ package com.anpha.android_huflit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -10,11 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class ProfileChange extends AppCompatActivity {
     ImageView avatarProfileChange;
     EditText edtSurname, edtName, edtBirthday, edtJob, edtAddress;
-
+     TextView txtusernamechange,txtemailprofilechange;
     Button btnSaveInfo;
 
     Intent i = null;
@@ -30,7 +32,18 @@ public class ProfileChange extends AppCompatActivity {
         edtAddress = findViewById(R.id.edtAddress);
         btnSaveInfo = findViewById(R.id.btnSaveInfo);
         avatarProfileChange = findViewById(R.id.avatar);
+        txtemailprofilechange=findViewById(R.id.txtemailprofilechange);
+        txtusernamechange=findViewById(R.id.txtusernamechange);
         i = getIntent();
+        SharedPreferences preferences = getSharedPreferences("mypreferences", MODE_PRIVATE);
+        String username = preferences.getString("username", "");
+        // Hiển thị tên người dùng trong TextView
+        txtusernamechange.setText(username);
+        String email = preferences.getString("email", "");
+        // Hiển thị email trong TextView
+        txtemailprofilechange.setText("EMAIL:"+email);
+
+
         // Nhận mảng byte chứa hình ảnh từ Intent
         byte[] byteArray = getIntent().getByteArrayExtra("currentAvatar");
         if (byteArray != null) {
@@ -38,6 +51,9 @@ public class ProfileChange extends AppCompatActivity {
             Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             // Set avatar bên profileChange thành hình ảnh Bitmap
             avatarProfileChange.setImageBitmap(bitmap);
+
+
+
         }
     }
 
