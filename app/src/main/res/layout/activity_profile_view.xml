@@ -162,12 +162,8 @@
             android:onClick="toProfileChange"
             android:text="(Thay đổi)"
             android:textColor="@color/blue"
-<<<<<<< HEAD
-            android:textSize="15dp"
-=======
->>>>>>> e07cb7afb8c6d6573f0c4ef194347125b3b4f97d
-            tools:ignore="TextSizeCheck"
-            />
+            android:textSize="15dp"/>
+
     </LinearLayout>
 
     <TextView
