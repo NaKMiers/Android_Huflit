@@ -2,7 +2,9 @@ package com.anpha.android_huflit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -18,6 +20,7 @@ Button btnoption;
         setContentView(R.layout.activity_theme_view);
         addControls();
         Event();
+
     }
 
     private void Event() {
@@ -33,8 +36,17 @@ Button btnoption;
     private void addControls() {
         btnoption=findViewById(R.id.btnoption);
     }
+    private void requireAuth() {
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
+        if (userId == null || userId == "") {
+            Intent intent = new Intent(ThemeView.this, Login.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
 
-
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mnu=getMenuInflater();
