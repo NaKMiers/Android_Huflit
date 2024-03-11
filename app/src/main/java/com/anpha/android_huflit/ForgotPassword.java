@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.anpha.android_huflit.Models.Prompt;
 
@@ -30,10 +33,14 @@ import okhttp3.Response;
 
 
 public class ForgotPassword extends AppCompatActivity {
-    EditText emailFPEdt;
+    EditText emailFPEdt, codeFPEdt;
+    TextView emailBackground, codeBackground;
     Button sendFPBtn;
+    LinearLayout inputEmailBox, inputCodeBox;
     OkHttpClient client = new OkHttpClient();
 
+    String code;
+    Boolean isSent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +54,12 @@ public class ForgotPassword extends AppCompatActivity {
     //Ánh xạ
     void mapping(){
         emailFPEdt = findViewById(R.id.emailFPEdt);
+        codeFPEdt = findViewById(R.id.codeFPEdt);
         sendFPBtn = findViewById(R.id.sendFPBtn);
+        emailBackground = findViewById(R.id.emailBackground);
+        codeBackground = findViewById(R.id.codeBackground);
+        inputEmailBox = findViewById(R.id.inputEmailBox);
+        inputCodeBox = findViewById(R.id.inputCodeBox);
     }
 
     // Hàm tạo chuỗi ngẫu nhiên
@@ -73,15 +85,37 @@ public class ForgotPassword extends AppCompatActivity {
         return randomString.toString();
     }
 
+    public void handleSendFP(View view) throws IOException {
+        if (isSent) {
+            // nếu nhập code đúng
+            if (codeFPEdt.getText().toString().trim() == code) {
+                // reset when code is available
+                // Làm tiếp chỗ reset này
+                // Bước 1: Tạo cái request để reset password tương tự lại send mail
+                // Bước 2: Sau khi nhập phản hồi từ yêu cầu đổi reset pass
+                //      - Nếu thành công: chuyển tới trang login
+                //      - Nếu thất bại: báo lỗi bằng Toast ra màn hình rồi xử lí sao j j đó để người dùng nhập lại
+            }
+            // Nếu nhập code sai
+            else {
+                // Báo lỗi rồi xử lí gì gì đó để người dùng nhập lại (Hãy đặt mình vào vị trí người dùng sẽ tự biết phải làm gì)
+            }
+
+        } else {
+            // send email to get code
+            SendMail("https://android-huflit-server.vercel.app");
+        }
+    }
 
     void SendMail(String url) throws IOException {
         // prevent empty prompt
         if (emailFPEdt.getText().toString().trim() == "") return;
+        code = generateRandomString(6);
 
         RequestBody formBody = new FormBody.Builder()
 //                .add("chatId", "")
                 .add("email", emailFPEdt.getText().toString().trim())
-                .add("code",generateRandomString(6))
+                .add("code", code)
                 .build();
 
         Request request = new Request.Builder()
@@ -98,11 +132,16 @@ public class ForgotPassword extends AppCompatActivity {
                         @Override
                         public void run() {
                             Log.d("asdaslkdjalskd", myResponse);
-//                            try {
-//
-//                            } catch (JSONException e) {
-//                                throw new RuntimeException(e);
-//                            }
+                            sendFPBtn.setText("Reset");
+
+                            // hide email input
+                            emailBackground.setVisibility(View.INVISIBLE);
+                            inputEmailBox.setVisibility(View.INVISIBLE);
+                            // show code input
+                            codeBackground.setVisibility(View.VISIBLE);
+                            inputCodeBox.setVisibility(View.VISIBLE);
+
+                            isSent = true;
                         }
                     });
                 }
@@ -114,5 +153,7 @@ public class ForgotPassword extends AppCompatActivity {
             }
         });
     }
+
+
 }
 
