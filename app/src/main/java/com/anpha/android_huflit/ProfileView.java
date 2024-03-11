@@ -3,6 +3,7 @@ package com.anpha.android_huflit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -51,6 +52,8 @@ public class ProfileView extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); // Retrieve username
         txtnameuser.setText(username);
+        String email = preferences.getString("email", "");
+        txtEmailProfile.setText("Email:"+email);
         avatar = findViewById(R.id.avatar);
         profileLayout = findViewById(R.id.profileLayout);
         informationView = findViewById(R.id.informationView);
@@ -116,6 +119,7 @@ public class ProfileView extends AppCompatActivity {
         //Sau đó set cho layoutFile
         profileLayout.setBackgroundColor(dimColor);
     }
+       
 
     //Hàm đổi avatar khi nhấn vào các lựa chọn hình
     public void onNewAvatarSelected(View view) {
@@ -153,5 +157,10 @@ public class ProfileView extends AppCompatActivity {
             txtnghe.setText("NGHỀ NGHIỆP: " + job);
             txtdiachi.setText("ĐỊA CHỈ: " + address);
         }
+    }
+
+    public void handleChangeProfileChange(View view) {
+        Intent intent = new Intent(ProfileView.this, ProfileChange.class);
+        startActivity(intent);
     }
 }

@@ -26,7 +26,7 @@
         android:src="@drawable/boy" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/txtusernamechange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -36,7 +36,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/txtemailprofilechange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"

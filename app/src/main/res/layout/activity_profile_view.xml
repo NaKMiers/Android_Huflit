@@ -163,7 +163,9 @@
             android:text="(Thay đổi)"
             android:textColor="@color/blue"
             android:textSize="15dp"
-            tools:ignore="TextSizeCheck" />
+            android:onClick="handleChangeProfileChange"
+            tools:ignore="TextSizeCheck"
+            />
     </LinearLayout>
 
     <TextView
@@ -301,9 +303,10 @@
         android:id="@+id/linearLayout3"
         android:layout_width="357dp"
         android:layout_height="91dp"
+        android:layout_marginEnd="1dp"
+
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout2"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <TextView
@@ -329,6 +332,13 @@
             android:gravity="center_vertical"
             android:text="Thanh toán nhanh chóng"
             android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            app:srcCompat="@drawable/icon_tick" />
     </LinearLayout>
 
     <TextView
