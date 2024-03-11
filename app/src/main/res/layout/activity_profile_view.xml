@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profileLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileView" >
+    tools:context=".ProfileView">
 
     <TextView
         android:id="@+id/textView2"
@@ -86,8 +87,10 @@
         app:layout_constraintTop_toBottomOf="@+id/textView14">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:onClick="changeAvatar"
             android:padding="5dp"
             android:src="@drawable/boy" />
     </RelativeLayout>
@@ -145,10 +148,10 @@
             android:layout_width="70dp"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:textSize="18dp"
-            android:textColor="@color/red"
             android:gravity="center|center_horizontal|center_vertical"
-            android:text="Thông tin chi tiết" />
+            android:text="Thông tin chi tiết"
+            android:textColor="@color/red"
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/txtthaydoi"
@@ -156,6 +159,7 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:gravity="center|center_horizontal|center_vertical"
+            android:onClick="toProfileChange"
             android:text="(Thay đổi)"
             android:textColor="@color/blue"
             android:textSize="15dp"
@@ -175,6 +179,7 @@
         app:layout_constraintTop_toBottomOf="@+id/thanhtext" />
 
     <LinearLayout
+        android:id="@+id/informationView"
         android:layout_width="300dp"
         android:layout_height="150dp"
         android:layout_marginTop="10dp"
@@ -265,10 +270,41 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="37dp"
+        android:layout_height="91dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            app:srcCompat="@drawable/icon_tick" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            app:srcCompat="@drawable/icon_tick" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            app:srcCompat="@drawable/icon_tick" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="357dp"
         android:layout_height="91dp"
         android:layout_marginEnd="1dp"
+
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">

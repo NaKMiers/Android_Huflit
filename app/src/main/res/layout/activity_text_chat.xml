@@ -31,20 +31,20 @@
                 android:layout_height="25dp"
                 android:layout_gravity="start"
                 android:onClick="openSidebar"
-                android:src="@drawable/sidebar" />
+                android:src="@drawable/altsidebar" />
 
             <ImageView
                 android:id="@+id/userIcon"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="30dp"
-                android:src="@drawable/user" />
+                android:src="@drawable/user1" />
 
             <ImageView
                 android:id="@+id/chatIcon"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="15dp"
                 android:src="@drawable/chat" />
 
             <TextView
@@ -190,10 +190,25 @@
                     android:src="@drawable/chat" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <TextView
+                android:id="@+id/textView15"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Chat Boxes" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chatBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp" />
+
+            <ImageView
+                android:id="@+id/btnCLearBox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/broom" />
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 

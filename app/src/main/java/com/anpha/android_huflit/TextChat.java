@@ -22,6 +22,8 @@ import android.view.View;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
+import com.anpha.android_huflit.ChatBox.ChatBoxAdapter;
+import com.anpha.android_huflit.ChatBox.ItemChatBox;
 import com.anpha.android_huflit.Message.Message;
 import com.anpha.android_huflit.Message.MessageAdapter;
 import com.anpha.android_huflit.Models.Prompt;
@@ -45,13 +47,17 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class TextChat extends AppCompatActivity {
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, chatBox;
     private MessageAdapter adapter;
+
+    private ChatBoxAdapter boxAdapter;
+
+    private List<ItemChatBox> dataList;
     private List<Message> messages;
     PopupWindow popupWindow;
     Toolbar toolbarChat;
 
-    ImageView btnSend, navigationIcon,imgavatar;
+    ImageView btnSend, navigationIcon,imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon;
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
@@ -77,6 +83,19 @@ public class TextChat extends AppCompatActivity {
         navigationIcon = findViewById(R.id.navigationIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
         txtMode = findViewById(R.id.txtMode);
+        chatBox = findViewById(R.id.chatBox);
+        chatBox.setLayoutManager(new LinearLayoutManager(this));
+        // Khởi tạo danh sách dữ liệu
+        dataList = new ArrayList<>();
+        // Thêm các item vào danh sách dữ liệu
+        dataList.add(new ItemChatBox("Box 1"));
+        dataList.add(new ItemChatBox("Box 2"));
+        dataList.add(new ItemChatBox("Box 3"));
+        dataList.add(new ItemChatBox("Box 4"));
+        // Khởi tạo Adapter và gán cho RecyclerView
+        boxAdapter = new ChatBoxAdapter(dataList, this);
+        chatBox.setAdapter(boxAdapter);
+
 
         // Khởi tạo danh sách tin nhắn
         messages = new ArrayList<>();
@@ -101,6 +120,11 @@ public class TextChat extends AppCompatActivity {
         btnLogOut=popupView.findViewById(R.id.btnLogOut);
         txtusername = popupView.findViewById(R.id.txtusername);
         imgavatar=popupView.findViewById(R.id.imgavatar);
+        fbIcon = popupView.findViewById(R.id.fbIcon);
+        insIcon = popupView.findViewById(R.id.insIcon);
+        twIcon = popupView.findViewById(R.id.twIcon);
+        pinIcon = popupView.findViewById(R.id.pinIcon);
+        gitIcon = popupView.findViewById(R.id.gitIcon);
 
 
 
@@ -109,22 +133,22 @@ public class TextChat extends AppCompatActivity {
         //Thiết lập con trỏ ở cuối văn bản EditText
         edtTextChat.setSelection(edtTextChat.getText().length());
 
-        navigationIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(drawerLayout.isDrawerOpen(GravityCompat.START))
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                else {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-            }
-        });
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogOutUser();
-            }
-        });
+//        navigationIcon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(drawerLayout.isDrawerOpen(GravityCompat.START))
+//                    drawerLayout.closeDrawer(GravityCompat.START);
+//                else {
+//                    drawerLayout.openDrawer(GravityCompat.START);
+//                }
+//            }
+//        });
+//        btnLogOut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                LogOutUser();
+//            }
+//        });
         imgavatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,6 +164,7 @@ public class TextChat extends AppCompatActivity {
            }
        });
 //       // lấy dữ liệu từ SharedPreferces
+
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
         token = preferences.getString("token", ""); //lưu trữ tên người dùng
@@ -443,10 +468,8 @@ public class TextChat extends AppCompatActivity {
         Uri webpage = Uri.parse(url);
         //Yêu cầu hệ thống mở dữ liệu bằng cách sử dụng ứng dụng mặc định của hệ thống (trình duyệt web)
         Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-        //Kiểm tra xem có ứng dụng nào để mở dữ liệu được cung cấp hay không
-        if (intent.resolveActivity(getPackageManager()) != null) {
         //Nếu có thì sẽ gửi intent và mở trang web
             startActivity(intent);
-        }
+
     }
 }

@@ -178,12 +178,24 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btnLogOut"
+            android:layout_width="76dp"
+            android:layout_height="33dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/buttonlogout"
+            android:text="Log out"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            />
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="27dp"
             android:layout_gravity="center"
-            android:layout_marginTop="400dp"
+            android:layout_marginTop="270dp"
             android:text="Các trang Social khác"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -216,31 +228,28 @@
                 android:id="@+id/insIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="90dp"
+                android:layout_marginLeft="85dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/ins"
                 android:onClick="insLink"
-                />
+                android:src="@drawable/ins" />
 
             <ImageView
                 android:id="@+id/twIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="165dp"
+                android:layout_marginLeft="150dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/tt"
                 android:onClick="twLink"
-                />
+                android:src="@drawable/tt" />
 
             <ImageView
                 android:id="@+id/pinIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="230dp"
+                android:layout_marginLeft="210dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/pin"
                 android:onClick="pinLink"
-                />
+                android:src="@drawable/pin" />
 
             <ImageView
                 android:id="@+id/gitIcon"
