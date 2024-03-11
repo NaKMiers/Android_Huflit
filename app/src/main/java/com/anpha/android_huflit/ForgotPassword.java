@@ -2,30 +2,20 @@ package com.anpha.android_huflit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import android.support.annotation.NonNull;
-
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.EmailAuthCredential;
-import com.google.firebase.auth.FirebaseAuth;
-import android.app.Application;
-import com.google.firebase.FirebaseApp;
+import com.anpha.android_huflit.Models.Prompt;
 
-import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Objects;
+
+import java.util.Random;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -37,104 +27,92 @@ import okhttp3.Response;
 
 
 public class ForgotPassword extends AppCompatActivity {
-    private static final String TAG = "ForgotPassword"; //giúp theo dõi, quản lý log
-    EditText edtemailforgotpassword;
-    Button btnokforgotpassword;
+    EditText emailFPEdt;
+    Button sendFPBtn;
     OkHttpClient client = new OkHttpClient();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //khởi tạo Firebase
-        FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_forgot_password);
-        addControls();
+
+        mapping();
+        generateRandomString(6);
     }
 
     //Ánh xạ
-    private void addControls() {
-        edtemailforgotpassword = findViewById(R.id.edtemailforgotpassword);
-        btnokforgotpassword = findViewById(R.id.btnokforgotpassword);
-
+    void mapping(){
+        emailFPEdt = findViewById(R.id.emailFPEdt);
+        sendFPBtn = findViewById(R.id.sendFPBtn);
     }
-    
-    public void onClickForgotPassword(View view) {
-        sendPasswordResetEmail();
-        // Lấy thông tin email từ trường nhập liệu
-        String email = edtemailforgotpassword.getText().toString();
 
-        //nếu người dùng bỏ trống
-        if (email.isEmpty()) {
-            edtemailforgotpassword.setError("Vui lòng nhập địa chỉ email của bạn !!!");
-            return;
+    // Hàm tạo chuỗi ngẫu nhiên
+    private String generateRandomString(int length) {
+        // Ký tự cho phép trong chuỗi
+        String allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+
+        // Tạo đối tượng Random
+        Random random = new Random();
+
+        // StringBuilder để xây dựng chuỗi ngẫu nhiên
+        StringBuilder randomString = new StringBuilder();
+
+        // Tạo chuỗi ngẫu nhiên bằng cách lựa chọn ký tự từ danh sách allowedCharacters
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(allowedCharacters.length());
+            char randomChar = allowedCharacters.charAt(randomIndex);
+            randomString.append(randomChar);
         }
 
-        // Tạo request body với thông tin đăng nhập
-        RequestBody requestBody = new FormBody.Builder()
-                .add("email", email)
+        // Trả về chuỗi ngẫu nhiên dưới dạng String
+        Log.d("dsfdsg", randomString.toString());
+        return randomString.toString();
+    }
+
+
+    void SendMail(String url) throws IOException {
+        // prevent empty prompt
+        if (emailFPEdt.getText().toString().trim() == "") return;
+
+        RequestBody formBody = new FormBody.Builder()
+//                .add("chatId", "")
+                .add("email", emailFPEdt.getText().toString().trim())
+                .add("code",generateRandomString(6))
                 .build();
 
-        //tạo request post
         Request request = new Request.Builder()
-                .url("https://android-huflit-server.vercel.app/auth/forgot-password")
-                .post(requestBody)
+                .url(url + "/auth/forgot-password")
+                .post(formBody)
                 .build();
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull IOException e) {
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Toast.makeText(ForgotPassword.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-//                if(response.isSuccessful()){
-//                    final String myResponse = response.body().string();
-//                    Log.d("---------Forgot----------",myResponse);
-//
-//                    //Lưu email vào SharedPreferences
-//                    android.content.SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = preferences.edit();
-//                    editor.putString("email",email);
-//                    editor.apply();
-//                }
-//                else {
-//                    // Đăng nhập thất bại
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(ForgotPassword.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//            }
-//            }
-//        });
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+
+                    ForgotPassword.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+
+
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
-
-
-
-    private void sendPasswordResetEmail() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        String emailAddress = "luuhonghuu530@gmail.com";
-
-        auth.sendPasswordResetEmail(emailAddress)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(ForgotPassword.this,"Email sent.",Toast.LENGTH_SHORT) .show();
-                        }
-                        else {
-                            Toast.makeText(ForgotPassword.this,"lỗi",Toast.LENGTH_SHORT) .show();
-                        }
-                    }
-                });
-    }
 }
+
 
 
