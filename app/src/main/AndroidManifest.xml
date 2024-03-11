@@ -34,9 +34,9 @@
             android:name=".Login"
             android:exported="true" />
 
-        <activity
-            android:name=".AdminUser"
-            android:exported="true" />
+<!--        <activity-->
+<!--            android:name=".AdminUser"-->
+<!--            android:exported="true" />-->
       
 <!--        <activity-->
 <!--            android:name=".Profile"-->

@@ -125,29 +125,27 @@ public class TextChat extends AppCompatActivity {
         pinIcon = popupView.findViewById(R.id.pinIcon);
         gitIcon = popupView.findViewById(R.id.gitIcon);
 
-
-
         //Nhận sự kiện nhập liệu
         edtTextChat.requestFocus();
         //Thiết lập con trỏ ở cuối văn bản EditText
         edtTextChat.setSelection(edtTextChat.getText().length());
 
-//        navigationIcon.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(drawerLayout.isDrawerOpen(GravityCompat.START))
-//                    drawerLayout.closeDrawer(GravityCompat.START);
-//                else {
-//                    drawerLayout.openDrawer(GravityCompat.START);
-//                }
-//            }
-//        });
-//        btnLogOut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                LogOutUser();
-//            }
-//        });
+        navigationIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(drawerLayout.isDrawerOpen(GravityCompat.START))
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                else {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogOutUser();
+            }
+        });
         imgavatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,13 +153,13 @@ public class TextChat extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//       txtusername.setOnClickListener(new View.OnClickListener() {
-//           @Override
-//           public void onClick(View v) {
-//              Intent intent = new Intent(TextChat.this, ProfileView.class);
-//              startActivity(intent);
-//           }
-//       });
+       txtusername.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+              Intent intent = new Intent(TextChat.this, ProfileView.class);
+              startActivity(intent);
+           }
+       });
        // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
@@ -220,11 +218,10 @@ public class TextChat extends AppCompatActivity {
         adapter.notifyItemInserted(messages.size() - 1);
     }
 
-
     void GetUserPrompts(String url) throws IOException {
         Request request = new Request.Builder()
                 .url(url + "/chat/get-prompts")
-                .addHeader("Authorization", "Bearer " + token)
+                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -253,7 +250,7 @@ public class TextChat extends AppCompatActivity {
 //                                    String updatedAt = prompt.optString("updatedAt");
 //                                    JSONArray images = prompt.optJSONArray("images");
 
-                                    // add each prompt to prompt list
+//                                     add each prompt to prompt list
                                     Prompt newPrompt = new Prompt(_id, userId, type, from, text);
                                     prompts.add(newPrompt);
                                 }
@@ -263,8 +260,6 @@ public class TextChat extends AppCompatActivity {
                                     Log.d("Type", prompt.type);
                                     addNewMessage(prompt.text, Objects.equals(prompt.from, "user"));
                                 }
-
-
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -438,7 +433,7 @@ public class TextChat extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Nhấn vào icon Facebook
+//    Nhấn vào icon Facebook
     public void toFb(View view) {
         openWebPage("https://facebook.com");
     }
