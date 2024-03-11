@@ -81,6 +81,8 @@ public class ImageChat extends AppCompatActivity {
     String token;
     int OptionSizeIndex = 0;
     ArrayList<Prompt> prompts = new ArrayList<>();
+    List<String> imageUrls  = new ArrayList<>();
+
     OkHttpClient client = new OkHttpClient();
     private ArrayList<String> images;
 
@@ -147,6 +149,7 @@ public class ImageChat extends AppCompatActivity {
         txtAmount.setText(amount);
         txtSize.setText(size);
         restoreValuesFromSharedPreferences();
+
 //        navigationIcon.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -283,19 +286,19 @@ public class ImageChat extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()){
                     String responseData = response.body().string();
-                   final  String myResponse = response.body().string();
-                   ImageChat.this.runOnUiThread(new Runnable() {
-                       @Override
-                       public void run() {
-                           try {
-                               JSONObject json = new JSONObject(myResponse);
-                               JSONArray jsonArray = json.getJSONArray("prompts");
-                               for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++){
-                                   JSONObject prompt = jsonArray.optJSONObject(i);
+                    final  String myResponse = response.body().string();
+                    ImageChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject json = new JSONObject(myResponse);
+                                JSONArray jsonArray = json.getJSONArray("prompts");
+                                for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++){
+                                    JSONObject prompt = jsonArray.optJSONObject(i);
 
-                                   // get values
-                                   String _id = prompt.optString("_id");
-                                   String userId = prompt.optString("userId");
+                                    // get values
+                                    String _id = prompt.optString("_id");
+                                    String userId = prompt.optString("userId");
                                     String chatId = prompt.optString("chatId");
 //                                   String type = prompt.optString("type");
 //                                   String from = prompt.optString("from");
@@ -310,22 +313,22 @@ public class ImageChat extends AppCompatActivity {
                                         imageUrls.add(imageUrl);
                                     }
 
-                                   // add each prompt to prompt list
-                                   Prompt newPrompt = new Prompt(_id,chatId, userId, createdAt, updatedAt, imageUrls);
-                                   prompts.add(newPrompt);
-                               }
-                               // show prompts after get
-                               for(Prompt prompt: prompts) {
-                                   Log.d("Type", prompt.type);
-                                   addNewMessage(prompt.text, Objects.equals(prompt.from, "user"));
-                               }
+                                    // add each prompt to prompt list
+                                    Prompt newPrompt = new Prompt(_id,chatId, userId, createdAt, updatedAt, imageUrls);
+                                    prompts.add(newPrompt);
+                                }
+                                // show prompts after get
+                                for(Prompt prompt: prompts) {
+                                    Log.d("Type", prompt.type);
+                                    addNewMessage(prompt.text, Objects.equals(prompt.from, "user"));
+                                }
 
-                           }catch (JSONException e)
-                           {
-                               throw new RuntimeException(e);
-                           }
-                       }
-                   });
+                            }catch (JSONException e)
+                            {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
 
                 }
                 else {
@@ -432,9 +435,9 @@ public class ImageChat extends AppCompatActivity {
         adapter.notifyItemInserted(messages.size() - 1);
     }
 
-    private void addnewAIMessage(boolean sentByUser, String imageURL) {
+    private void addnewAIMessage(boolean sentByUser, List<String> imageUrls) {
         //Khởi tạo tin nhắn nhận từ AI với senbyUser là false (không do người dùng gửi) và link ảnh kiểu String
-        ImageMessage receivedImage = new ImageMessage(false, imageURL);
+        ImageMessage receivedImage = new ImageMessage(false, imageUrls);
         // Thêm tin nhắn nhận vào cuối danh sách
         messages.add(receivedImage);
         // Thông báo cho Adapter biết rằng có một mục mới được thêm vào cuối danh sách
@@ -496,7 +499,7 @@ public class ImageChat extends AppCompatActivity {
                                         addNewMessage(prompt.text, true);
                                     } else {
                                         Log.d("Image: ", prompt.images.get(0));
-                                        addnewAIMessage(false, "https://image.lexica.art/full_webp/2a010649-554e-4628-90b7-919165968082");
+                                        addnewAIMessage(false,imageUrls);
                                     }
                                 }
 
@@ -553,7 +556,7 @@ public class ImageChat extends AppCompatActivity {
 //                                String text = prompt.optString("text");
 
                                 // add new prompt to message list
-                             
+
                                 Prompt newPrompt = new Prompt(_id, userId, type, from, text);
                                 prompts.add(newPrompt);
                                 addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
@@ -625,10 +628,11 @@ public class ImageChat extends AppCompatActivity {
                                         String imageUrl = images.optString(i);
                                         if (i >= 0) {
                                             txtHelp2.setText("");
-                                            ;
+                                            imageUrls.add(imageUrl);
+                                            addnewAIMessage(false, imageUrls);
+
                                         }
                                         // sentByUser false là do AI gửi, link ảnh kiểu String imageUrl
-                                        addnewAIMessage(false, imageUrl);
                                     }
                                 }
                             } catch (JSONException e) {
@@ -702,9 +706,11 @@ public class ImageChat extends AppCompatActivity {
             size = txtSize.getText().toString();
             CreateImages("https://android-huflit-server.vercel.app");
             saveValuesToSharedPreferences();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
     //Hàm mở trang web tương ứng
     private void openWebPage(String url) {
@@ -713,7 +719,7 @@ public class ImageChat extends AppCompatActivity {
         //Yêu cầu hệ thống mở dữ liệu bằng cách sử dụng ứng dụng mặc định của hệ thống (trình duyệt web)
         Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
         //Nếu có thì sẽ gửi intent và mở trang web
-            startActivity(intent);
+        startActivity(intent);
 
     }
 
