@@ -92,6 +92,7 @@ public class ForgotPassword extends AppCompatActivity {
                 // reset when code is available
                 // Làm tiếp chỗ reset này
                 // Bước 1: Tạo cái request để reset password tương tự lại send mail
+
                 // Bước 2: Sau khi nhập phản hồi từ yêu cầu đổi reset pass
                 //      - Nếu thành công: chuyển tới trang login
                 //      - Nếu thất bại: báo lỗi bằng Toast ra màn hình rồi xử lí sao j j đó để người dùng nhập lại
