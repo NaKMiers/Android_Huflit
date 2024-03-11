@@ -7,7 +7,7 @@
     tools:context=".Login">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/fbIcon"
         android:layout_width="167dp"
         android:layout_height="190dp"
         android:layout_marginTop="32dp"
@@ -20,14 +20,14 @@
         android:id="@+id/edtusernameregister"
         android:layout_width="320dp"
         android:layout_height="67dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/custom_edt"
         android:drawableLeft="@drawable/icon_user"
         android:ems="10"
         android:hint=" Username"
         android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
@@ -113,13 +113,13 @@
         android:id="@+id/textView22"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginTop="15dp"
         android:gravity="center|center_horizontal|center_vertical"
         android:text="LOGIN"
-        android:textSize="30dp"
         android:textColor="@color/black"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/fbIcon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

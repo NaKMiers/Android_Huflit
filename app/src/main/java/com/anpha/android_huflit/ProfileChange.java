@@ -3,6 +3,7 @@ package com.anpha.android_huflit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -10,12 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class ProfileChange extends AppCompatActivity {
     ImageView avatarProfileChange;
     EditText edtSurname, edtName, edtBirthday, edtJob, edtAddress;
-
+     TextView txtusernamechange,txtemailprofilechange;
     Button btnSaveInfo;
+
+    Intent i = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,27 +32,43 @@ public class ProfileChange extends AppCompatActivity {
         edtAddress = findViewById(R.id.edtAddress);
         btnSaveInfo = findViewById(R.id.btnSaveInfo);
         avatarProfileChange = findViewById(R.id.avatar);
-        Intent i = getIntent();
+        txtemailprofilechange=findViewById(R.id.txtemailprofilechange);
+        txtusernamechange=findViewById(R.id.txtusernamechange);
+        i = getIntent();
+        SharedPreferences preferences = getSharedPreferences("mypreferences", MODE_PRIVATE);
+        String username = preferences.getString("username", "");
+        // Hiển thị tên người dùng trong TextView
+        txtusernamechange.setText(username);
+        String email = preferences.getString("email", "");
+        // Hiển thị email trong TextView
+        txtemailprofilechange.setText("EMAIL:"+email);
+
+
         // Nhận mảng byte chứa hình ảnh từ Intent
         byte[] byteArray = getIntent().getByteArrayExtra("currentAvatar");
-
         if (byteArray != null) {
             // Chuyển đổi mảng byte thành Bitmap
             Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            // Set avatar bên profileChange thành hình ảnh Bitmap
             avatarProfileChange.setImageBitmap(bitmap);
-        }
 
-        btnSaveInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                i.putExtra("surName",edtSurname.getText().toString());
-                i.putExtra("name",edtName.getText().toString());
-                i.putExtra("birthday",edtBirthday.getText().toString());
-                i.putExtra("job",edtJob.getText().toString());
-                i.putExtra("address",edtAddress.getText().toString());
-                setResult(2,i);
-                finish();
-            }
-        });
+
+
+        }
+    }
+
+    public void saveInfo(View view) {
+        //Đẩy các thông tin đã thay đổi vào intent
+        i.putExtra("surName",edtSurname.getText().toString());
+        i.putExtra("name",edtName.getText().toString());
+        i.putExtra("birthday",edtBirthday.getText().toString());
+        i.putExtra("job",edtJob.getText().toString());
+        i.putExtra("address",edtAddress.getText().toString());
+        //Biến setResult để trả các thông tin về Profile
+        setResult(2,i);
+        finish();
+
+
+
     }
 }

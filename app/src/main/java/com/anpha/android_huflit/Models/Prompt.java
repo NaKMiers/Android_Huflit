@@ -1,12 +1,10 @@
 package com.anpha.android_huflit.Models;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class Prompt {
     public String _id;
@@ -46,5 +44,6 @@ public class Prompt {
             this.images = images;
         }
     }
+
 
 }

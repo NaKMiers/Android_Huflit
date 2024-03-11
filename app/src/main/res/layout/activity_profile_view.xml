@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profileLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileView" >
+    tools:context=".ProfileView">
 
     <TextView
         android:id="@+id/textView2"
@@ -24,40 +25,52 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0.5"
-            android:src="@drawable/hinhuser" />
+        <LinearLayout
+            android:id="@+id/thanhtext"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/imageView13"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0.5"
-            android:src="@drawable/verified" />
+            <ImageView
+                android:id="@+id/pinIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="0.5"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/hinhuser" />
 
-        <ImageView
-            android:id="@+id/imageView12"
-            android:layout_width="35dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0.5"
-            android:src="@drawable/settings" />
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="0.5"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/verified" />
 
-        <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0.5"
-            android:src="@drawable/information" />
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:layout_weight="0.5"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/settings" />
+
+            <ImageView
+                android:id="@+id/gitIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="0.5"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/information" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView
@@ -70,6 +83,7 @@
         android:textColor="@color/black"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -86,10 +100,18 @@
         app:layout_constraintTop_toBottomOf="@+id/textView14">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="117dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="116dp"
+            android:onClick="changeAvatar"
             android:padding="5dp"
-            android:src="@drawable/cam" />
+            android:src="@drawable/boy" />
     </RelativeLayout>
 
     <ImageView
@@ -116,60 +138,163 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
-
     <LinearLayout
-        android:id="@+id/thanhtext"
-        android:layout_width="220dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="1dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="210dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/textView21">
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="10dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/owl" />
 
         <TextView
-            android:id="@+id/textView19"
+            android:id="@+id/textView27"
             android:layout_width="70dp"
-            android:layout_height="30dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center|center_horizontal|center_vertical"
-            android:text="Thông tin chi tiết"
-            android:textColor="@color/red"
-            android:textSize="18dp" />
+            android:text="HUFLIT BIRD"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/txtthaydoi"
-            android:layout_width="1dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:gravity="center|center_horizontal|center_vertical"
-            android:text="(Thay đổi)"
-            android:textColor="@color/blue"
-            android:textSize="15dp"
-            tools:ignore="TextSizeCheck" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="37dp"
+        android:layout_height="91dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            app:srcCompat="@drawable/icon_tick" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            app:srcCompat="@drawable/icon_tick" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            app:srcCompat="@drawable/icon_tick" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="37dp"
+        android:layout_height="91dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="Thông tin chi tiết"
+        android:textColor="@color/red"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView21"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtthaydoi"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:onClick="toProfileChange"
+        android:text="(Thay đổi)"
+        android:textColor="@color/blue"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView21"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textView21"
         android:layout_width="300dp"
         android:layout_height="150dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/custom_view"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/thanhtext" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="280dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="71dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtnameuser">
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="1dp"
+            android:text="EMAIL:"
+            android:textColor="#201F1F"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtprofileemail"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:hint="luuhonghuu530@gmail.com"
+            android:paddingLeft="1dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/informationView"
         android:layout_width="300dp"
         android:layout_height="150dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="56dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/thanhtext">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
 
         <TextView
@@ -218,148 +343,55 @@
             android:textSize="15sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="210dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21">
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="10dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/owl" />
-
-        <TextView
-            android:id="@+id/textView27"
-            android:layout_width="70dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center|center_horizontal|center_vertical"
-            android:text="HUFLIT BIRD"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="37dp"
-        android:layout_height="91dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="370dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            app:srcCompat="@drawable/icon_tick" />
-
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            app:srcCompat="@drawable/icon_tick" />
-
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            app:srcCompat="@drawable/icon_tick" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="357dp"
-        android:layout_height="91dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="1dp"
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="42dp"
+        android:gravity="center_vertical"
+        android:text="Đưa ra câu trả lời nhanh và chính xác"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/linearLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-        <TextView
-            android:id="@+id/textView28"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center_vertical"
-            android:text="Đưa ra câu trả lời nhanh và chính xác"
-            android:textColor="@color/black"/>
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="42dp"
+        android:gravity="center_vertical"
+        android:text="Đầy đủ tính năng"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
-        <TextView
-            android:id="@+id/textView29"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center_vertical"
-            android:text="Đầy đủ tính năng"
-            android:textColor="@color/black"/>
-
-        <TextView
-            android:id="@+id/textView30"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center_vertical"
-            android:text="Thanh toán nhanh chóng"
-            android:textColor="@color/black"/>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="42dp"
+        android:gravity="center_vertical"
+        android:text="Thanh toán nhanh chóng"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="280dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/linearLayout0"
+        android:layout_width="37dp"
+        android:layout_height="91dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtnameuser">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:paddingLeft="1dp"
-            android:text="EMAIL:"
-            android:textColor="#201F1F"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
 
-        <TextView
-            android:id="@+id/txtprofileemail"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint="luuhonghuu530@gmail.com"
-            android:paddingLeft="1dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
-        />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

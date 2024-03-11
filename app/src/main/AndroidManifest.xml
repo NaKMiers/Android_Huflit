@@ -29,22 +29,20 @@
       
         <activity
             android:name=".ProfileView"
-            android:exported="true">
-        </activity>
-      
+            android:exported="true"/>
         <activity
             android:name=".Login"
             android:exported="true" >
 
         </activity>
 
-        <activity
-            android:name=".ListUser"
-            android:exported="true" />
+<!--        <activity-->
+<!--            android:name=".AdminUser"-->
+<!--            android:exported="true" />-->
       
-        <activity
-            android:name=".Profile"
-            android:exported="true" />
+<!--        <activity-->
+<!--            android:name=".Profile"-->
+<!--            android:exported="true" />-->
 
       
         <activity
@@ -79,15 +77,16 @@
             android:exported="true">
 
         </activity>
-
         <activity
             android:name=".ImageChat"
             android:exported="true">
 
         </activity>
+
         <activity
             android:name=".ProfileChange"
             android:exported="true" />
+
     </application>
 
 </manifest>

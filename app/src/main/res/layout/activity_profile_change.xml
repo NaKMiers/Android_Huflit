@@ -19,23 +19,24 @@
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
+        android:layout_marginTop="15dp"
         android:src="@drawable/boy" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/txtusernamechange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="Username"
         android:textColor="#000000"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/txtemailprofilechange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
@@ -45,20 +46,10 @@
         android:textColor="#000000" />
 
     <TextView
-        android:id="@+id/textView19"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        android:text="PHONE: 0886007589"
-        android:textColor="#000000" />
-
-    <TextView
         android:id="@+id/textView20"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="Thông tin chi tiết"
         android:textColor="#FF0000" />
@@ -68,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="40dp"
         android:background="@drawable/edtprofile"
         android:hint="Họ:"
@@ -129,7 +120,8 @@
         android:layout_width="wrap_content"
         android:layout_height="42dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:background="@drawable/buttonlogout"
+        android:onClick="saveInfo"
         android:text="SAVE" />
 </LinearLayout>

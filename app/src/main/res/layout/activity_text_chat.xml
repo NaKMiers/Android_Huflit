@@ -8,60 +8,10 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView12"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/owl" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:text="New chat"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/imageView17"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/chat" />
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-    </com.google.android.material.navigation.NavigationView>
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context=".ImageChat">
 
@@ -69,7 +19,7 @@
             android:id="@+id/toolbarChat"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/white"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
@@ -80,20 +30,21 @@
                 android:layout_width="30dp"
                 android:layout_height="25dp"
                 android:layout_gravity="start"
-                android:src="@drawable/menu" />
+                android:onClick="openSidebar"
+                android:src="@drawable/altsidebar" />
 
             <ImageView
                 android:id="@+id/userIcon"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="30dp"
-                android:src="@drawable/user" />
+                android:src="@drawable/user1" />
 
             <ImageView
                 android:id="@+id/chatIcon"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="15dp"
                 android:src="@drawable/chat" />
 
             <TextView
@@ -102,26 +53,26 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:onClick="handleChangeToImageMode"
                 android:text="AI CHAT"
-                android:textColor="#FF9800"
-                android:textSize="20sp"
-                android:onClick="handleChangeToImageMode"/>
+                android:textColor="#3F90F6"
+                android:textSize="20sp" />
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="604dp"
-            android:layout_marginBottom="15dp">
+            android:layout_height="680dp"
+            android:layout_marginBottom="10dp">
 
 
             <ImageView
                 android:id="@+id/backgroundImg"
-                android:layout_width="311dp"
-                android:layout_height="351dp"
+                android:layout_width="257dp"
+                android:layout_height="257dp"
                 android:layout_gravity="center"
-                android:src="@drawable/owl"
+                android:alpha="0.7"
 
-                />
+                android:src="@drawable/owl" />
 
             <TextView
                 android:id="@+id/txtHelp1"
@@ -154,14 +105,14 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="70dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/voicesearch" />
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
@@ -169,10 +120,9 @@
                 <EditText
                     android:id="@+id/edtTextChat"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/edtcustom"
-                    android:ems="10"
                     android:hint="Nhập câu lệnh tại đây..."
                     android:inputType="textMultiLine"
                     android:paddingLeft="15dp"
@@ -194,4 +144,72 @@
 
 
     </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/owl" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:text="New chat"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/imageView17"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/chat" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Chat Boxes" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chatBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" />
+
+            <ImageView
+                android:id="@+id/btnCLearBox"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/broom" />
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+
 </androidx.drawerlayout.widget.DrawerLayout>
