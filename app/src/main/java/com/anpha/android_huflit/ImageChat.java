@@ -467,7 +467,7 @@ public class ImageChat extends AppCompatActivity {
                                     String updatedAt = prompt.optString("updatedAt");
                                     JSONArray imagesArray = prompt.optJSONArray("images");
 
-                                    // Convert JSONArray to List<String>
+                                    // Convert JSONArray to ArrayList<String>
                                     ArrayList<String> images = new ArrayList<>();
                                     if (imagesArray != null) {
                                         for (int j = 0; j < imagesArray.length(); j++) {
@@ -476,7 +476,7 @@ public class ImageChat extends AppCompatActivity {
                                     }
 
                                     // add each prompt to prompt list
-                                    Prompt newPrompt = new Prompt(_id, userId, type, from, text);
+                                    Prompt newPrompt = new Prompt(_id, userId, type, from, text, images);
                                     prompts.add(newPrompt);
                                 }
 

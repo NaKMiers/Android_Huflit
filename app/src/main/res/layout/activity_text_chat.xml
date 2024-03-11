@@ -54,7 +54,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:onClick="handleChangeToImageMode"
-                android:text="AI CHAT"
+                android:text="CHAT"
                 android:textColor="#3F90F6"
                 android:textSize="20sp" />
         </androidx.appcompat.widget.Toolbar>

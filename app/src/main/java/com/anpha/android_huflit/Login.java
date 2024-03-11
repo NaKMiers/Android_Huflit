@@ -118,6 +118,7 @@ import okhttp3.Response;
                        JSONObject json = new JSONObject(myResponse);
                        JSONObject userJson = json.optJSONObject("user");
                        String token = json.optString("token");
+                       Log.d("-----token", token);
 
                        String username = userJson.optString("username");
                        String avatar = userJson.optString("avatar");
@@ -125,9 +126,9 @@ import okhttp3.Response;
     //                    Lưu username vào SharedPreferences
                        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
                        SharedPreferences.Editor editor = preferences.edit();
-                       editor.putString("username",username);
-                       editor.putString("avatar",avatar);
-                       editor.putString("token",username);
+                       editor.putString("username", username);
+                       editor.putString("avatar", avatar);
+                       editor.putString("token", token);
                        editor.apply();
 
                        // Đăng nhập thành công, chuyển sang màn hình text-chat
