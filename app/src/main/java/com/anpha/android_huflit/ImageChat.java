@@ -295,8 +295,15 @@ public class ImageChat extends AppCompatActivity {
                                     String updatedAt = prompt.optString("updatedAt");
                                     JSONArray images = prompt.optJSONArray("images");
 
+                                    ArrayList<String> imageUrls = new ArrayList<>();
+                                    for (int j = 0; j < Objects.requireNonNull(jsonArray).length(); j++) {
+                                        String imageUrl = images.optString(j);
+
+                                        imageUrls.add(imageUrl);
+                                    }
+
                                    // add each prompt to prompt list
-                                   Prompt newPrompt = new Prompt(_id,chatId, userId, createdAt, updatedAt,images);
+                                   Prompt newPrompt = new Prompt(_id,chatId, userId, createdAt, updatedAt, imageUrls);
                                    prompts.add(newPrompt);
                                }
                                // show prompts after get

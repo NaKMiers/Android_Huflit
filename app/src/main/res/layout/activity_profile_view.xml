@@ -163,7 +163,6 @@
             android:text="(Thay đổi)"
             android:textColor="@color/blue"
             android:textSize="15dp"
-            android:onClick="handleChangeProfileChange"
             tools:ignore="TextSizeCheck"
             />
     </LinearLayout>
@@ -292,7 +291,7 @@
             app:srcCompat="@drawable/icon_tick" />
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/imageView10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
