@@ -21,7 +21,7 @@
         android:id="@+id/edtemailregister"
         android:layout_width="300dp"
         android:layout_height="55dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/custom_edt"
         android:drawableLeft="@drawable/icon_mail"
         android:ems="10"
@@ -33,23 +33,6 @@
         app:layout_constraintHorizontal_bias="0.594"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <EditText
-        android:id="@+id/edtphoneregister"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/custom_edt"
-        android:drawableLeft="@drawable/icon_phone"
-        android:ems="10"
-        android:hint=" Phone: "
-        android:inputType="text"
-        android:paddingStart="20dp"
-        android:textAlignment="viewStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.594"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtemailregister" />
 
     <EditText
         android:id="@+id/edtusernameregister"
@@ -66,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.594"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtphoneregister" />
+        app:layout_constraintTop_toBottomOf="@+id/edtemailregister" />
 
     <EditText
         android:id="@+id/edtpasswordregister"
@@ -122,12 +105,13 @@
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="16dp"
         android:text="Already a member ? "
         android:textColor="#050505"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.322"
+        app:layout_constraintHorizontal_bias="0.007"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnregister" />
 
@@ -135,14 +119,27 @@
         android:id="@+id/txtsigninregister"
         android:layout_width="61dp"
         android:layout_height="22dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="100dp"
         android:text="SIGN IN"
         android:textColor="#3F51B5"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.192"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView17"
         app:layout_constraintTop_toBottomOf="@+id/btnregister" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="Register"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
