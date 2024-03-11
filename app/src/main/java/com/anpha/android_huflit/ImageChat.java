@@ -302,7 +302,7 @@ public class ImageChat extends AppCompatActivity {
                                     }
 
                                    // add each prompt to prompt list
-                                   Prompt newPrompt = new Prompt(_id,chatId, userId, createdAt, updatedAt,imageUrls);
+                                   Prompt newPrompt = new Prompt(_id,chatId, userId, createdAt, updatedAt, imageUrls);
                                    prompts.add(newPrompt);
                                }
                                // show prompts after get

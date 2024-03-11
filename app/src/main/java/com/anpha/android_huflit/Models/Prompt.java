@@ -4,6 +4,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Prompt {
     public String _id;
