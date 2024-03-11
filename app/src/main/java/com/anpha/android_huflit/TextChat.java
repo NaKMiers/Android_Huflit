@@ -31,6 +31,7 @@ import com.anpha.android_huflit.Models.Prompt;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,11 +57,11 @@ public class TextChat extends AppCompatActivity {
     PopupWindow popupWindow;
     Toolbar toolbarChat;
 
-    ImageView btnSend, navigationIcon,imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon;
+    ImageView btnSend, navigationIcon,imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon,imgChangetheme,imgDevinfo,imgSetting;
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
-    TextView txtHelp1, txtMode, txtusername;
+    TextView txtHelp1, txtMode, txtusername,txtChangetheme,txtDevinfo,txtSetting;
      Button btnLogOut;
     ArrayList<Prompt> prompts = new ArrayList<>();
 
@@ -73,6 +74,8 @@ public class TextChat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_chat);
 
+
+
         // mapping
         toolbarChat = findViewById(R.id.toolbarChat);
         btnSend = findViewById(R.id.btnSendImg);
@@ -83,6 +86,7 @@ public class TextChat extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         txtMode = findViewById(R.id.txtMode);
         chatBox = findViewById(R.id.chatBox);
+
         chatBox.setLayoutManager(new LinearLayoutManager(this));
         // Khởi tạo danh sách dữ liệu
         dataList = new ArrayList<>();
@@ -124,6 +128,12 @@ public class TextChat extends AppCompatActivity {
         twIcon = popupView.findViewById(R.id.twIcon);
         pinIcon = popupView.findViewById(R.id.pinIcon);
         gitIcon = popupView.findViewById(R.id.gitIcon);
+        txtChangetheme=popupView.findViewById(R.id.txtChangetheme);
+        imgChangetheme=popupView.findViewById(R.id.imgChangetheme);
+        txtDevinfo=popupView.findViewById(R.id.txtDevinfo);
+        imgDevinfo=popupView.findViewById(R.id.imgDevinfo);
+        txtSetting=popupView.findViewById(R.id.txtSetting);
+        imgSetting=popupView.findViewById(R.id.imgSetting);
 
 
 
@@ -155,6 +165,7 @@ public class TextChat extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 //       txtusername.setOnClickListener(new View.OnClickListener() {
 //           @Override
 //           public void onClick(View v) {
@@ -163,10 +174,48 @@ public class TextChat extends AppCompatActivity {
 //           }
 //       });
        // lấy dữ liệu từ SharedPreferces
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        String username = preferences.getString("username", ""); //lưu trữ tên người dùng
-        token = preferences.getString("token", ""); //lưu trữ tên người dùng
-        txtusername.setText(username); // đặt tên người dùng trong textview
+          txtChangetheme.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(TextChat.this, ThemeView.class);
+                  startActivity(intent);
+              }
+          });
+          imgSetting.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(TextChat.this,ForgotPassword.class);
+                  startActivity(intent);
+              }
+          });
+          txtSetting.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(TextChat.this,ForgotPassword.class);
+                  startActivity(intent);
+              }
+          });
+          imgChangetheme.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(TextChat.this, ThemeView.class);
+                  startActivity(intent);
+              }
+          });
+          imgDevinfo.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(TextChat.this, DevInfo.class);
+                  startActivity(intent);
+              }
+          });
+          txtDevinfo.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(TextChat.this, DevInfo.class);
+                  startActivity(intent);
+              }
+          });
 
         //Mở popupWindow (chỉ set sự kiện được trong java)
         toolbarChat.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -183,6 +232,15 @@ public class TextChat extends AppCompatActivity {
             }
         });
 
+        // check
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String username = preferences.getString("username", ""); //lưu trữ tên người dùng
+        token = preferences.getString("token", ""); //lưu trữ tên người dùng
+        txtusername.setText(username); // đặt tên người dùng trong textview
+
+        // check auth login
+        requireAuth();
+
         try {
             GetUserPrompts("https://android-huflit-server.vercel.app");
         } catch (IOException e) {
@@ -190,19 +248,38 @@ public class TextChat extends AppCompatActivity {
         }
     }
 
+    private void requireAuth() {
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
+        if (userId == null || userId == "") {
+            Intent intent = new Intent(TextChat.this, Login.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+    }
+
     private void LogOutUser() {
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit(); // Sửa lỗi gán lại biến preferences
-        editor.remove("token");
+//        editor.remove("token");
+        editor.clear();
         editor.apply();
-        Intent intent = new Intent(TextChat.this, Login.class);
+        Intent intent = new Intent(TextChat.this, TextChat.class);
         // Xóa tất cả các hoạt động trước đó khỏi ngăn xếp và chuyển người dùng đến màn hình đăng nhập
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
     public void handleSendChatPrompt(View view) throws IOException {
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String messageText = edtTextChat.getText().toString().trim();
+        if (token.isEmpty()) {
+            Intent intent = new Intent(TextChat.this, Login.class);
+            startActivity(intent);
+            return; // Kết thúc phương thức để không thực hiện gửi tin nhắn nếu chưa đăng nhập
+        }
+
         if (!messageText.isEmpty()) {
             txtHelp1.setText("");
 
@@ -413,6 +490,7 @@ public class TextChat extends AppCompatActivity {
     public void handleChangeToImageMode(View view) {
         Intent intent = new Intent(TextChat.this,ImageChat.class);
         startActivity(intent);
+        finish();
     }
 
     //Mở sidebar

@@ -82,14 +82,14 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/imgChangetheme"
                 android:layout_width="104dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/theme" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/txtChangetheme"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -134,14 +134,14 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/imgDevinfo"
                 android:layout_width="104dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/information" />
 
             <TextView
-                android:id="@+id/txtSurName"
+                android:id="@+id/txtDevinfo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -160,14 +160,14 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView7"
+                android:id="@+id/imgSetting"
                 android:layout_width="104dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/settings" />
 
             <TextView
-                android:id="@+id/txtName"
+                android:id="@+id/txtSetting"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

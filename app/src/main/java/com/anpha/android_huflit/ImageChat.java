@@ -255,7 +255,16 @@ public class ImageChat extends AppCompatActivity {
         token= preferences.getString("token", ""); //lưu trữ tên người dùng
         txtusername.setText(username); // đặt tên người dùng trong textview
     }
-
+    private void requireAuth() {
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
+        if (userId == null || userId == "") {
+            Intent intent = new Intent(ImageChat.this, Login.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+    }
     private void getBox(String type){
         OkHttpClient client = new OkHttpClient();
 

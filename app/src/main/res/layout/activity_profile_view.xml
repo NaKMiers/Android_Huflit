@@ -108,7 +108,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <TextView
-        android:id="@+id/txtnameuser"
+        android:id="@+id/txtUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -119,29 +119,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
-    <TextView
-        android:id="@+id/txtphoneprofile"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:textColor="@color/black"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
-
     <LinearLayout
         android:id="@+id/thanhtext"
         android:layout_width="220dp"
         android:layout_height="30dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtphoneprofile">
+        app:layout_constraintTop_toBottomOf="@+id/txtUsername">
 
         <TextView
             android:id="@+id/textView19"
@@ -163,9 +150,7 @@
             android:text="(Thay đổi)"
             android:textColor="@color/blue"
             android:textSize="15dp"
-            android:onClick="handleChangeProfileChange"
-            tools:ignore="TextSizeCheck"
-            />
+            tools:ignore="TextSizeCheck" />
     </LinearLayout>
 
     <TextView
@@ -180,29 +165,30 @@
 
     <LinearLayout
         android:id="@+id/informationView"
-        android:layout_width="300dp"
+        android:layout_width="400dp"
         android:layout_height="150dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.314"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/thanhtext">
 
 
         <TextView
-            android:id="@+id/txtHo"
+            android:id="@+id/txtID"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
 
-            android:text="Họ:"
+            android:text="ID:"
 
             android:textColor="@color/black"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/txtTen"
+            android:id="@+id/txtSetting"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
@@ -211,29 +197,29 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/txtngaysinh"
+            android:id="@+id/txtEmail"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="NGÀY SINH: "
+            android:text="EMAIL:"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/txtdiachi"
+            android:id="@+id/txtRole"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="ĐỊA CHỈ: "
+            android:text="ROLE:"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/txtnghe"
+            android:id="@+id/txtAuthType"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="NGHỀ NGHIỆP: "
+            android:text="AUTHTYPE: "
             android:textColor="@color/black"
             android:textSize="15sp" />
     </LinearLayout>
@@ -251,7 +237,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView21">
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/imgDevinfo"
             android:layout_width="10dp"
             android:layout_height="60dp"
             android:layout_weight="1"
@@ -292,7 +278,7 @@
             app:srcCompat="@drawable/icon_tick" />
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/asdasd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
@@ -334,25 +320,11 @@
             android:textColor="@color/black" />
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/imgSetting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
             app:srcCompat="@drawable/icon_tick" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/txtEmailProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:paddingLeft="1dp"
-        android:text="EMAIL:"
-        android:textColor="#201F1F"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.181"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtnameuser" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,10 +11,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -33,39 +31,45 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileView extends AppCompatActivity {
 
     CircleImageView avatar;
-    TextView txtnameuser, txtEmailProfile;
-
+    TextView txtUsername, txtID, txtName, txtEmail, txtRole, txtAuthType;
     ImageView selectedAvatarImageView;
     ConstraintLayout profileLayout;
     PopupWindow popupWindow;
 
     LinearLayout informationView;
 
-    TextView txtHo, txtTen, txtngaysinh, txtdiachi, txtnghe;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
-        txtnameuser = findViewById(R.id.txtnameuser);
-        txtEmailProfile = findViewById(R.id.txtEmailProfile);
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        String username = preferences.getString("username", ""); // Retrieve username
-        txtnameuser.setText(username);
-        String email = preferences.getString("email", "");
-        txtEmailProfile.setText("Email:"+email);
-        avatar = findViewById(R.id.avatar);
-        profileLayout = findViewById(R.id.profileLayout);
-        informationView = findViewById(R.id.informationView);
-        txtHo = findViewById(R.id.txtHo);
-        txtTen = findViewById(R.id.txtTen);
-        txtngaysinh = findViewById(R.id.txtngaysinh);
-        txtdiachi = findViewById(R.id.txtdiachi);
-        txtnghe = findViewById(R.id.txtnghe);
 
-//       SharedPreferences preferences = getSharedPreferences("mypreferences",Context.MODE_PRIVATE);
-//       String email = preferences.getString("email","");
-//        txtEmailProfile.setText("EMAIL: " +email);
+        // mapping
+        txtUsername = findViewById(R.id.txtUsername);
+        txtID = findViewById(R.id.txtID);
+        txtName = findViewById(R.id.txtSetting);
+        txtEmail = findViewById(R.id.txtEmail);
+        txtRole = findViewById(R.id.txtRole);
+        txtAuthType = findViewById(R.id.txtAuthType);
+
+        // Set user information
+        SharedPreferences preferences = getSharedPreferences("mypreferences", MODE_PRIVATE);
+        String username = preferences.getString("username", ""); //lưu trữ tên người dùng
+        String id = preferences.getString("userId", ""); //lưu trữ tên người dùng
+        String email =preferences.getString("email", ""); //lưu trữ tên người dùng
+        String role =preferences.getString("role","");
+        String authType =preferences.getString("authType","");
+
+
+        txtID.setText(" Id: " +  id);
+        txtEmail.setText(" Email: " + email);
+        txtName.setText(" Username: " + username);
+        txtUsername.setText(username);
+        txtRole.setText(" Role: " +role);
+        txtAuthType.setText(" AuthType: " + authType);
+
+
 
     }
 
@@ -87,6 +91,16 @@ public class ProfileView extends AppCompatActivity {
         Intent i = new Intent(ProfileView.this, ProfileChange.class);
         i.putExtra("currentAvatar", byteArray);
         startActivityForResult(i, 1);
+    }
+    private void requireAuth() {
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
+        if (userId == null || userId == "") {
+            Intent intent = new Intent(ProfileView.this, Login.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
     }
 
     public void changeAvatar(View view) {
@@ -144,19 +158,14 @@ public class ProfileView extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //Thay đổi thông tin theo các thông tin đã đổi ở profileChange
-        if (requestCode == 1 && resultCode == 2) {
-            String surname = data.getStringExtra("surName");
-            String name = data.getStringExtra("name");
-            String birthday = data.getStringExtra("birthday");
-            String job = data.getStringExtra("job");
-            String address = data.getStringExtra("address");
-
-            txtHo.setText("HỌ: " + surname);
-            txtTen.setText("TÊN: " + name);
-            txtngaysinh.setText("NGÀY SINH: " + birthday);
-            txtnghe.setText("NGHỀ NGHIỆP: " + job);
-            txtdiachi.setText("ĐỊA CHỈ: " + address);
-        }
+//        if (requestCode == 1 && resultCode == 2) {
+//            String id = data.getStringExtra("id");
+//            String email = data.getStringExtra("email");
+//            String birthday = data.getStringExtra("birthday");
+//            String job = data.getStringExtra("job");
+//            String address = data.getStringExtra("address");
+//
+//        }
     }
 
     public void handleChangeProfileChange(View view) {

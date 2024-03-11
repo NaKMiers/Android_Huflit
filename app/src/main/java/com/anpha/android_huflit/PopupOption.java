@@ -2,6 +2,9 @@ package com.anpha.android_huflit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +19,16 @@ public class PopupOption extends AppCompatActivity {
         setContentView(R.layout.activity_popup_option);
         Bundle bundle=getIntent().getExtras();
     }
-
+    private void requireAuth() {
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
+        if (userId == null || userId == "") {
+            Intent intent = new Intent(PopupOption.this, Login.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mnu=getMenuInflater();

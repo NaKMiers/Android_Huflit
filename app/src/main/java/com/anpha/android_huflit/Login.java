@@ -116,22 +116,34 @@ import okhttp3.Response;
                    try {
                        Log.d("--------- Logined In RES -------", myResponse);
                        JSONObject json = new JSONObject(myResponse);
+
+
+                       // get data from response
                        JSONObject userJson = json.optJSONObject("user");
                        String token = json.optString("token");
 
                        String username = userJson.optString("username");
                        String avatar = userJson.optString("avatar");
+                       String email = userJson.optString("email");
+                       String id = userJson.optString("_id");
+                       String role = userJson.optString("role");
+                       String authType = userJson.optString("authType");
 
     //                    Lưu username vào SharedPreferences
                        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
                        SharedPreferences.Editor editor = preferences.edit();
-                       editor.putString("username",username);
-                       editor.putString("avatar",avatar);
-                       editor.putString("token",username);
+                       editor.putString("username", username);
+                       editor.putString("avatar", avatar);
+                       editor.putString("token", username);
+                       editor.putString("userId", id);
+                       editor.putString("email", email);
+                       editor.putString("role", role);
+                       editor.putString("authType", authType);
+
                        editor.apply();
 
-                       // Đăng nhập thành công, chuyển sang màn hình text-chat
-                       Intent intent = new Intent(Login.this, TextChat.class);
+                       Class<?> nextActivity = role.equals("admin") ? TextChat.class : TextChat.class;
+                       Intent intent = new Intent(Login.this, nextActivity);
                        startActivity(intent);
                    } catch (JSONException e) {
                        throw new RuntimeException(e);
