@@ -22,11 +22,12 @@
         android:id="@+id/thanh"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.496">
 
         <ImageView
             android:id="@+id/pinIcon"
@@ -42,7 +43,7 @@
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
             android:layout_weight="0.5"
-            android:src="@drawable/wallclock" />
+            android:src="@drawable/verified" />
 
         <ImageView
             android:id="@+id/imageView12"
@@ -50,15 +51,23 @@
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
             android:layout_weight="0.5"
-            android:src="@drawable/khien" />
+            android:src="@drawable/settings" />
 
         <ImageView
             android:id="@+id/gitIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_weight="0.5"
-            android:src="@drawable/icon_out" />
+            android:layout_marginTop="10dp"
+            android:src="@drawable/information" />
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            tools:layout_editor_absoluteY="117dp"
+            tools:layout_editor_absoluteX="339dp" />
+
     </LinearLayout>
 
     <ImageView
@@ -71,18 +80,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:srcCompat="@drawable/owl" />
-
-    <ImageView
-
-        android:id="@+id/imageView15"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="148dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.708"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:srcCompat="@drawable/settings" />
 
     <TextView
         android:id="@+id/textView3"
@@ -100,16 +97,29 @@
     <Button
         android:id="@+id/btnoption"
         android:layout_width="250dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginTop="9dp"
         android:background="@drawable/btn_option"
         android:gravity="center_vertical"
         android:text="OPTION THEME"
         android:textColor="@color/black"
         android:textSize="20dp"
+
+        android:onClick="clickOptionTheme"
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewTheme"
+        android:layout_width="350dp"
+        android:layout_height="260dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnoption" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

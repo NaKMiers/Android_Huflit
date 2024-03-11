@@ -41,6 +41,7 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.mediarouter:mediarouter:1.6.0")
+    implementation("com.google.firebase:firebase-auth:22.3.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -59,4 +60,11 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.9.1")
     // render image from link
     implementation ("com.squareup.picasso:picasso:2.8")
+
+    //thư viện firebase
+
+
+
+
+
 }

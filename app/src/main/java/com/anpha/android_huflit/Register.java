@@ -43,7 +43,6 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         //ánh xạ
         edtemail=findViewById(R.id.edtemailregister);
-        edtphone=findViewById(R.id.edtphoneregister);
         edtpasswordlogin =findViewById(R.id.edtpasswordregister);
         edtpassagainregister=findViewById(R.id.edtpassagainregister);
         edtusername=findViewById(R.id.edtusernameregister);

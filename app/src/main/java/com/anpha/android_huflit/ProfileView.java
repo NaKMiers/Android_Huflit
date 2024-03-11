@@ -39,7 +39,6 @@ public class ProfileView extends AppCompatActivity {
     LinearLayout informationView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -278,6 +278,7 @@
             app:srcCompat="@drawable/icon_tick" />
 
         <ImageView
+            android:id="@+id/asdasd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
