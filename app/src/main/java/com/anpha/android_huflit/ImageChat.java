@@ -24,8 +24,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.anpha.android_huflit.ChatBox.ChatBoxAdapter;
+import com.anpha.android_huflit.ChatBox.ItemChatBox;
 import com.anpha.android_huflit.Message.ChatBox;
 import com.anpha.android_huflit.Message.ImageMessage;
 import com.anpha.android_huflit.Message.ImageMessageAdapter;
@@ -51,9 +54,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ImageChat extends AppCompatActivity {
-    private RecyclerView recyclerViewImage;
+    private RecyclerView recyclerViewImage, imageChatBox;
     //Khởi tạo adapter
+
+    private ChatBoxAdapter boxAdapter;
+
     private ImageMessageAdapter adapter;
+
+    private List<ItemChatBox> dataList;
     //Khởi tạo List tin nhắn
     private List<ImageMessage> messages;
 
@@ -99,7 +107,21 @@ public class ImageChat extends AppCompatActivity {
         txtusername=popupView.findViewById(R.id.txtusername);
 
         //Khởi tạo các biến
+        imageChatBox = findViewById(R.id.imageChatBox);
+        imageChatBox.setLayoutManager(new LinearLayoutManager(this));
+        /// Khởi tạo danh sách dữ liệu chatBox
+        dataList = new ArrayList<>();
+        // Thêm các item vào danh sách dữ liệu
+        dataList.add(new ItemChatBox("Box 1"));
+        dataList.add(new ItemChatBox("Box 2"));
+        dataList.add(new ItemChatBox("Box 3"));
+        dataList.add(new ItemChatBox("Box 4"));
+        // Khởi tạo Adapter và gán cho RecyclerView
+        boxAdapter = new ChatBoxAdapter(dataList, this);
+        imageChatBox.setAdapter(boxAdapter);
+        //Khởi tạo danh sách dữ liệu tin nhắn
         messages = new ArrayList<>();
+        // Khởi tạo Adapter và gán cho RecyclerView
         adapter = new ImageMessageAdapter(messages);
         recyclerViewImage.setAdapter(adapter);
         txtHelp2 = findViewById(R.id.txtHelp2);
@@ -117,18 +139,24 @@ public class ImageChat extends AppCompatActivity {
         btnMinus1 = findViewById(R.id.btnMinus1);
         btnPlus1 = findViewById(R.id.btnPlus1);
         CrChat = findViewById(R.id.CrChat);
+        fbIcon = popupView.findViewById(R.id.fbIcon);
+        insIcon = popupView.findViewById(R.id.insIcon);
+        twIcon = popupView.findViewById(R.id.twIcon);
+        pinIcon = popupView.findViewById(R.id.pinIcon);
+        gitIcon = popupView.findViewById(R.id.gitIcon);
+        txtAmount.setText(amount);
+        txtSize.setText(size);
         restoreValuesFromSharedPreferences();
-
-        navigationIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(drawerLayout.isDrawerOpen(GravityCompat.START))
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                else {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-            }
-        });
+//        navigationIcon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(drawerLayout.isDrawerOpen(GravityCompat.START))
+//                    drawerLayout.closeDrawer(GravityCompat.START);
+//                else {
+//                    drawerLayout.openDrawer(GravityCompat.START);
+//                }
+//            }
+//        });
         imgavatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,33 +184,33 @@ public class ImageChat extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        btnMinus1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentValue > 1) {
-                    currentValue--;
-                    updateTextView();
-                }
-            }
-        });
-        btnPlus1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentValue++;
-                updateTextView();
-            }
-        });
+//        btnMinus1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (currentValue > 1) {
+//                    currentValue--;
+//                    updateTextView();
+//                }
+//            }
+//        });
+//        btnPlus1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                currentValue++;
+//                updateTextView();
+//            }
+//        });
 
         ImageSize = new Size[]{new Size(256, 256), new Size(512, 512), new Size(1024, 1024)};
-        btnInCr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (OptionSizeIndex < ImageSize.length - 1) {
-                    OptionSizeIndex = (OptionSizeIndex + 1) % ImageSize.length;
-                    updateTextView();
-                }
-            }
-        });
+//        btnInCr.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (OptionSizeIndex < ImageSize.length - 1) {
+//                    OptionSizeIndex = (OptionSizeIndex + 1) % ImageSize.length;
+//                    updateTextView();
+//                }
+//            }
+//        });
         txtusername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,30 +218,30 @@ public class ImageChat extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        btnDes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (OptionSizeIndex > 0) {
-                    OptionSizeIndex = (OptionSizeIndex - 1) % ImageSize.length;
-                    updateTextView();
-                }
-            }
-        });
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    // Lấy giá trị từ txtAmount và txtSize
-                    amount = txtAmount.getText().toString();
-                    size = txtSize.getText().toString();
-                    CreateImages("https://android-huflit-server.vercel.app");
-                    saveValuesToSharedPreferences();
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        btnDes.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (OptionSizeIndex > 0) {
+//                    OptionSizeIndex = (OptionSizeIndex - 1) % ImageSize.length;
+//                    updateTextView();
+//                }
+//            }
+//        });
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                try {
+//                    // Lấy giá trị từ txtAmount và txtSize
+//                    amount = txtAmount.getText().toString();
+//                    size = txtSize.getText().toString();
+//                    CreateImages("https://android-huflit-server.vercel.app");
+//                    saveValuesToSharedPreferences();
+//                }
+//                catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
         CrChat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -663,6 +691,16 @@ public class ImageChat extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    //Hàm mở trang web tương ứng
+    private void openWebPage(String url) {
+        //Tạp Uri từ địa chỉ url (Uri là chuỗi đại diện cho địa chỉ hoặc tài nguyên Internet)
+        Uri webpage = Uri.parse(url);
+        //Yêu cầu hệ thống mở dữ liệu bằng cách sử dụng ứng dụng mặc định của hệ thống (trình duyệt web)
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        //Nếu có thì sẽ gửi intent và mở trang web
+            startActivity(intent);
+
+    }
 
     //Nhấn vào icon Facebook
     public void fbLink(View view) {
@@ -684,16 +722,5 @@ public class ImageChat extends AppCompatActivity {
     public void gitLink(View view) {
         openWebPage("https://github.com");
     }
-    //Hàm mở trang web tương ứng
-    private void openWebPage(String url) {
-        //Tạp Uri từ địa chỉ url (Uri là chuỗi đại diện cho địa chỉ hoặc tài nguyên Internet)
-        Uri webpage = Uri.parse(url);
-        //Yêu cầu hệ thống mở dữ liệu bằng cách sử dụng ứng dụng mặc định của hệ thống (trình duyệt web)
-        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-        //Kiểm tra xem có ứng dụng nào để mở dữ liệu được cung cấp hay không
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            //Nếu có thì sẽ gửi intent và mở trang web
-            startActivity(intent);
-        }
-    }
+
 }
