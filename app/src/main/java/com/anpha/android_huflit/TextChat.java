@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.SplittableRandom;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -138,11 +139,13 @@ public class TextChat extends AppCompatActivity {
               startActivity(intent);
            }
        });
-       // lấy dữ liệu từ SharedPreferces
+//       // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
         token = preferences.getString("token", ""); //lưu trữ tên người dùng
         txtusername.setText(username); // đặt tên người dùng trong textview
+
+
 
         //Mở popupWindow (chỉ set sự kiện được trong java)
         toolbarChat.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

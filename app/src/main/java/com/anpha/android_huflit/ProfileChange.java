@@ -58,17 +58,30 @@ public class ProfileChange extends AppCompatActivity {
     }
 
     public void saveInfo(View view) {
-        //Đẩy các thông tin đã thay đổi vào intent
-        i.putExtra("surName",edtSurname.getText().toString());
-        i.putExtra("name",edtName.getText().toString());
-        i.putExtra("birthday",edtBirthday.getText().toString());
-        i.putExtra("job",edtJob.getText().toString());
-        i.putExtra("address",edtAddress.getText().toString());
-        //Biến setResult để trả các thông tin về Profile
-        setResult(2,i);
+        // Lấy SharedPreferences và tạo SharedPreferences.Editor
+        SharedPreferences preferences = getSharedPreferences("mypreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        // Lấy các giá trị từ EditText
+        String surName = edtSurname.getText().toString();
+        String name = edtName.getText().toString();
+        String birthday = edtBirthday.getText().toString();
+        String job = edtJob.getText().toString();
+        String address = edtAddress.getText().toString();
+
+        // Lưu các giá trị mới vào SharedPreferences
+        editor.putString("ho", surName);
+        editor.putString("ten", name);
+        editor.putString("ngaysinh", birthday);
+        editor.putString("nghe", job);
+        editor.putString("diachi", address);
+
+        // Lưu các thay đổi
+        editor.apply();
+
+        // Trả kết quả về ProfileView
+        setResult(2, i);
         finish();
-
-
-
     }
+
 }

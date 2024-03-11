@@ -3,6 +3,7 @@ package com.anpha.android_huflit;
 import  androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,11 +33,12 @@ import okhttp3.Response;
 public class Register extends AppCompatActivity {
     EditText edtemail,edtphone,edtusername,edtpasswordlogin,edtpassagainregister;
     Button btnregister;
-    TextView txtsigninregister;
+    TextView txtsigninregister,txtEmailProfile;
 
     // Thực hiện request
     OkHttpClient client = new OkHttpClient();
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,7 @@ public class Register extends AppCompatActivity {
         edtusername=findViewById(R.id.edtusernameregister);
         btnregister=findViewById(R.id.btnregister);
         txtsigninregister=findViewById(R.id.txtsigninregister);
+        txtEmailProfile= findViewById(R.id.txtEmailProfile);
 
         txtsigninregister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,12 +62,12 @@ public class Register extends AppCompatActivity {
         });
     }
     public void handleRegister(View view) {
-        String email = edtemail.getText().toString();
+        String inputEmail  = edtemail.getText().toString();
         String username = edtusername.getText().toString();
         String password = edtpasswordlogin.getText().toString();
         String confirmPassword = edtpassagainregister.getText().toString();
         //thông báo yêu cầu nhập thông tin của người dùng
-        if(email.isEmpty())
+        if(inputEmail .isEmpty())
         {
             edtemail.setError("Vui lòng nhập email của bạn !!!");
             return;
@@ -85,8 +88,11 @@ public class Register extends AppCompatActivity {
             return;
         }
 
-        saveUserData(email,username,password);
+        saveUserData(inputEmail ,username,password);
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String email = preferences.getString("email", "");
+        // Hiển thị email lên TextView
+        txtEmailProfile.setText("Email: " + email);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("email", email);
         editor.apply();
@@ -157,13 +163,11 @@ public class Register extends AppCompatActivity {
 
 
     private void saveUserData(String email, String username, String password) {
-        SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("email",email);
         editor.putString("username",username);
         editor.putString("password",password);
         editor.apply();
     }
-
-
 }
