@@ -4,7 +4,7 @@ public class Box {
     private String boxId;
     private String boxName;
 
-    // Empty constructor for Gson
+
     public Box() {
     }
 

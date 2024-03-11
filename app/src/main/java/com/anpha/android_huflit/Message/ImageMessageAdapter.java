@@ -1,9 +1,14 @@
 package com.anpha.android_huflit.Message;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -12,12 +17,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.anpha.android_huflit.ImageChat;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 
 import com.anpha.android_huflit.R;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 //Lớp adapter ImageMessageAdapter mở rộng từ lớp RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -131,13 +141,14 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     //Lấy tiêu đề của mục được chọn trong menu
-                    String option = ((String) item.getTitle()).toString();
+                    String option = item.getTitle().toString();
                     //Nếu chọn Save image
-                    if (option.equals("Save image"));
-                    //Xử lí sự kiện
-
-                    //Nếu chọn Copy image
-                    else if (option.equals("Copy image"));
+                    if (option.equals("Save image")) {
+                        saveImage();
+                    }
+                        //Xử lí sự kiện
+                        //Nếu chọn Copy image
+                    else if (option.equals("Copy image")) ;
                     //Xử lí sự kiện
 
                     return true;
@@ -146,13 +157,53 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             //Hiển thị popupMenu
             popupMenu.show();
         }
+        private void saveImage() {
+            // Bật chế độ lấy cache cho imageViewMessage
+            imageViewMessage.setDrawingCacheEnabled(true);
+
+            // Lấy bitmap từ cache
+            Bitmap bitmap = imageViewMessage.getDrawingCache();
+
+            // Kiểm tra xem bitmap có null hay không
+            if (bitmap != null) {
+                // Tạo một đường dẫn cụ thể cho tệp ảnh
+                File root = Environment.getExternalStorageDirectory();
+                File file = new File(root.getAbsolutePath() + "/DCIM/Camera/img.jpg");
+
+                try {
+                    // Kiểm tra và tạo mới tệp nếu nó không tồn tại (nếu bạn muốn ghi đè, bạn có thể loại bỏ điều kiện này)
+//                    if (!file.exists()) {
+//                        file.createNewFile();
+//                    }
+
+                    FileOutputStream ostream = new FileOutputStream(file);
+
+                    // Nén và ghi bitmap vào tệp
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream);
+                    ostream.close();
+
+                    // Tắt chế độ lấy cache sau khi đã sử dụng
+                    imageViewMessage.setDrawingCacheEnabled(false);
+
+                    // Hiển thị thông báo hoặc thực hiện các hành động khác sau khi lưu thành công
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // Xử lý lỗi khi lưu ảnh
+                }
+            }
+        }
+
+
 
         public void bind(ImageMessage message) {
             //Nếu link ảnh không phải null và không trống
-            if(message.getImageUrls() != null && !message.getImageUrls().isEmpty()){
+            if (message.getImageUrls() != null && !message.getImageUrls().isEmpty()) {
+                //Lấy ra địa chỉ đầu tiên từ danh sách các URI
+                Uri imageUrl = Uri.parse(message.getImageUrls().get(0));
                 //Dùng thư viện Picasso và tải ảnh vào imageViewMessage
-                Picasso.get().load((Uri) message.getImageUrls()).into(imageViewMessage);
+                Picasso.get().load(imageUrl).into(imageViewMessage);
             }
         }
+
     }
 }

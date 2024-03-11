@@ -230,31 +230,31 @@ public class ImageChat extends AppCompatActivity {
 //            }
 //        });
     }
-    private  void CreatChat(){
-        OkHttpClient client = new OkHttpClient();
-
-        String url = "https://android-huflit-server.vercel.app/box/create-box/";
-        RequestBody requestBody = RequestBody.create(null, new byte[0]);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(requestBody).build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()){
-                    String responseData = response.body().string();
-
-                    
-                }
-            }
-        });
-    }
+//    private  void CreatChat(){
+//        OkHttpClient client = new OkHttpClient();
+//
+//        String url = "https://android-huflit-server.vercel.app/box/create-box/";
+//        RequestBody requestBody = RequestBody.create(null, new byte[0]);
+//        Request request = new Request.Builder()
+//                .url(url)
+//                .post(requestBody).build();
+//
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+//                if (response.isSuccessful()){
+//                    String responseData = response.body().string();
+//
+//
+//                }
+//            }
+//        });
+//    }
     private void getBoxData() {
         getBox("");
     }
