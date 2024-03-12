@@ -40,7 +40,7 @@ public class ForgotPassword extends AppCompatActivity {
     OkHttpClient client = new OkHttpClient();
 
     String code;
-    Boolean isSent = false;
+    Boolean isSent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class ForgotPassword extends AppCompatActivity {
     public void handleSendFP(View view) throws IOException {
         if (isSent) {
             // nếu nhập code đúng
-            if (codeFPEdt.getText().toString().equals(code)) {
+            if (codeFPEdt.getText().toString().trim() == code) {
                 // reset when code is available
                 // Làm tiếp chỗ reset này
                 // Bước 1: Tạo cái request để reset password tương tự lại send mail
@@ -111,8 +111,7 @@ public class ForgotPassword extends AppCompatActivity {
     void SendMail(String url) throws IOException {
         // prevent empty prompt
         if (emailFPEdt.getText().toString().trim() == "") return;
-//        code = generateRandomString(6);
-        code = "ASDASD";
+        code = generateRandomString(6);
 
         RequestBody formBody = new FormBody.Builder()
 //                .add("chatId", "")
