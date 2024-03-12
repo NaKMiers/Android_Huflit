@@ -60,11 +60,11 @@ public class TextChat extends AppCompatActivity {
     PopupWindow popupWindow;
     Toolbar toolbarChat;
 
-    ImageView btnSend, navigationIcon,imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon,imgChangetheme,imgDevinfo,imgSetting;
+    ImageView btnSend, navigationIcon,imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon,imgChangetheme,imgDevinfo,imgSetting,imgAdmin;
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
-    TextView txtHelp1, txtMode, txtusername,txtChangetheme,txtDevinfo,txtSetting;
+    TextView txtHelp1, txtMode, txtusername,txtChangetheme,txtDevinfo,txtSetting,txtAdmin;
      Button btnLogOut;
     ArrayList<Prompt> prompts = new ArrayList<>();
 
@@ -127,11 +127,27 @@ public class TextChat extends AppCompatActivity {
         imgDevinfo=popupView.findViewById(R.id.imgDevinfo);
         txtSetting=popupView.findViewById(R.id.txtSetting);
         imgSetting=popupView.findViewById(R.id.imgSetting);
+        imgAdmin=popupView.findViewById(R.id.imgAdmin);
+        txtAdmin=popupView.findViewById(R.id.txtAdmin);
 
         //Nhận sự kiện nhập liệu
         edtTextChat.requestFocus();
         //Thiết lập con trỏ ở cuối văn bản EditText
         edtTextChat.setSelection(edtTextChat.getText().length());
+        // Lấy vai trò của người dùng từ Shared Preferences
+        SharedPreferences mypreferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String role = mypreferences.getString("role", "");
+
+        // Kiểm tra và ẩn/hiển thị các phần tử dựa trên vai trò của người dùng
+        if (role.equals("admin")) {
+            // Nếu người dùng có vai trò là admin, hiển thị các phần tử imgAdmin và txtAdmin
+            imgAdmin.setVisibility(View.VISIBLE);
+            txtAdmin.setVisibility(View.VISIBLE);
+        } else {
+            // Nếu không phải admin, ẩn đi các phần tử imgAdmin và txtAdmin
+            imgAdmin.setVisibility(View.GONE);
+            txtAdmin.setVisibility(View.GONE);
+        }
 
         navigationIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,6 +241,7 @@ public class TextChat extends AppCompatActivity {
                 return false;
             }
         });
+
 
         // check
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
