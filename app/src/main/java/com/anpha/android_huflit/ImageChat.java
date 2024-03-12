@@ -736,7 +736,6 @@ public class ImageChat extends AppCompatActivity {
 //                                    // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
 //                                    addnewAIMessage(false,imageUrl);
 //                                }
-                                Toast.makeText(ImageChat.this, String.valueOf(Objects.requireNonNull(images).length()), Toast.LENGTH_LONG).show();
 
                                 for (int i = 0; i < Objects.requireNonNull(images).length(); i+= chunkSize) {
                                     ArrayList<String> imgUrls = new ArrayList<>();
@@ -759,6 +758,7 @@ public class ImageChat extends AppCompatActivity {
 
             @Override
             public void onFailure(Call call, IOException e) {
+                Toast.makeText(ImageChat.this, "Create Images Failed", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         });
@@ -784,7 +784,7 @@ public class ImageChat extends AppCompatActivity {
 
     //Giảm số lượng ảnh
     public void desAmount(View view) {
-        if (currentValue > 1) {
+        if (currentValue - 1 >= 1) {
             currentValue--;
             updateTextView();
         }
@@ -792,8 +792,10 @@ public class ImageChat extends AppCompatActivity {
 
     //Tăng số lượng ảnh
     public void incrAmount(View view) {
-        currentValue++;
-        updateTextView();
+        if (currentValue + 1 <= 4) {
+            currentValue++;
+            updateTextView();
+        }
     }
 
     //Giảm size ảnh
