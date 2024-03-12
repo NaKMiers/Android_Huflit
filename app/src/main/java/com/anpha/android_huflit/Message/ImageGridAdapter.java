@@ -10,13 +10,15 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.anpha.android_huflit.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 class ImageGridAdapter extends ArrayAdapter<String> {
-    private Activity context;
+    private Context context;
     private ArrayList<String> mImageUrls;
 
     public ImageGridAdapter(Activity context, ArrayList<String> imageUrls) {
@@ -33,7 +35,10 @@ class ImageGridAdapter extends ArrayAdapter<String> {
             imageView = new ImageView(context);
             imageView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200)); // Set your desired image size here
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_corners)); // Áp dụng rounded_corners.xml làm background
+            imageView.setClipToOutline(true); // Bật bo góc cho ImageView
         } else {
+
             imageView = (ImageView) convertView;
         }
 

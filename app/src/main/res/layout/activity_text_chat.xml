@@ -55,7 +55,7 @@
                 android:gravity="center"
                 android:onClick="handleChangeToImageMode"
                 android:text="CHAT"
-                android:textColor="#3F90F6"
+                android:textColor="#a8daf9"
                 android:textSize="20sp" />
         </androidx.appcompat.widget.Toolbar>
 
