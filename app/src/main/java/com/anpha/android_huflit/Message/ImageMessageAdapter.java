@@ -150,11 +150,12 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public void bind(ImageMessage message) {
             ArrayList<String> imageUrls = message.getImageUrls();
+
             if (imageUrls != null && !imageUrls.isEmpty()) {
 //                String imageUrl = imageUrls.get(0); // Lấy đường dẫn URL đầu tiên từ danh sách
                     // Sử dụng thư viện Picasso để tải ảnh từ đường dẫn URL và hiển thị nó trong imageViewMessage
 //                    Picasso.get().load(imageUrl).into(imageViewMessage);
-                ArrayAdapter<String> adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,imageUrls);
+//                ArrayAdapter<String> adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,imageUrls);
             }
             
         }

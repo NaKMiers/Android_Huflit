@@ -28,18 +28,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:numColumns="2">
-
         </GridView>
-        <!--        <ImageView-->
-        <!--            android:id="@+id/receivedImage"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:scaleType="fitCenter"-->
-        <!--            android:src="@drawable/boy"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent">-->
-        <!--            -->
-        <!--        </ImageView>-->
 
     </FrameLayout>
 
