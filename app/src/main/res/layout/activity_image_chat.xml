@@ -294,10 +294,10 @@
 
             <Button
                 android:id="@+id/btnSave"
-                android:layout_width="75dp"
-                android:layout_height="21dp"
+                android:layout_width="90dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/buttonlogout"
                 android:onClick="saveImageAttribute"
                 android:text="SAVE"

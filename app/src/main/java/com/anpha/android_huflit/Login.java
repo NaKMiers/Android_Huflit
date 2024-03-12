@@ -46,8 +46,7 @@ import okhttp3.Response;
        edtusername = findViewById(R.id.edtusernameregister);
         edtpasswordlogin = findViewById(R.id.edtpasswordregister);
         txtforgetpassword = findViewById(R.id.txtforgetpassword);
-        txtloginwithgg = findViewById(R.id.txtloginwithgg);
-        imgGG = findViewById(R.id.imgGG);
+
 
 
         btnsignin.setOnClickListener(new View.OnClickListener() {

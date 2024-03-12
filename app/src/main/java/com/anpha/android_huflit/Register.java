@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.SharedMemory;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,7 +29,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Register extends AppCompatActivity {
-    EditText edtemail, edtusername, edtpasswordlogin, edtpassagainregister;
+    EditText edtEmail, edtusername, edtpasswordlogin, edtpassagainregister;
     Button btnregister;
     TextView txtsigninregister, txtEmailProfile;
 
@@ -44,12 +42,13 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         //ánh xạ
-        edtemail = findViewById(R.id.edtemailregister);
+        edtEmail = findViewById(R.id.edtemailregister);
         edtpasswordlogin = findViewById(R.id.edtpasswordregister);
         edtpassagainregister = findViewById(R.id.edtpassagainregister);
         edtusername = findViewById(R.id.edtusernameregister);
         btnregister = findViewById(R.id.btnregister);
         txtsigninregister = findViewById(R.id.txtsigninregister);
+//        txtEmailProfile = findViewById(R.id.txtEmailProfile);
 
         txtsigninregister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,14 +59,14 @@ public class Register extends AppCompatActivity {
         });
     }
     public void handleRegister(View view) {
-        String inputEmail  = edtemail.getText().toString();
+        String inputEmail  = edtEmail.getText().toString();
         String username = edtusername.getText().toString();
         String password = edtpasswordlogin.getText().toString();
         String confirmPassword = edtpassagainregister.getText().toString();
         //thông báo yêu cầu nhập thông tin của người dùng
         if(inputEmail .isEmpty())
         {
-            edtemail.setError("Vui lòng nhập email của bạn !!!");
+            edtEmail.setError("Vui lòng nhập email của bạn !!!");
             return;
         }
         if(username.isEmpty())
@@ -86,18 +85,19 @@ public class Register extends AppCompatActivity {
             return;
         }
 
-        saveUserData(inputEmail ,username,password);
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        String email = preferences.getString("email", "");
-        // Hiển thị email lên TextView
-        txtEmailProfile.setText("Email: " + email);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("email", email);
-        editor.apply();
+        saveUserData(inputEmail ,username, password);
+
+//        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+//        String email = preferences.getString("email", "");
+//        // Hiển thị email lên TextView
+//        txtEmailProfile.setText("Email: " + email);
+//        SharedPreferences.Editor editor = preferences.edit();
+//        editor.putString("email", email);
+//        editor.apply();
 
         // tạo request body với thông tin đăng ký
         RequestBody requestBody = new FormBody.Builder()
-                .add("email", email)
+                .add("email", inputEmail)
                 .add("username", username)
                 .add("password", password)
                 .build();

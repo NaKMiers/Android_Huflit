@@ -198,18 +198,17 @@
                 android:id="@+id/fbIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/fb"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
                 android:onClick="toFb"
-                />
+                android:src="@drawable/fb" />
 
             <ImageView
                 android:id="@+id/insIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="85dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="95dp"
+                android:layout_marginTop="10dp"
                 android:onClick="toIns"
                 android:src="@drawable/ins" />
 
@@ -217,8 +216,8 @@
                 android:id="@+id/twIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="150dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="160dp"
+                android:layout_marginTop="10dp"
                 android:onClick="toTw"
                 android:src="@drawable/tt" />
 
@@ -226,8 +225,8 @@
                 android:id="@+id/pinIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="210dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="220dp"
+                android:layout_marginTop="10dp"
                 android:onClick="toPin"
                 android:src="@drawable/pin" />
 
@@ -235,11 +234,10 @@
                 android:id="@+id/gitIcon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="30dp"
                 android:layout_marginTop="60dp"
-                android:src="@drawable/git"
                 android:onClick="toGit"
-                />
+                android:src="@drawable/git" />
 
         </FrameLayout>
 

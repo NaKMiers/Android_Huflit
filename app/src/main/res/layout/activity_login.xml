@@ -74,38 +74,15 @@
         app:layout_constraintTop_toBottomOf="@+id/btnlogin" />
 
     <TextView
-        android:id="@+id/txtloginwithgg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:text="Đăng nhập với google"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
-        app:layout_constraintStart_toEndOf="@+id/imgGG"
-        app:layout_constraintTop_toBottomOf="@+id/btnsignup" />
-
-    <ImageView
-        android:id="@+id/imgGG"
-        android:layout_width="56dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="68dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.208"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnsignup"
-        app:srcCompat="@drawable/google" />
-
-    <TextView
         android:id="@+id/txtforgetpassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:text="Forget password ?"
         android:textColor="#3F51B5"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnsignup" />
 
