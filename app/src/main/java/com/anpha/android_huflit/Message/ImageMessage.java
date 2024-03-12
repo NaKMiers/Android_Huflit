@@ -1,5 +1,6 @@
 package com.anpha.android_huflit.Message;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // Class đại diện cho tin nhắn
@@ -9,13 +10,7 @@ public class ImageMessage {
     // Biến để xác định có phải do người dùng gửi (true là người dùng)
     private boolean sentByUser;
     // Danh sách các đường dẫn URL hình ảnh
-    private List<String> imageUrls;
-
-    public ImageMessage() {
-        this.text = text;
-        this.sentByUser = sentByUser;
-        this.imageUrls = imageUrls;
-    }
+    private ArrayList<String> imageUrls;
 
     // Constructor cho tin nhắn người dùng gửi
     public ImageMessage(String text, boolean sentByUser) {
@@ -24,7 +19,7 @@ public class ImageMessage {
     }
 
     // Constructor cho tin nhắn AI gửi
-    public ImageMessage(boolean sentByUser, List<String> imageUrls) {
+    public ImageMessage(boolean sentByUser, ArrayList<String> imageUrls) {
         this.sentByUser = sentByUser;
         this.imageUrls = imageUrls;
     }
@@ -46,11 +41,11 @@ public class ImageMessage {
         this.sentByUser = sentByUser;
     }
 
-    public List<String> getImageUrls() {
+    public ArrayList<String> getImageUrls() {
         return imageUrls;
     }
 
-    public void setImageUrls(List<String> imageUrls) {
+    public void setImageUrls(ArrayList<String> imageUrls) {
         this.imageUrls = imageUrls;
     }
 }

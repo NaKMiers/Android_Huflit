@@ -81,7 +81,7 @@ public class ImageChat extends AppCompatActivity {
     String token, userId;
     int OptionSizeIndex = 0;
     ArrayList<Prompt> prompts = new ArrayList<>();
-    List<String> imageUrls  = new ArrayList<>();
+    ArrayList<String> imageUrls  = new ArrayList<>();
 
     OkHttpClient client = new OkHttpClient();
     private ArrayList<String> images;
@@ -426,8 +426,9 @@ public class ImageChat extends AppCompatActivity {
         if (!messageText.isEmpty()) {
             txtHelp2.setText("");
 //            edtImgChat.setText("");
+
             CreatePrompt("https://android-huflit-server.vercel.app");
-            CreateImages("https://android-huflit-server.vercel.app");
+
         }
     }
 
@@ -450,9 +451,9 @@ public class ImageChat extends AppCompatActivity {
         adapter.notifyItemInserted(messages.size() - 1);
     }
 
-    private void addnewAIMessage(boolean sentByUser, List<String> imageUrls) {
+    private void addNewAIMessage(boolean sentByUser, ArrayList<String> imageUrls) {
         //Khởi tạo tin nhắn nhận từ AI với senbyUser là false (không do người dùng gửi) và link ảnh kiểu String
-        ImageMessage receivedImage = new ImageMessage(false, imageUrls);
+        ImageMessage receivedImage = new ImageMessage(sentByUser, imageUrls);
         // Thêm tin nhắn nhận vào cuối danh sách
         messages.add(receivedImage);
         // Thông báo cho Adapter biết rằng có một mục mới được thêm vào cuối danh sách
@@ -466,8 +467,6 @@ public class ImageChat extends AppCompatActivity {
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
-
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
@@ -489,9 +488,9 @@ public class ImageChat extends AppCompatActivity {
                                     String type = prompt.optString("type");
                                     String from = prompt.optString("from");
                                     String text = prompt.optString("text");
-                                    String chatId = prompt.optString("chatId");
-                                    String createdAt = prompt.optString("createdAt");
-                                    String updatedAt = prompt.optString("updatedAt");
+//                                    String chatId = prompt.optString("chatId");
+//                                    String createdAt = prompt.optString("createdAt");
+//                                    String updatedAt = prompt.optString("updatedAt");
                                     JSONArray imagesArray = prompt.optJSONArray("images");
 
                                     // Convert JSONArray to ArrayList<String>
@@ -506,15 +505,13 @@ public class ImageChat extends AppCompatActivity {
                                     Prompt newPrompt = new Prompt(_id, userId, type, from, text, images);
                                     prompts.add(newPrompt);
                                 }
-
+//
                                 // show prompts after get
                                 for (Prompt prompt : prompts) {
-                                    Log.d("Type", prompt.type);
                                     if (Objects.equals(prompt.from, "user")) {
                                         addNewMessage(prompt.text, true);
                                     } else {
-                                        Log.d("Image: ", prompt.images.get(0));
-                                        addnewAIMessage(false,imageUrls);
+                                        addNewAIMessage(false, prompt.getImages());
                                     }
                                 }
 
@@ -580,8 +577,8 @@ public class ImageChat extends AppCompatActivity {
                                 recyclerViewImage.scrollToPosition(messages.size() - 1);
                                 // clear text chat
                                 edtImgChat.setText("");
-
-                            } catch (JSONException e) {
+                                CreateImages("https://android-huflit-server.vercel.app");
+                            } catch (JSONException  | IOException e ) {
                                 throw new RuntimeException(e);
                             }
                         }
@@ -641,14 +638,10 @@ public class ImageChat extends AppCompatActivity {
                                 if (Objects.requireNonNull(images).length() > 0) {
                                     for (int i = 0; i < images.length(); i++) {
                                         String imageUrl = images.optString(i);
-                                        if (i >= 0) {
-                                            txtHelp2.setText("");
-                                            imageUrls.add(imageUrl);
-                                            addnewAIMessage(false, imageUrls);
-
-                                        }
+                                        imageUrls.add(imageUrl);
                                         // sentByUser false là do AI gửi, link ảnh kiểu String imageUrl
                                     }
+                                    addNewAIMessage(false,imageUrls);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
