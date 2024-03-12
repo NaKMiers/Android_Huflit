@@ -3,6 +3,7 @@ package com.anpha.android_huflit;
 import  androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,24 +31,25 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Register extends AppCompatActivity {
-    EditText edtemail,edtphone,edtusername,edtpasswordlogin,edtpassagainregister;
+    EditText edtemail, edtusername, edtpasswordlogin, edtpassagainregister;
     Button btnregister;
-    TextView txtsigninregister;
+    TextView txtsigninregister, txtEmailProfile;
 
     // Thực hiện request
     OkHttpClient client = new OkHttpClient();
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         //ánh xạ
-        edtemail=findViewById(R.id.edtemailregister);
-        edtpasswordlogin =findViewById(R.id.edtpasswordregister);
-        edtpassagainregister=findViewById(R.id.edtpassagainregister);
-        edtusername=findViewById(R.id.edtusernameregister);
-        btnregister=findViewById(R.id.btnregister);
-        txtsigninregister=findViewById(R.id.txtsigninregister);
+        edtemail = findViewById(R.id.edtemailregister);
+        edtpasswordlogin = findViewById(R.id.edtpasswordregister);
+        edtpassagainregister = findViewById(R.id.edtpassagainregister);
+        edtusername = findViewById(R.id.edtusernameregister);
+        btnregister = findViewById(R.id.btnregister);
+        txtsigninregister = findViewById(R.id.txtsigninregister);
 
         txtsigninregister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,12 +60,12 @@ public class Register extends AppCompatActivity {
         });
     }
     public void handleRegister(View view) {
-        String email = edtemail.getText().toString();
+        String inputEmail  = edtemail.getText().toString();
         String username = edtusername.getText().toString();
         String password = edtpasswordlogin.getText().toString();
         String confirmPassword = edtpassagainregister.getText().toString();
         //thông báo yêu cầu nhập thông tin của người dùng
-        if(email.isEmpty())
+        if(inputEmail .isEmpty())
         {
             edtemail.setError("Vui lòng nhập email của bạn !!!");
             return;
@@ -84,8 +86,11 @@ public class Register extends AppCompatActivity {
             return;
         }
 
-        saveUserData(email,username,password);
+        saveUserData(inputEmail ,username,password);
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String email = preferences.getString("email", "");
+        // Hiển thị email lên TextView
+        txtEmailProfile.setText("Email: " + email);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("email", email);
         editor.apply();
@@ -118,6 +123,7 @@ public class Register extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     final String myResponse = response.body().string();
+
                     try {
                         Log.d("--------- Register RES -------", myResponse);
                         JSONObject json = new JSONObject(myResponse);
@@ -125,29 +131,21 @@ public class Register extends AppCompatActivity {
                         String token = json.optString("token");
                         String username = userJson.optString("username");
                         String avatar = userJson.optString("avatar");
+
 //                        Lưu username vào SharedPreferences
                         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("username", username);
                         editor.putString("avatar", avatar);
-                        editor.putString("token", username);
+                        editor.putString("token", token);
                         editor.apply();
+
                         // Đăng nhập thành công, chuyển sang màn hình text-chat
                         Intent intent = new Intent(Register.this, Login.class);
                         startActivity(intent);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
-                }
-                else
-                {
-                    // Đăng ký thất bại
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(Register.this,"Registration failed",Toast.LENGTH_SHORT).show();
-                        }
-                    });
                 }
             }
         });
@@ -156,13 +154,11 @@ public class Register extends AppCompatActivity {
 
 
     private void saveUserData(String email, String username, String password) {
-        SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("email",email);
         editor.putString("username",username);
         editor.putString("password",password);
         editor.apply();
     }
-
-
 }

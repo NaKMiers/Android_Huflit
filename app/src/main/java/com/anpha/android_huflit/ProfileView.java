@@ -29,6 +29,8 @@ import java.io.ByteArrayOutputStream;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileView extends AppCompatActivity {
+    TextView txtnameuser, txtEmailProfile;
+    SharedPreferences preferences;
 
     CircleImageView avatar;
     TextView txtUsername, txtID, txtName, txtEmail, txtRole, txtAuthType;
@@ -37,6 +39,7 @@ public class ProfileView extends AppCompatActivity {
     PopupWindow popupWindow;
 
     LinearLayout informationView;
+
 
 
     @Override
@@ -61,13 +64,12 @@ public class ProfileView extends AppCompatActivity {
         String authType =preferences.getString("authType","");
 
 
-        txtID.setText(" Id: " +  id);
-        txtEmail.setText(" Email: " + email);
-        txtName.setText(" Username: " + username);
+        txtID.setText("Id: " + id);
+        txtEmail.setText("Email: " + email);
+        txtName.setText("Username: " + username);
         txtUsername.setText(username);
-        txtRole.setText(" Role: " +role);
-        txtAuthType.setText(" AuthType: " + authType);
-
+        txtRole.setText("Role: " + role);
+        txtAuthType.setText("AuthType: " + authType);
 
 
     }
@@ -171,4 +173,55 @@ public class ProfileView extends AppCompatActivity {
         Intent intent = new Intent(ProfileView.this, ProfileChange.class);
         startActivity(intent);
     }
+
+    // Method to handle profile view button click
+//    public void handleProfileView(View view) {
+//        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+//        String email = preferences.getString("email", "");
+//
+//        // Lấy thông tin từ SharedPreferences
+//        String ho = preferences.getString("ho", "");
+//        String ten = preferences.getString("ten", "");
+//        String ngaysinh = preferences.getString("ngaysinh", "");
+//        String diachi = preferences.getString("diachi", "");
+//        String nghe = preferences.getString("nghe", "");
+//
+//        // Hiển thị thông tin trong TextViews
+//        txtHo.setText("Họ: " + ho);
+//        txtTen.setText("Tên: " + ten);
+//        txtngaysinh.setText("Ngày sinh: " + ngaysinh);
+//        txtdiachi.setText("Địa chỉ: " + diachi);
+//        txtnghe.setText("Nghề nghiệp: " + nghe);
+//
+//        // Hiển thị email trong TextView
+//        txtEmailProfile.setText("Email: " + email);
+//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Lấy lại dữ liệu từ SharedPreferences và hiển thị thông tin
+//        displayProfileInfo();
+    }
+
+//    private void displayProfileInfo() {
+//        // Lấy thông tin từ SharedPreferences
+//        String ho = preferences.getString("ho", "");
+//        String ten = preferences.getString("ten", "");
+//        String ngaysinh = preferences.getString("ngaysinh", "");
+//        String diachi = preferences.getString("diachi", "");
+//        String nghe = preferences.getString("nghe", "");
+//
+//        // Hiển thị thông tin trong TextViews
+//        txtHo.setText("Họ: " + ho);
+//        txtTen.setText("Tên: " + ten);
+//        txtngaysinh.setText("Ngày sinh: " + ngaysinh);
+//        txtdiachi.setText("Địa chỉ: " + diachi);
+//        txtnghe.setText("Nghề nghiệp: " + nghe);
+//
+//        // Hiển thị email trong TextView
+//        String email = preferences.getString("email", "");
+//        txtEmailProfile.setText("Email: " + email);
+//    }
+
+
 }

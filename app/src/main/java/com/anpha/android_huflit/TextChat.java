@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.SplittableRandom;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -170,6 +171,7 @@ public class TextChat extends AppCompatActivity {
               startActivity(intent);
            }
        });
+
        // lấy dữ liệu từ SharedPreferces
           txtChangetheme.setOnClickListener(new View.OnClickListener() {
               @Override
@@ -213,6 +215,9 @@ public class TextChat extends AppCompatActivity {
                   startActivity(intent);
               }
           });
+
+
+
 
         //Mở popupWindow (chỉ set sự kiện được trong java)
         toolbarChat.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
