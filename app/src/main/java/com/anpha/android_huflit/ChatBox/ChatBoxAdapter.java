@@ -91,49 +91,11 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 // Xử lý sự kiện xóa
-                ItemChatBox item = dataList.get(position);
-                String itemId = item.get_id();
 
-                // Tạo yêu cầu DELETE
-                OkHttpClient client = new OkHttpClient();
-                String url = "https://android-huflit-server.vercel.app/box/" + itemId;
-                Request request = new Request.Builder()
-                        .url(url)
-                        .delete()
-                        .build();
-
-                // Gửi yêu cầu DELETE đến API
-                client.newCall(request).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        // Xử lý lỗi kết nối hoặc lỗi xảy ra trong quá trình gửi yêu cầu
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        if (response.isSuccessful()) {
-                            // Xóa mục khỏi danh sách
-                                detekeItem(position);
-                            // Cập nhật giao diện người dùng
-                        } else {
-                            // Xử lý lỗi
-                        }
                     }
                 });
             }
-        });
-    }
 
-    private void detekeItem(int position){
-        dataList.remove(position);
-        notifyItemRemoved(position);
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getItemCount() {
-        return dataList.size();
-    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
