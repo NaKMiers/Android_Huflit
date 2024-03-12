@@ -8,15 +8,17 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
-
 import com.anpha.android_huflit.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //Lớp adapter ImageMessageAdapter mở rộng từ lớp RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -99,7 +101,7 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     // ViewHolder cho tin nhắn nhận với hình ảnh
     public static class ReceivedImageMessageViewHolder extends RecyclerView.ViewHolder {
         //Khai báo biến imageViewMessage, đại diện cho ImageView trong tin nhắn nhận
-        private ImageView imageViewMessage;
+        private GridView imageViewMessage;
         //Context truyền vào khi tạo mục viewHolder
         private Context context;
 
@@ -147,14 +149,14 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         public void bind(ImageMessage message) {
-            List<String> imageUrls = message.getImageUrls();
+            ArrayList<String> imageUrls = message.getImageUrls();
             if (imageUrls != null && !imageUrls.isEmpty()) {
-                String imageUrl = imageUrls.get(0); // Lấy đường dẫn URL đầu tiên từ danh sách
-                if (imageUrl != null && !imageUrl.isEmpty()) {
+//                String imageUrl = imageUrls.get(0); // Lấy đường dẫn URL đầu tiên từ danh sách
                     // Sử dụng thư viện Picasso để tải ảnh từ đường dẫn URL và hiển thị nó trong imageViewMessage
-                    Picasso.get().load(imageUrl).into(imageViewMessage);
-                }
+//                    Picasso.get().load(imageUrl).into(imageViewMessage);
+                ArrayAdapter<String> adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,imageUrls);
             }
+            
         }
     }
 }

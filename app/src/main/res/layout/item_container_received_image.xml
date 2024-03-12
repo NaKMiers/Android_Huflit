@@ -17,19 +17,29 @@
         android:paddingTop="8dp"
         android:paddingEnd="12dp"
         android:paddingBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_max="wrap"
         app:layout_constraintWidth_percent="0.8">
 
-        <ImageView
+        <GridView
             android:id="@+id/receivedImage"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:scaleType="fitCenter"
-            android:src="@drawable/boy"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:numColumns="2">
+
+        </GridView>
+        <!--        <ImageView-->
+        <!--            android:id="@+id/receivedImage"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:scaleType="fitCenter"-->
+        <!--            android:src="@drawable/boy"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent">-->
+        <!--            -->
+        <!--        </ImageView>-->
 
     </FrameLayout>
 

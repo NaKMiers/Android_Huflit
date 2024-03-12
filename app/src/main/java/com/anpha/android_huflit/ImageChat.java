@@ -81,7 +81,7 @@ public class ImageChat extends AppCompatActivity {
     String token, userId;
     int OptionSizeIndex = 0;
     ArrayList<Prompt> prompts = new ArrayList<>();
-    List<String> imageUrls  = new ArrayList<>();
+    ArrayList<String> imageUrls  = new ArrayList<>();
 
     OkHttpClient client = new OkHttpClient();
     private ArrayList<String> images;
@@ -451,9 +451,9 @@ public class ImageChat extends AppCompatActivity {
         adapter.notifyItemInserted(messages.size() - 1);
     }
 
-    private void addnewAIMessage(boolean sentByUser, List<String> imageUrls) {
+    private void addnewAIMessage(boolean sentByUser, ArrayList<String> imageUrls) {
         //Khởi tạo tin nhắn nhận từ AI với senbyUser là false (không do người dùng gửi) và link ảnh kiểu String
-        ImageMessage receivedImage = new ImageMessage(false, imageUrls);
+        ImageMessage receivedImage = new ImageMessage(sentByUser, imageUrls);
         // Thêm tin nhắn nhận vào cuối danh sách
         messages.add(receivedImage);
         // Thông báo cho Adapter biết rằng có một mục mới được thêm vào cuối danh sách
@@ -515,7 +515,6 @@ public class ImageChat extends AppCompatActivity {
                                         addNewMessage(prompt.text, true);
                                     } else {
                                         Log.d("Image: ", prompt.images.get(0));
-                                        addnewAIMessage(false,imageUrls);
                                     }
                                 }
 
@@ -642,14 +641,10 @@ public class ImageChat extends AppCompatActivity {
                                 if (Objects.requireNonNull(images).length() > 0) {
                                     for (int i = 0; i < images.length(); i++) {
                                         String imageUrl = images.optString(i);
-                                        if (i >= 0) {
-                                            txtHelp2.setText("");
-                                            imageUrls.add(imageUrl);
-                                            addnewAIMessage(false, imageUrls);
-
-                                        }
+                                        imageUrls.add(imageUrl);
                                         // sentByUser false là do AI gửi, link ảnh kiểu String imageUrl
                                     }
+                                    addnewAIMessage(false,imageUrls);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
