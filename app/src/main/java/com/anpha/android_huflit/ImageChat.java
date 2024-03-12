@@ -84,7 +84,8 @@ public class ImageChat extends AppCompatActivity {
     ArrayList<String> imageUrls  = new ArrayList<>();
 
     OkHttpClient client = new OkHttpClient();
-    private ArrayList<String> images;
+
+    int chunkSize = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -530,13 +531,12 @@ public class ImageChat extends AppCompatActivity {
                                     if (Objects.equals(prompt.from, "user")) {
                                         addNewMessage(prompt.text, true);
                                     } else {
-                                        int chunkSize = 2;
                                         ArrayList<String> imageUrls = prompt.getImages();
                                         for (int i = 0; i < imageUrls.size(); i += chunkSize) {
                                             ArrayList<String> imgUrls = new ArrayList<>();
 
                                             for (int j = 0; j < chunkSize; j++) {
-                                                if (j < imageUrls.size()) {
+                                                if (i + j < imageUrls.size()) {
                                                     imgUrls.add(imageUrls.get(j));
                                                 }
                                             }
@@ -664,6 +664,8 @@ public class ImageChat extends AppCompatActivity {
                                 // lấy ra mảng image urls
                                 JSONArray images = response.getJSONArray("images");
 
+
+
                                 // ở chỗ này, thay vì chỉ dùng images[0] thì hãy dùng vòng lặp trong trường hợp có nhiều hơn 1 image
 //                                if(Objects.requireNonNull(images).length() > 0) {
 //                                    String imageUrl = images.optString(0);
@@ -671,14 +673,14 @@ public class ImageChat extends AppCompatActivity {
 //                                    // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
 //                                    addnewAIMessage(false,imageUrl);
 //                                }
+                                Toast.makeText(ImageChat.this, String.valueOf(Objects.requireNonNull(images).length()), Toast.LENGTH_LONG).show();
 
-                                int chunkSize = 2;
                                 for (int i = 0; i < Objects.requireNonNull(images).length(); i+= chunkSize) {
                                     ArrayList<String> imgUrls = new ArrayList<>();
 
                                     for (int j = 0; j < chunkSize; j++) {
-                                        if (j < Objects.requireNonNull(images).length()) {
-                                            imgUrls.add(images.optString(j));
+                                        if (i + j < Objects.requireNonNull(images).length()) {
+                                            imgUrls.add(images.optString(i));
                                         }
                                     }
 
