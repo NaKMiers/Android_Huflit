@@ -60,7 +60,7 @@ public class TextChat extends AppCompatActivity {
     PopupWindow popupWindow;
     Toolbar toolbarChat;
 
-    ImageView btnSend, navigationIcon,imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon,imgChangetheme,imgDevinfo,imgSetting,imgAdmin;
+    ImageView btnSend, navigationIcon,imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon,imgChangetheme,imgDevinfo,imgAdmin;
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
@@ -125,8 +125,6 @@ public class TextChat extends AppCompatActivity {
         imgChangetheme=popupView.findViewById(R.id.imgChangetheme);
         txtDevinfo=popupView.findViewById(R.id.txtDevinfo);
         imgDevinfo=popupView.findViewById(R.id.imgDevinfo);
-        txtSetting=popupView.findViewById(R.id.txtSetting);
-        imgSetting=popupView.findViewById(R.id.imgSetting);
         imgAdmin=popupView.findViewById(R.id.imgAdmin);
         txtAdmin=popupView.findViewById(R.id.txtAdmin);
 
@@ -185,20 +183,6 @@ public class TextChat extends AppCompatActivity {
               @Override
               public void onClick(View v) {
                   Intent intent = new Intent(TextChat.this, ThemeView.class);
-                  startActivity(intent);
-              }
-          });
-          imgSetting.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  Intent intent = new Intent(TextChat.this,ForgotPassword.class);
-                  startActivity(intent);
-              }
-          });
-          txtSetting.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  Intent intent = new Intent(TextChat.this,ForgotPassword.class);
                   startActivity(intent);
               }
           });

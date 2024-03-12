@@ -116,12 +116,6 @@ public class ImageChat extends AppCompatActivity {
         /// Khởi tạo danh sách dữ liệu chatBox
         dataList = new ArrayList<>();
 
-        // Thêm các item vào danh sách dữ liệu
-        dataList.add(new ItemChatBox("Box1", userId, "image", "Hello 01"));
-        dataList.add(new ItemChatBox("Box2", userId, "image", "Hello 01"));
-        dataList.add(new ItemChatBox("Box3", userId, "image", "Hello 01"));
-        dataList.add(new ItemChatBox("Box4", userId, "image", "Hello 01"));
-
         // Khởi tạo Adapter và gán cho RecyclerView
         boxAdapter = new ChatBoxAdapter(dataList, this);
         imageChatBox.setAdapter(boxAdapter);
@@ -150,9 +144,9 @@ public class ImageChat extends AppCompatActivity {
         twIcon = popupView.findViewById(R.id.twIcon);
         pinIcon = popupView.findViewById(R.id.pinIcon);
         gitIcon = popupView.findViewById(R.id.gitIcon);
+
         txtAmount.setText(amount);
         txtSize.setText(size);
-        restoreValuesFromSharedPreferences();
 
 //        navigationIcon.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -190,7 +184,15 @@ public class ImageChat extends AppCompatActivity {
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
         token = preferences.getString("token", ""); //lưu trữ tên người dùng
         userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
+
+        amount = preferences.getString("amount", "1"); //lưu trữ tên người dùng
+        size = preferences.getString("size", "256x256"); //lưu trữ tên người dùng
         txtusername.setText(username); // đặt tên người dùng trong textview
+
+//        SharedPreferences.Editor editor = preferences.edit();
+//        editor.apply();
+        txtAmount.setText(amount);
+        txtSize.setText(size);
 
         //Khởi tạo các biến
         imageChatBox = findViewById(R.id.imageChatBox);
@@ -414,11 +416,11 @@ public class ImageChat extends AppCompatActivity {
         Size selectedSize = ImageSize[OptionSizeIndex];
         txtSize.setText(selectedSize.getWidth() + "x" + selectedSize.getHeight());
 
-        try {
-            GetUserPrompts("https://android-huflit-server.vercel.app");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            GetUserPrompts("https://android-huflit-server.vercel.app");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     public void handleSentImagePrompt(View view) throws IOException {
@@ -594,9 +596,17 @@ public class ImageChat extends AppCompatActivity {
     }
 
     void CreateImages(String url) throws IOException {
+
         // prevent empty prompt
         if (edtImgChat.getText().toString().trim() == "") return;
-        txtHelp2.setText("creating...");
+//        txtHelp2.setText("creating...");
+
+
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String amount = preferences.getString("amount", "1"); //lưu trữ tên người dùng
+        String size = preferences.getString("size", "256x256"); //lưu trữ tên người dùng
+
+        txtHelp2.setText(amount + " " + size);
 
         RequestBody formBody = new FormBody.Builder()
                 .add("prompt", edtImgChat.getText().toString().trim())
@@ -620,7 +630,7 @@ public class ImageChat extends AppCompatActivity {
                         @Override
                         public void run() {
                             String jsonString = myResponse;
-                            // txtHelp2.setText(jsonString);
+                             txtHelp2.setText(jsonString);
 
                             try {
                                 JSONObject json = new JSONObject(jsonString);
@@ -712,8 +722,15 @@ public class ImageChat extends AppCompatActivity {
             // Lấy giá trị từ txtAmount và txtSize
             amount = txtAmount.getText().toString();
             size = txtSize.getText().toString();
-            CreateImages("https://android-huflit-server.vercel.app");
-            saveValuesToSharedPreferences();
+
+            SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("amount", amount);
+            editor.putString("size", size);
+            editor.apply();
+
+////            CreateImages("https://android-huflit-server.vercel.app");
+//            saveValuesToSharedPreferences();
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -20,11 +20,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_max="wrap"
+        app:layout_constraintWidth_default="wrap"
         app:layout_constraintWidth_percent="0.8">
 
         <GridView
             android:id="@+id/receivedImageGrid"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numColumns="2">
         </GridView>
