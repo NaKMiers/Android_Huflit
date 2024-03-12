@@ -16,7 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anpha.android_huflit.R;
 
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.ViewHolder> {
     private List<ItemChatBox> dataList;
@@ -84,8 +91,43 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 // Xử lý sự kiện xóa
+                ItemChatBox item = dataList.get(position);
+                String itemId = item.get_id();
+
+                // Tạo yêu cầu DELETE
+                OkHttpClient client = new OkHttpClient();
+                String url = "https://android-huflit-server.vercel.app/box/" + itemId;
+                Request request = new Request.Builder()
+                        .url(url)
+                        .delete()
+                        .build();
+
+                // Gửi yêu cầu DELETE đến API
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        // Xử lý lỗi kết nối hoặc lỗi xảy ra trong quá trình gửi yêu cầu
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()) {
+                            // Xóa mục khỏi danh sách
+                                detekeItem(position);
+                            // Cập nhật giao diện người dùng
+                        } else {
+                            // Xử lý lỗi
+                        }
+                    }
+                });
             }
         });
+    }
+
+    private void detekeItem(int position){
+        dataList.remove(position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 
     @Override
