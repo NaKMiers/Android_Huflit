@@ -200,6 +200,13 @@ public class TextChat extends AppCompatActivity {
                   startActivity(intent);
               }
           });
+          txtAdmin.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(TextChat.this,AdminUser.class);
+                  startActivity(intent);
+              }
+          });
           txtDevinfo.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
@@ -207,10 +214,6 @@ public class TextChat extends AppCompatActivity {
                   startActivity(intent);
               }
           });
-
-
-
-
         //Mở popupWindow (chỉ set sự kiện được trong java)
         toolbarChat.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
