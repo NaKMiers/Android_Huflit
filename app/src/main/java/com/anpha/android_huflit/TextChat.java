@@ -134,7 +134,6 @@ public class TextChat extends AppCompatActivity {
         // Lấy vai trò của người dùng từ Shared Preferences
         SharedPreferences mypreferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String role = mypreferences.getString("role", "");
-
         // Kiểm tra và ẩn/hiển thị các phần tử dựa trên vai trò của người dùng
         if (role.equals("admin")) {
             // Nếu người dùng có vai trò là admin, hiển thị các phần tử imgAdmin và txtAdmin
@@ -145,6 +144,7 @@ public class TextChat extends AppCompatActivity {
             imgAdmin.setVisibility(View.GONE);
             txtAdmin.setVisibility(View.GONE);
         }
+
 
         navigationIcon.setOnClickListener(new View.OnClickListener() {
             @Override

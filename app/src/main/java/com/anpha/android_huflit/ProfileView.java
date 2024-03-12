@@ -169,10 +169,10 @@ public class ProfileView extends AppCompatActivity {
 //        }
     }
 
-    public void handleChangeProfileChange(View view) {
-        Intent intent = new Intent(ProfileView.this, ProfileChange.class);
-        startActivity(intent);
-    }
+//    public void handleChangeProfileChange(View view) {
+//        Intent intent = new Intent(ProfileView.this, ProfileChange.class);
+//        startActivity(intent);
+//    }
 
     // Method to handle profile view button click
 //    public void handleProfileView(View view) {

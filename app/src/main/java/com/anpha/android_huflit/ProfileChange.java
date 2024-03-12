@@ -51,9 +51,6 @@ public class ProfileChange extends AppCompatActivity {
             Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             // Set avatar bên profileChange thành hình ảnh Bitmap
             avatarProfileChange.setImageBitmap(bitmap);
-
-
-
         }
     }
 

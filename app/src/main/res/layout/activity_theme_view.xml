@@ -33,7 +33,7 @@
             android:id="@+id/pinIcon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="13dp"
             android:layout_weight="0.5"
             android:src="@drawable/hinhuser" />
 
@@ -41,7 +41,7 @@
             android:id="@+id/imageView13"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="13dp"
             android:layout_weight="0.5"
             android:src="@drawable/verified" />
 
@@ -49,7 +49,7 @@
             android:id="@+id/imageView12"
             android:layout_width="35dp"
             android:layout_height="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="13dp"
             android:layout_weight="0.5"
             android:src="@drawable/settings" />
 
@@ -57,16 +57,9 @@
             android:id="@+id/gitIcon"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginTop="13dp"
             android:layout_weight="0.5"
-            android:layout_marginTop="10dp"
             android:src="@drawable/information" />
-
-        <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            tools:layout_editor_absoluteY="117dp"
-            tools:layout_editor_absoluteX="339dp" />
 
     </LinearLayout>
 

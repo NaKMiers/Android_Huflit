@@ -65,13 +65,13 @@ public class ImageChat extends AppCompatActivity {
     //Khởi tạo List tin nhắn
     private List<ImageMessage> messages;
 
-    TextView txtHelp2,txtusername, txtAmount, txtSize;
+    TextView txtHelp2,txtusername, txtAmount, txtSize,txtAdminimg,txtDevinfo;
     EditText edtImgChat;
     NavigationView navigationView;
-    ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon, receivedImage, CrChat;
+    ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon, receivedImage, CrChat,imgAdminimg,imgDevinfo;
     PopupWindow popupWindow;
     Toolbar toolbarImage;
-    Button btnSave;
+    Button btnSave,btnLogout;
     DrawerLayout drawerLayout;
     ImageButton btnPlus1, btnInCr, btnMinus1, btnDes;
     int currentValue = 1;
@@ -107,9 +107,13 @@ public class ImageChat extends AppCompatActivity {
                 //Cho phép tương tác với các phần tử khác trên màn hình
                 true
         );
-
+        imgAdminimg=popupView.findViewById(R.id.imgAdminimg);
+        txtAdminimg=popupView.findViewById(R.id.txtAdminimg);
+         btnLogout=popupView.findViewById(R.id.btnLogOut);
         recyclerViewImage = findViewById(R.id.recyclerViewImage);
         txtusername=popupView.findViewById(R.id.txtusername);
+        imgDevinfo=popupView.findViewById(R.id.imgDevinfo);
+        txtDevinfo=popupView.findViewById(R.id.txtDevinfo);
 
         //Khởi tạo các biến
         imageChatBox = findViewById(R.id.imageChatBox);
@@ -148,6 +152,8 @@ public class ImageChat extends AppCompatActivity {
 
         txtAmount.setText(amount);
         txtSize.setText(size);
+        SharedPreferences mypreferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String role = mypreferences.getString("role", "");
 
 //        navigationIcon.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -166,7 +172,21 @@ public class ImageChat extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//
+        imgDevinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageChat.this, DevInfo.class);
+                startActivity(intent);
+            }
+        });
+       txtDevinfo.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(ImageChat.this, DevInfo.class);
+               startActivity(intent);
+           }
+       });
+
         toolbarImage.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -179,7 +199,20 @@ public class ImageChat extends AppCompatActivity {
                 return false;
             }
         });
-
+        txtAdminimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageChat.this,AdminUser.class);
+                startActivity(intent);
+            }
+        });
+        imgAdminimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageChat.this,AdminUser.class);
+                startActivity(intent);
+            }
+        });
         // lấy dữ liệu từ SharedPreferces
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
@@ -212,7 +245,16 @@ public class ImageChat extends AppCompatActivity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        // Kiểm tra và ẩn/hiển thị các phần tử dựa trên vai trò của người dùng
+        if (role.equals("admin")) {
+            // Nếu người dùng có vai trò là admin, hiển thị các phần tử imgAdmin và txtAdmin
+            imgAdminimg.setVisibility(View.VISIBLE);
+            txtAdminimg.setVisibility(View.VISIBLE);
+        } else {
+            // Nếu không phải admin, ẩn đi các phần tử imgAdmin và txtAdmin
+            imgAdminimg.setVisibility(View.GONE);
+            txtAdminimg.setVisibility(View.GONE);
+        }
 //        btnMinus1.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -282,9 +324,17 @@ public class ImageChat extends AppCompatActivity {
                 }
             }
         });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogOutUser();
+            }
+        });
 
     }
-
+    public void logOutUser(View view) {
+        LogOutUser();
+    }
     private void addBox(ItemChatBox box) {
         // Thêm các item vào danh sách dữ liệu
         dataList.add(box);
@@ -353,7 +403,17 @@ public class ImageChat extends AppCompatActivity {
             }
         });
     }
-
+    private void LogOutUser() {
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit(); // Sửa lỗi gán lại biến preferences
+//        editor.remove("token");
+        editor.clear();
+        editor.apply();
+        Intent intent = new Intent(ImageChat.this, Login.class);
+//         Xóa tất cả các hoạt động trước đó khỏi ngăn xếp và chuyển người dùng đến màn hình đăng nhập
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
     private void CreateImageBox() throws IOException {
         OkHttpClient client = new OkHttpClient();
 

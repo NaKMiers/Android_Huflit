@@ -217,5 +217,14 @@
                 android:src="@drawable/woman" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btnSaveavatar"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/buttonlogout"
+            android:text="SAVE" />
+
     </LinearLayout>
 </LinearLayout>
