@@ -451,7 +451,7 @@ public class ImageChat extends AppCompatActivity {
         adapter.notifyItemInserted(messages.size() - 1);
     }
 
-    private void addnewAIMessage(boolean sentByUser, ArrayList<String> imageUrls) {
+    private void addNewAIMessage(boolean sentByUser, ArrayList<String> imageUrls) {
         //Khởi tạo tin nhắn nhận từ AI với senbyUser là false (không do người dùng gửi) và link ảnh kiểu String
         ImageMessage receivedImage = new ImageMessage(sentByUser, imageUrls);
         // Thêm tin nhắn nhận vào cuối danh sách
@@ -511,7 +511,7 @@ public class ImageChat extends AppCompatActivity {
                                     if (Objects.equals(prompt.from, "user")) {
                                         addNewMessage(prompt.text, true);
                                     } else {
-                                        addnewAIMessage(false, prompt.getImages());
+                                        addNewAIMessage(false, prompt.getImages());
                                     }
                                 }
 
@@ -641,7 +641,7 @@ public class ImageChat extends AppCompatActivity {
                                         imageUrls.add(imageUrl);
                                         // sentByUser false là do AI gửi, link ảnh kiểu String imageUrl
                                     }
-                                    addnewAIMessage(false,imageUrls);
+                                    addNewAIMessage(false,imageUrls);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
