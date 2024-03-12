@@ -445,6 +445,8 @@ public class TextChat extends AppCompatActivity {
                     TextChat.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            txtHelp1.setText(myResponse);
+
                             try {
                                 JSONObject json = new JSONObject(myResponse);
                                 JSONObject completion = json.getJSONObject("completion");
