@@ -511,17 +511,8 @@ public class ImageChat extends AppCompatActivity {
 //            edtImgChat.setText("");
 
             CreatePrompt("https://android-huflit-server.vercel.app");
-
-        }
-    }
-
-    public void handleSendChatPrompt(View view) throws IOException {
-        String messageText = edtImgChat.getText().toString().trim();
-        if (!messageText.isEmpty()) {
-            txtHelp2.setText("");
-
-            CreatePrompt("https://android-huflit-server.vercel.app");
             CreateImages("https://android-huflit-server.vercel.app");
+
         }
     }
 
@@ -671,8 +662,9 @@ public class ImageChat extends AppCompatActivity {
                                 recyclerViewImage.scrollToPosition(messages.size() - 1);
                                 // clear text chat
                                 edtImgChat.setText("");
-                                CreateImages("https://android-huflit-server.vercel.app");
-                            } catch (JSONException  | IOException e ) {
+
+
+                            } catch (JSONException e ) {
                                 throw new RuntimeException(e);
                             }
                         }
@@ -691,24 +683,24 @@ public class ImageChat extends AppCompatActivity {
 
         // prevent empty prompt
         if (edtImgChat.getText().toString().trim() == "") return;
-//        txtHelp2.setText("creating...");
+        txtHelp2.setText("creating...");
 
 
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        String amount = preferences.getString("amount", "1"); //lưu trữ tên người dùng
-        String size = preferences.getString("size", "256x256"); //lưu trữ tên người dùng
+//        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+//        String amount = preferences.getString("amount", "1"); //lưu trữ tên người dùng
+//        String size = preferences.getString("size", "256x256"); //lưu trữ tên người dùng
 
         RequestBody formBody = new FormBody.Builder()
                 .add("prompt", edtImgChat.getText().toString().trim())
-                .add("amount", amount)
-                .add("size", size)
+                .add("amount", "1")
+                .add("size", "256x256")
 //                .add("chatId", "")
                 .build();
 
         Request request = new Request.Builder()
                 .url(url + "/image/create-images")
                 .post(formBody)
-                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
+                .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlYjNlMTczMGVkNzI0NzQ4YzI2N2UiLCJ1c2VybmFtZSI6Im5ha21pZXJzIiwiZW1haWwiOiJkaXdhczExODE1MUBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJ0aGVtZSI6MCwiaWF0IjoxNzEwMjYyOTc4fQ.8N6B_WZroS0iPe49U2xD59EOPQ6Sr5MryGTV9bpRJ88") // Add the authorization header with bearer token
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -719,23 +711,12 @@ public class ImageChat extends AppCompatActivity {
                     ImageChat.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            String jsonString = myResponse;
-
                             try {
-                                JSONObject json = new JSONObject(jsonString);
+                                JSONObject json = new JSONObject(myResponse);
                                 JSONObject response = json.getJSONObject("images");
                                 // lấy ra mảng image urls
                                 JSONArray images = response.getJSONArray("images");
 
-
-
-                                // ở chỗ này, thay vì chỉ dùng images[0] thì hãy dùng vòng lặp trong trường hợp có nhiều hơn 1 image
-//                                if(Objects.requireNonNull(images).length() > 0) {
-//                                    String imageUrl = images.optString(0);
-//
-//                                    // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
-//                                    addnewAIMessage(false,imageUrl);
-//                                }
 
                                 for (int i = 0; i < Objects.requireNonNull(images).length(); i+= chunkSize) {
                                     ArrayList<String> imgUrls = new ArrayList<>();
