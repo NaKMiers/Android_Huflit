@@ -56,7 +56,6 @@ import okhttp3.Response;
 public class ImageChat extends AppCompatActivity {
     private RecyclerView recyclerViewImage, imageChatBox;
     //Khởi tạo adapter
-
     private ChatBoxAdapter boxAdapter;
 
     private ImageMessageAdapter adapter;
@@ -113,6 +112,7 @@ public class ImageChat extends AppCompatActivity {
         imageChatBox.setLayoutManager(new LinearLayoutManager(this));
         /// Khởi tạo danh sách dữ liệu chatBox
         dataList = new ArrayList<>();
+
         // Thêm các item vào danh sách dữ liệu
         dataList.add(new ItemChatBox("Box 1"));
         dataList.add(new ItemChatBox("Box 2"));
