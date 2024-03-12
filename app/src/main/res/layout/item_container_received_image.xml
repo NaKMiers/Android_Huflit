@@ -5,22 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
-    android:layout_marginTop="8dp"
     android:padding="4dp">
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="12dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="12dp"
-        android:paddingBottom="8dp">
+        android:layout_height="wrap_content">
 
         <GridView
             android:id="@+id/receivedImageGrid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:horizontalSpacing="8dp"
             android:numColumns="2"/>
     </FrameLayout>
 
@@ -28,6 +24,7 @@
         android:id="@+id/imageOption"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:visibility="gone"
         android:src="@drawable/menu_vertical" />
 
 

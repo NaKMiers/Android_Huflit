@@ -60,7 +60,7 @@ public class TextChat extends AppCompatActivity {
     PopupWindow popupWindow;
     Toolbar toolbarChat;
 
-    ImageView btnSend, navigationIcon,imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon,imgChangetheme,imgDevinfo,imgAdmin;
+    ImageView btnSend, navigationIcon,imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon,imgChangetheme,imgDevinfo,imgAdmin, CrChatBoxBtn;
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
@@ -87,6 +87,7 @@ public class TextChat extends AppCompatActivity {
         txtMode = findViewById(R.id.txtMode);
         chatBox = findViewById(R.id.chatBox);
         txtHiUser=findViewById(R.id.txtHiUser);
+        CrChatBoxBtn = findViewById(R.id.CrChatBoxBtn);
 
 
 
@@ -253,6 +254,17 @@ public class TextChat extends AppCompatActivity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        CrChatBoxBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    CreateImageBox();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     private void requireAuth() {
@@ -424,9 +436,63 @@ public class TextChat extends AppCompatActivity {
             }
         });
     }
+
+    private void CreateImageBox() throws IOException {
+        OkHttpClient client = new OkHttpClient();
+
+        String url = "https://android-huflit-server.vercel.app/box/create-box/image";
+
+        RequestBody formBody = new FormBody.Builder()
+                .add("prompt", "Nothing")
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .addHeader("Authorization", "Bearer " + token)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+
+                    TextChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject json = new JSONObject(myResponse);
+                                JSONObject boxJSON = json.getJSONObject("newBox");
+
+                                // get prompt values
+                                String _id = boxJSON.optString("_id");
+                                String userId = boxJSON.optString("userId");
+                                String title = boxJSON.optString("title");
+//                                String createdAt = boxJSON.optString("createdAt");
+//                                String updatedAt = boxJSON.optString("updatedAt");
+
+                                ItemChatBox newBox = new ItemChatBox(_id, userId, "chat", title);
+                                addBox(newBox);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     void CreatePrompt(String url) throws IOException {
         // prevent empty prompt
         if (edtTextChat.getText().toString().trim() == "") return;
+
 
         RequestBody formBody = new FormBody.Builder()
 //                .add("chatId", "")
