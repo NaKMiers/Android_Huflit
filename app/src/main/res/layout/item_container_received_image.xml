@@ -1,45 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
     android:layout_marginLeft="10dp"
+    android:layout_marginTop="8dp"
     android:padding="4dp">
 
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="0dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_received_message"
         android:paddingStart="12dp"
         android:paddingTop="8dp"
         android:paddingEnd="12dp"
-        android:paddingBottom="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="wrap"
-        app:layout_constraintWidth_default="wrap"
-        app:layout_constraintWidth_percent="0.8">
+        android:paddingBottom="8dp">
 
         <GridView
             android:id="@+id/receivedImageGrid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numColumns="2">
-        </GridView>
+            android:numColumns="2"/>
     </FrameLayout>
 
     <ImageView
         android:id="@+id/imageOption"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_centerVertical="true"
-        android:src="@drawable/menu_vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
-        app:layout_constraintStart_toEndOf="@id/frameLayout"
-        app:layout_constraintTop_toTopOf="@id/frameLayout" />
+        android:src="@drawable/menu_vertical" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

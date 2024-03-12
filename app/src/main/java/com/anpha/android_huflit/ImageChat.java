@@ -630,7 +630,6 @@ public class ImageChat extends AppCompatActivity {
                         @Override
                         public void run() {
                             String jsonString = myResponse;
-                             txtHelp2.setText(jsonString);
 
                             try {
                                 JSONObject json = new JSONObject(jsonString);

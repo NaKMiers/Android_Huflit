@@ -103,7 +103,6 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     // ViewHolder cho tin nhắn nhận với hình ảnh
     public static class ReceivedImageMessageViewHolder extends RecyclerView.ViewHolder {
         //Khai báo biến imageViewMessage, đại diện cho ImageView trong tin nhắn nhận
-        private ImageView imageViewMessage;
         private GridView receivedImageGrid;
         //Context truyền vào khi tạo mục viewHolder
         private Context context;

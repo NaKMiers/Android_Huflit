@@ -75,7 +75,7 @@
                 android:src="@drawable/owl" />
 
             <TextView
-                android:id="@+id/txtHiuser"
+                android:id="@+id/txtHiUser"
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="68dp"

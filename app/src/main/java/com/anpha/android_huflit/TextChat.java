@@ -64,7 +64,7 @@ public class TextChat extends AppCompatActivity {
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
-    TextView txtHelp1, txtMode, txtusername,txtChangetheme,txtDevinfo,txtAdmin,txtHiuser;
+    TextView txtHelp1, txtMode, txtusername,txtChangetheme,txtDevinfo,txtAdmin,txtHiUser;
      Button btnLogOut;
     ArrayList<Prompt> prompts = new ArrayList<>();
 
@@ -77,19 +77,16 @@ public class TextChat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_chat);
 
-
-
         // mapping
         toolbarChat = findViewById(R.id.toolbarChat);
         btnSend = findViewById(R.id.btnSendImg);
         edtTextChat = findViewById(R.id.edtTextChat);
-        txtHelp1 = findViewById(R.id.txtHelp1);
         recyclerView = findViewById(R.id.recyclerViewImage);
         navigationIcon = findViewById(R.id.navigationIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
         txtMode = findViewById(R.id.txtMode);
         chatBox = findViewById(R.id.chatBox);
-        txtHiuser=findViewById(R.id.txtHiuser);
+        txtHiUser=findViewById(R.id.txtHiUser);
 
 
 
@@ -237,7 +234,7 @@ public class TextChat extends AppCompatActivity {
         token = preferences.getString("token", ""); //lưu trữ tên người dùng
         userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
         txtusername.setText(username); // đặt tên người dùng trong textview
-        txtHiuser.setText(" Hi " +username );
+        txtHiUser.setText(" Hi " + username );
 
 
         chatBox.setLayoutManager(new LinearLayoutManager(this));
@@ -291,7 +288,7 @@ public class TextChat extends AppCompatActivity {
         }
 
         if (!messageText.isEmpty()) {
-            txtHelp1.setText("");
+            txtHiUser.setText("");
 
             CreatePrompt("https://android-huflit-server.vercel.app");
             CreateCompletion("https://android-huflit-server.vercel.app");
@@ -492,7 +489,7 @@ public class TextChat extends AppCompatActivity {
     void CreateCompletion(String url) throws IOException {        // prevent empty prompt
         if (edtTextChat.getText().toString().trim() == "") return;
 
-        txtHelp1.setText("Generating...");
+        txtHiUser.setText("Generating...");
 
         RequestBody formBody = new FormBody.Builder()
                 .add("prompt", edtTextChat.getText().toString().trim())
@@ -516,7 +513,7 @@ public class TextChat extends AppCompatActivity {
                     TextChat.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            txtHelp1.setText(myResponse);
+                            txtHiUser.setText(myResponse);
 
                             try {
                                 JSONObject json = new JSONObject(myResponse);
@@ -540,7 +537,7 @@ public class TextChat extends AppCompatActivity {
                                 // clear text chat
                                 edtTextChat.setText("");
                                 // clear dòng chữ "How can I help you?"
-                                txtHelp1.setText("");
+                                txtHiUser.setText("");
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
