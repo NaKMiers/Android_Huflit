@@ -10,8 +10,7 @@
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:background="#eee">
+        android:layout_height="wrap_content">
 
         <GridView
             android:id="@+id/receivedImageGrid"

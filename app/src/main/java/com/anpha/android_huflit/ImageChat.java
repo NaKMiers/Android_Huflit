@@ -274,7 +274,11 @@ public class ImageChat extends AppCompatActivity {
         CrChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreatChat();
+                try {
+                    CreateImageBox();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -293,7 +297,6 @@ public class ImageChat extends AppCompatActivity {
             Intent intent = new Intent(ImageChat.this, Login.class);
             startActivity(intent);
             finish();
-            return;
         }
     }
     private void GetImageBoxes(String url){
@@ -339,13 +342,7 @@ public class ImageChat extends AppCompatActivity {
                                     ItemChatBox newBox = new ItemChatBox(_id, userId, "image", title);
                                     addBox(newBox);
                                 }
-                                // show prompts after get
-                                for(Prompt prompt: prompts) {
-                                    Log.d("Type", prompt.type);
-                                    addNewMessage(prompt.text, Objects.equals(prompt.from, "user"));
-                                }
-
-                            }catch (JSONException e)
+                            } catch (JSONException e)
                             {
                                 throw new RuntimeException(e);
                             }
@@ -355,37 +352,57 @@ public class ImageChat extends AppCompatActivity {
             }
         });
     }
-    private void CreatChat(){
+
+    private void CreateImageBox() throws IOException {
         OkHttpClient client = new OkHttpClient();
 
-        String url ="https://android-huflit-server.vercel.app/box/create-box/:type";
+        String url = "https://android-huflit-server.vercel.app/box/create-box/image";
 
-        RequestBody requestBody = RequestBody.create(null, new byte[0]);
+        RequestBody formBody = new FormBody.Builder()
+                .add("prompt", "Nothing")
+                .build();
 
         Request request = new Request.Builder()
                 .url(url)
-                .post(requestBody).build();
+                .post(formBody)
+                .addHeader("Authorization", "Bearer " + token)
+                .build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+
+                    ImageChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject json = new JSONObject(myResponse);
+                                JSONObject boxJSON = json.getJSONObject("newBox");
+
+                                // get prompt values
+                                String _id = boxJSON.optString("_id");
+                                String userId = boxJSON.optString("userId");
+                                String title = boxJSON.optString("title");
+//                                String createdAt = boxJSON.optString("createdAt");
+//                                String updatedAt = boxJSON.optString("updatedAt");
+
+                                ItemChatBox newBox = new ItemChatBox(_id, userId, "image", title);
+                                addBox(newBox);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()){
-                    ChatBox newChatBox = new ChatBox();
-                }
-                else {
-
-                }
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
             }
         });
-
-        // lấy dữ liệu từ SharedPreferces
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        String username = preferences.getString("username", ""); //lưu trữ tên người dùng
-        txtusername.setText(username); // đặt tên người dùng trong textview
     }
 
 
@@ -557,7 +574,7 @@ public class ImageChat extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(url + "/image/create-prompt")
                 .post(formBody)
-                .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWQ1NmVmZWViZTdkNjA2MDk0MTBkNjgiLCJ1c2VybmFtZSI6ImdiYW8xMjMzIiwiZW1haWwiOiJnYmFvQGZhc2ZkYXMiLCJyb2xlIjoidXNlciIsInRoZW1lIjowLCJpYXQiOjE3MDg0ODY0NDN9.S31Nw2bqoH2YWkoc0YD-SC0fF4EKpvRiMOgjqPSDzl0") // Add the authorization header with bearer token
+                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -618,8 +635,6 @@ public class ImageChat extends AppCompatActivity {
         String amount = preferences.getString("amount", "1"); //lưu trữ tên người dùng
         String size = preferences.getString("size", "256x256"); //lưu trữ tên người dùng
 
-        txtHelp2.setText(amount + " " + size);
-
         RequestBody formBody = new FormBody.Builder()
                 .add("prompt", edtImgChat.getText().toString().trim())
                 .add("amount", amount)
@@ -630,7 +645,7 @@ public class ImageChat extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(url + "/image/create-images")
                 .post(formBody)
-                .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWQ1NmVmZWViZTdkNjA2MDk0MTBkNjgiLCJ1c2VybmFtZSI6ImdiYW8xMjMzIiwiZW1haWwiOiJnYmFvQGZhc2ZkYXMiLCJyb2xlIjoidXNlciIsInRoZW1lIjowLCJpYXQiOjE3MDg0ODY0NDN9.S31Nw2bqoH2YWkoc0YD-SC0fF4EKpvRiMOgjqPSDzl0") // Add the authorization header with bearer token
+                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override

@@ -191,7 +191,7 @@
                     android:textSize="16sp" />
 
                 <ImageView
-                    android:id="@+id/imageView17"
+                    android:id="@+id/CrChatBoxBtn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
