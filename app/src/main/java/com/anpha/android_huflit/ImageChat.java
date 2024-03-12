@@ -426,8 +426,9 @@ public class ImageChat extends AppCompatActivity {
         if (!messageText.isEmpty()) {
             txtHelp2.setText("");
 //            edtImgChat.setText("");
+
             CreatePrompt("https://android-huflit-server.vercel.app");
-            CreateImages("https://android-huflit-server.vercel.app");
+
         }
     }
 
@@ -580,8 +581,8 @@ public class ImageChat extends AppCompatActivity {
                                 recyclerViewImage.scrollToPosition(messages.size() - 1);
                                 // clear text chat
                                 edtImgChat.setText("");
-
-                            } catch (JSONException e) {
+                                CreateImages("https://android-huflit-server.vercel.app");
+                            } catch (JSONException  | IOException e ) {
                                 throw new RuntimeException(e);
                             }
                         }
