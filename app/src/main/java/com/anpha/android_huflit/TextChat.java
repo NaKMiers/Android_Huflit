@@ -125,8 +125,7 @@ public class TextChat extends AppCompatActivity {
         imgChangetheme=popupView.findViewById(R.id.imgChangetheme);
         txtDevinfo=popupView.findViewById(R.id.txtDevinfo);
         imgDevinfo=popupView.findViewById(R.id.imgDevinfo);
-        txtSetting=popupView.findViewById(R.id.txtSetting);
-        imgSetting=popupView.findViewById(R.id.imgSetting);
+
         imgAdmin=popupView.findViewById(R.id.imgAdmin);
         txtAdmin=popupView.findViewById(R.id.txtAdmin);
 
@@ -188,20 +187,6 @@ public class TextChat extends AppCompatActivity {
                   startActivity(intent);
               }
           });
-          imgSetting.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  Intent intent = new Intent(TextChat.this,ForgotPassword.class);
-                  startActivity(intent);
-              }
-          });
-          txtSetting.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  Intent intent = new Intent(TextChat.this,ForgotPassword.class);
-                  startActivity(intent);
-              }
-          });
           imgChangetheme.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
@@ -216,6 +201,20 @@ public class TextChat extends AppCompatActivity {
                   startActivity(intent);
               }
           });
+          imgAdmin.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(TextChat.this,AdminUser.class);
+                  startActivity(intent);
+              }
+          });
+          txtAdmin.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(TextChat.this,AdminUser.class);
+                  startActivity(intent);
+              }
+          });
           txtDevinfo.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
@@ -223,10 +222,6 @@ public class TextChat extends AppCompatActivity {
                   startActivity(intent);
               }
           });
-
-
-
-
         //Mở popupWindow (chỉ set sự kiện được trong java)
         toolbarChat.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

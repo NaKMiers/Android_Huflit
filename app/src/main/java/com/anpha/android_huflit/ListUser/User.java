@@ -3,27 +3,27 @@ package com.anpha.android_huflit.ListUser;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private int imageUser;
     private String IDUser;
     private String UserName;
     private String EmailUser;
+    private String Avatar;
 
     public User() {
     }
 
-    public User(int imageUser, String IDUser, String userName, String emailUser) {
-        this.imageUser = imageUser;
+    public User(String IDUser, String userName, String emailUser, String avatar) {
         this.IDUser = IDUser;
-        this.UserName = userName;
-        this.EmailUser = emailUser;
+        UserName = userName;
+        EmailUser = emailUser;
+        Avatar = avatar;
     }
 
-    public int getImageUser() {
-        return imageUser;
+    public String getAvatar() {
+        return Avatar;
     }
 
-    public void setImageUser(int imageUser) {
-        this.imageUser = imageUser;
+    public void setAvatar(String avatar) {
+        Avatar = avatar;
     }
 
     public String getIDUser() {
