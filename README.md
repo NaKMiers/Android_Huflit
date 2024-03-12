@@ -100,9 +100,9 @@ Reset Password(post): /auth/reset-password
 
 ### BOX
 
-Get Boxes(get): /box/get-boxes/:type
+Get Boxes(get): /box/get-boxes/:type (type là "image" hoặc "chat")
 
-Create Box(post): /box/create-box/:type
+Create Box(post): /box/create-box/:type  (type là "image" hoặc "chat")
 
 Edit Box(patch): /box/:id
 (title)
