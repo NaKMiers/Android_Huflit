@@ -24,8 +24,9 @@
         android:layout_marginTop="100dp"
         android:background="@drawable/custom_edt"
         android:drawableLeft="@drawable/icon_mail"
+        android:drawablePadding="8dp"
         android:ems="10"
-        android:hint=" Email: "
+        android:hint="Email: "
         android:inputType="textEmailAddress"
         android:paddingStart="20dp"
         android:textAlignment="viewStart"
@@ -41,8 +42,9 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/custom_edt"
         android:drawableLeft="@drawable/icon_user"
+        android:drawablePadding="8dp"
         android:ems="10"
-        android:hint=" Username: "
+        android:hint="Username: "
         android:inputType="text"
         android:paddingStart="20dp"
         android:textAlignment="viewStart"
@@ -58,8 +60,9 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/custom_edt"
         android:drawableLeft="@drawable/icon_khoa"
+        android:drawablePadding="8dp"
         android:ems="10"
-        android:hint=" Password: "
+        android:hint="Password: "
         android:inputType="textPassword"
         android:paddingStart="20dp"
         android:textAlignment="viewStart"
@@ -75,8 +78,9 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/custom_edt"
         android:drawableLeft="@drawable/icon_khoa"
+        android:drawablePadding="8dp"
         android:ems="10"
-        android:hint=" Password again: "
+        android:hint="Password again: "
         android:inputType="textPassword"
         android:paddingStart="20dp"
         android:textAlignment="viewStart"
@@ -128,8 +132,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtemailprofilechange"
         app:layout_constraintTop_toBottomOf="@+id/btnregister" />
-
-
 
     <TextView
         android:id="@+id/textView15"

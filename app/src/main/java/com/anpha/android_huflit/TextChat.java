@@ -29,6 +29,7 @@ import com.anpha.android_huflit.ChatBox.ItemChatBox;
 import com.anpha.android_huflit.Message.Message;
 import com.anpha.android_huflit.Message.MessageAdapter;
 import com.anpha.android_huflit.Models.Prompt;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -131,6 +132,7 @@ public class TextChat extends AppCompatActivity {
         edtTextChat.requestFocus();
         //Thiết lập con trỏ ở cuối văn bản EditText
         edtTextChat.setSelection(edtTextChat.getText().length());
+
         // Lấy vai trò của người dùng từ Shared Preferences
         SharedPreferences mypreferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String role = mypreferences.getString("role", "");
@@ -234,6 +236,9 @@ public class TextChat extends AppCompatActivity {
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
         token = preferences.getString("token", ""); //lưu trữ tên người dùng
         userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
+        String avatar = preferences.getString("avatar", "");
+        Picasso.get().load("https://android-huflit-server.vercel.app" + avatar).into(imgavatar);
+
         txtusername.setText(username); // đặt tên người dùng trong textview
         txtHiUser.setText(" Hi " + username );
 

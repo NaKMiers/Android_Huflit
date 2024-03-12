@@ -40,6 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -218,6 +219,8 @@ public class ImageChat extends AppCompatActivity {
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
         token = preferences.getString("token", ""); //lưu trữ tên người dùng
         userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
+        String avatar = preferences.getString("avatar", "");
+        Picasso.get().load("https://android-huflit-server.vercel.app" + avatar).into(imgavatar);
 
         amount = preferences.getString("amount", "1"); //lưu trữ tên người dùng
         size = preferences.getString("size", "256x256"); //lưu trữ tên người dùng

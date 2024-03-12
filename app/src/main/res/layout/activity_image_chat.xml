@@ -32,19 +32,19 @@
                 android:onClick="openSidebarImage"
                 android:src="@drawable/altsidebar" />
 
-            <ImageView
-                android:id="@+id/userIcon"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="30dp"
-                android:src="@drawable/user1" />
+<!--            <ImageView-->
+<!--                android:id="@+id/userIcon"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="25dp"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:src="@drawable/user1" />-->
 
-            <ImageView
-                android:id="@+id/chatIcon"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="15dp"
-                android:src="@drawable/chat" />
+<!--            <ImageView-->
+<!--                android:id="@+id/chatIcon"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="25dp"-->
+<!--                android:layout_marginLeft="15dp"-->
+<!--                android:src="@drawable/chat" />-->
 
             <TextView
                 android:id="@+id/txtMode2"
@@ -150,6 +150,7 @@
         android:visibility="visible">
 
         <LinearLayout
+            android:paddingTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -193,7 +194,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
-                android:background="#E3E3E3"
+                android:background="@drawable/rounded_corners"
                 android:orientation="vertical">
 
                 <TextView
@@ -214,7 +215,7 @@
                     <ImageButton
                         android:id="@+id/btnMinus1"
                         android:layout_width="45dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:backgroundTint="#E3E3E3"
