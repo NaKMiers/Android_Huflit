@@ -513,7 +513,19 @@ public class ImageChat extends AppCompatActivity {
                                     if (Objects.equals(prompt.from, "user")) {
                                         addNewMessage(prompt.text, true);
                                     } else {
-                                        addNewAIMessage(false, prompt.getImages());
+                                        int chunkSize = 2;
+                                        ArrayList<String> imageUrls = prompt.getImages();
+                                        for (int i = 0; i < imageUrls.size(); i += chunkSize) {
+                                            ArrayList<String> imgUrls = new ArrayList<>();
+
+                                            for (int j = 0; j < chunkSize; j++) {
+                                                if (j < imageUrls.size()) {
+                                                    imgUrls.add(imageUrls.get(j));
+                                                }
+                                            }
+
+                                            addNewAIMessage(false, imgUrls);
+                                        }
                                     }
                                 }
 
@@ -644,13 +656,18 @@ public class ImageChat extends AppCompatActivity {
 //                                    // tempImageView chỉ là hiển thị tạm thời thôi, m tự chỉnh cho nó hiển thị ở đúng vị trí
 //                                    addnewAIMessage(false,imageUrl);
 //                                }
-                                if (Objects.requireNonNull(images).length() > 0) {
-                                    for (int i = 0; i < images.length(); i++) {
-                                        String imageUrl = images.optString(i);
-                                        imageUrls.add(imageUrl);
-                                        // sentByUser false là do AI gửi, link ảnh kiểu String imageUrl
+
+                                int chunkSize = 2;
+                                for (int i = 0; i < Objects.requireNonNull(images).length(); i+= chunkSize) {
+                                    ArrayList<String> imgUrls = new ArrayList<>();
+
+                                    for (int j = 0; j < chunkSize; j++) {
+                                        if (j < Objects.requireNonNull(images).length()) {
+                                            imgUrls.add(images.optString(j));
+                                        }
                                     }
-                                    addNewAIMessage(false,imageUrls);
+
+                                    addNewAIMessage(false, imgUrls);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 class ImageGridAdapter extends ArrayAdapter<String> {
-    private Context context;
+    private Activity context;
     private ArrayList<String> mImageUrls;
 
     public ImageGridAdapter(Activity context, ArrayList<String> imageUrls) {
