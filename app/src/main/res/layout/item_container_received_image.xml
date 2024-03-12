@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
-    android:padding="4dp">
+    android:padding="4dp"
+    >
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -17,15 +18,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:horizontalSpacing="8dp"
-            android:numColumns="2"/>
+            android:numColumns="2" />
     </FrameLayout>
+
 
     <ImageView
         android:id="@+id/imageOption"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:visibility="gone"
-        android:src="@drawable/menu_vertical" />
-
+        android:layout_gravity="center|left"
+        android:src="@drawable/menu_vertical"
+        android:visibility="visible" />
 
 </LinearLayout>
