@@ -64,7 +64,7 @@ public class TextChat extends AppCompatActivity {
     EditText edtTextChat;
 
     DrawerLayout drawerLayout;
-    TextView txtHelp1, txtMode, txtusername,txtChangetheme,txtDevinfo,txtSetting,txtAdmin;
+    TextView txtHelp1, txtMode, txtusername,txtChangetheme,txtDevinfo,txtAdmin,txtHiuser;
      Button btnLogOut;
     ArrayList<Prompt> prompts = new ArrayList<>();
 
@@ -89,6 +89,7 @@ public class TextChat extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         txtMode = findViewById(R.id.txtMode);
         chatBox = findViewById(R.id.chatBox);
+        txtHiuser=findViewById(R.id.txtHiuser);
 
 
 
@@ -236,6 +237,8 @@ public class TextChat extends AppCompatActivity {
         token = preferences.getString("token", ""); //lưu trữ tên người dùng
         userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
         txtusername.setText(username); // đặt tên người dùng trong textview
+        txtHiuser.setText(" Hi " +username );
+
 
         chatBox.setLayoutManager(new LinearLayoutManager(this));
         // Khởi tạo danh sách dữ liệu
@@ -261,8 +264,8 @@ public class TextChat extends AppCompatActivity {
         if (userId == null || userId == "") {
             Intent intent = new Intent(TextChat.this, Login.class);
             startActivity(intent);
-            finish();
-            return;
+//            finish();
+//            return;
         }
     }
 
@@ -273,7 +276,7 @@ public class TextChat extends AppCompatActivity {
         editor.clear();
         editor.apply();
         Intent intent = new Intent(TextChat.this, TextChat.class);
-        // Xóa tất cả các hoạt động trước đó khỏi ngăn xếp và chuyển người dùng đến màn hình đăng nhập
+//         Xóa tất cả các hoạt động trước đó khỏi ngăn xếp và chuyển người dùng đến màn hình đăng nhập
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
