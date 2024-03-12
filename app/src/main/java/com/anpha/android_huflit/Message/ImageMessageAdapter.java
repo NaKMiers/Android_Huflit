@@ -3,6 +3,7 @@ package com.anpha.android_huflit.Message;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import com.squareup.picasso.Picasso;
 import androidx.annotation.NonNull;
 import com.anpha.android_huflit.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,14 +103,15 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     // ViewHolder cho tin nhắn nhận với hình ảnh
     public static class ReceivedImageMessageViewHolder extends RecyclerView.ViewHolder {
         //Khai báo biến imageViewMessage, đại diện cho ImageView trong tin nhắn nhận
-        private GridView imageViewMessage;
+//        private GridView imageViewMessage;
+        private ImageView imageViewMessage;
         //Context truyền vào khi tạo mục viewHolder
         private Context context;
 
         public ReceivedImageMessageViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             //Tìm kiếm và tham chiếu đến phần tử có id receivedImage (imageView)
-            imageViewMessage = itemView.findViewById(R.id.receivedImage);
+            imageViewMessage = itemView.findViewById(R.id.imageItemMessageView);
             this.context = context;
             //Tìm kiếm và tham chiếu đến phần tử có id imageOption(icon 3 chấm)
             ImageView imageOption = itemView.findViewById(R.id.imageOption);
@@ -149,15 +152,20 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         public void bind(ImageMessage message) {
-            ArrayList<String> imageUrls = message.getImageUrls();
+//            ArrayList<String> imageUrls = message.getImageUrls();
+//
+//            if (imageUrls != null && !imageUrls.isEmpty()) {
+//                // Create and set adapter for GridView
+//                ImageGridAdapter adapter = new ImageGridAdapter(context, imageUrls);
+//                imageViewMessage.setAdapter(adapter);
+//            }
 
-            if (imageUrls != null && !imageUrls.isEmpty()) {
-//                String imageUrl = imageUrls.get(0); // Lấy đường dẫn URL đầu tiên từ danh sách
-                    // Sử dụng thư viện Picasso để tải ảnh từ đường dẫn URL và hiển thị nó trong imageViewMessage
-//                    Picasso.get().load(imageUrl).into(imageViewMessage);
-//                ArrayAdapter<String> adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,imageUrls);
+            ArrayList<String> imageUrls = message.getImageUrls();
+            String imageUrl = imageUrls.get(0);
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                Picasso.get().load(imageUrl).into(imageViewMessage);
             }
-            
         }
+
     }
 }

@@ -12,12 +12,6 @@ public class ImageMessage {
     // Danh sách các đường dẫn URL hình ảnh
     private ArrayList<String> imageUrls;
 
-    public ImageMessage() {
-        this.text = text;
-        this.sentByUser = sentByUser;
-        this.imageUrls = imageUrls;
-    }
-
     // Constructor cho tin nhắn người dùng gửi
     public ImageMessage(String text, boolean sentByUser) {
         this.text = text;

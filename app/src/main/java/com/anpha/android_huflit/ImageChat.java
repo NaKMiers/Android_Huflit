@@ -467,8 +467,6 @@ public class ImageChat extends AppCompatActivity {
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
-
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
@@ -490,9 +488,9 @@ public class ImageChat extends AppCompatActivity {
                                     String type = prompt.optString("type");
                                     String from = prompt.optString("from");
                                     String text = prompt.optString("text");
-                                    String chatId = prompt.optString("chatId");
-                                    String createdAt = prompt.optString("createdAt");
-                                    String updatedAt = prompt.optString("updatedAt");
+//                                    String chatId = prompt.optString("chatId");
+//                                    String createdAt = prompt.optString("createdAt");
+//                                    String updatedAt = prompt.optString("updatedAt");
                                     JSONArray imagesArray = prompt.optJSONArray("images");
 
                                     // Convert JSONArray to ArrayList<String>
@@ -507,14 +505,13 @@ public class ImageChat extends AppCompatActivity {
                                     Prompt newPrompt = new Prompt(_id, userId, type, from, text, images);
                                     prompts.add(newPrompt);
                                 }
-
+//
                                 // show prompts after get
                                 for (Prompt prompt : prompts) {
-                                    Log.d("Type", prompt.type);
                                     if (Objects.equals(prompt.from, "user")) {
                                         addNewMessage(prompt.text, true);
                                     } else {
-                                        Log.d("Image: ", prompt.images.get(0));
+                                        addnewAIMessage(false, prompt.getImages());
                                     }
                                 }
 
