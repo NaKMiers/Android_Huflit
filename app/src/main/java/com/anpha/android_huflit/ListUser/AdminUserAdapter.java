@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.anpha.android_huflit.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -22,9 +23,9 @@ public class AdminUserAdapter extends ArrayAdapter<User> {
     ArrayList<User> userList;
     int IdLayout;
 
-    public AdminUserAdapter(@NonNull Activity context, int IdLayout, ArrayList<User> userList) {
-        super(context, IdLayout);
-        this.context=context;
+    public AdminUserAdapter(Activity context, int IdLayout, ArrayList<User> userList) {
+        super(context, IdLayout, userList);
+        this.context =  context;
         this.IdLayout = IdLayout;
         this.userList = userList;
     }
@@ -32,25 +33,21 @@ public class AdminUserAdapter extends ArrayAdapter<User> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater layoutInflater = this.context.getLayoutInflater();
-        View customView = layoutInflater.inflate(R.layout.item_user, null);
+        LayoutInflater inflater = context.getLayoutInflater();
+        convertView = inflater.inflate(IdLayout, null);
 
-//        ImageView imageUser = customView.findViewById(R.id.imageUser);
-//        TextView IDUser =   customView.findViewById(R.id.IDUser);
-//        TextView UserName = customView.findViewById(R.id.UserName);
-//        TextView EmailUser = customView.findViewById(R.id.EmailUser);
         User user = userList.get(position);
 //
         ImageView avatar = convertView.findViewById(R.id.imageUser);
-        TextView IDUser =   customView.findViewById(R.id.IDUser);
-        TextView UserName = customView.findViewById(R.id.UserName);
-        TextView EmailUser = customView.findViewById(R.id.EmailUser);
+        TextView IDUser = convertView.findViewById(R.id.IDUser);
+        TextView UserName = convertView.findViewById(R.id.UserName);
+        TextView EmailUser = convertView.findViewById(R.id.EmailUser);
 
+        Picasso.get().load("https://android-huflit-server.vercel.app/" + user.getAvatar()).into(avatar);
         IDUser.setText(user.getIDUser() + "");
         UserName.setText(user.getUserName() + "");
         EmailUser.setText(user.getEmailUser() + "");
 
-
-        return customView;
+        return convertView;
     }
 }
