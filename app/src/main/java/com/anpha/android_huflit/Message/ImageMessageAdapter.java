@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,26 +128,9 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private void showPopupMenu(View v) {
             //Khởi tạo PopupMenu
             PopupMenu popupMenu = new PopupMenu(context, v);
-            //Thêm 2 mục là Save image và Copy image
-            popupMenu.getMenu().add("Save image");
-            popupMenu.getMenu().add("Copy image");
-            //Sự kiện khi nhn vào các mục của popupMenu
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    //Lấy tiêu đề của mục được chọn trong menu
-                    String option = ((String) item.getTitle()).toString();
-                    //Nếu chọn Save image
-                    if (option.equals("Save image"));
-                        //Xử lí sự kiện
-
-                        //Nếu chọn Copy image
-                    else if (option.equals("Copy image"));
-                    //Xử lí sự kiện
-
-                    return true;
-                }
-            });
+            //Inflate file menu
+            MenuInflater mnuPopup = popupMenu.getMenuInflater();
+            mnuPopup.inflate(R.menu.option_menu, popupMenu.getMenu());
             //Hiển thị popupMenu
             popupMenu.show();
         }
