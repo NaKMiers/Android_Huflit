@@ -44,6 +44,4 @@ public class Prompt {
             this.images = images;
         }
     }
-
-
 }

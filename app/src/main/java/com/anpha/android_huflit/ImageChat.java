@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -77,7 +78,7 @@ public class ImageChat extends AppCompatActivity {
     Size[] ImageSize;
     String amount = "1";
     String size = "256x256";
-    String token;
+    String token, userId;
     int OptionSizeIndex = 0;
     ArrayList<Prompt> prompts = new ArrayList<>();
     List<String> imageUrls  = new ArrayList<>();
@@ -90,6 +91,8 @@ public class ImageChat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_chat);
         toolbarImage = findViewById(R.id.toolbarImage);
+
+
 
         //Nạp layout từ tệp popup_image_chat_menu
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_image_chat_menu, null);
@@ -114,10 +117,11 @@ public class ImageChat extends AppCompatActivity {
         dataList = new ArrayList<>();
 
         // Thêm các item vào danh sách dữ liệu
-        dataList.add(new ItemChatBox("Box 1"));
-        dataList.add(new ItemChatBox("Box 2"));
-        dataList.add(new ItemChatBox("Box 3"));
-        dataList.add(new ItemChatBox("Box 4"));
+        dataList.add(new ItemChatBox("Box1", userId, "image", "Hello 01"));
+        dataList.add(new ItemChatBox("Box2", userId, "image", "Hello 01"));
+        dataList.add(new ItemChatBox("Box3", userId, "image", "Hello 01"));
+        dataList.add(new ItemChatBox("Box4", userId, "image", "Hello 01"));
+
         // Khởi tạo Adapter và gán cho RecyclerView
         boxAdapter = new ChatBoxAdapter(dataList, this);
         imageChatBox.setAdapter(boxAdapter);
@@ -181,8 +185,27 @@ public class ImageChat extends AppCompatActivity {
             }
         });
 
+        // lấy dữ liệu từ SharedPreferces
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String username = preferences.getString("username", ""); //lưu trữ tên người dùng
+        token = preferences.getString("token", ""); //lưu trữ tên người dùng
+        userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
+        txtusername.setText(username); // đặt tên người dùng trong textview
+
+        //Khởi tạo các biến
+        imageChatBox = findViewById(R.id.imageChatBox);
+        imageChatBox.setLayoutManager(new LinearLayoutManager(this));
+        /// Khởi tạo danh sách dữ liệu chatBox
+        dataList = new ArrayList<>();
+
+
+        // Khởi tạo Adapter và gán cho RecyclerView
+        boxAdapter = new ChatBoxAdapter(dataList, this);
+        imageChatBox.setAdapter(boxAdapter);
+
         try {
             GetUserPrompts("https://android-huflit-server.vercel.app");
+            GetImageBoxes("https://android-huflit-server.vercel.app");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -252,11 +275,14 @@ public class ImageChat extends AppCompatActivity {
                 CreatChat();
             }
         });
-        // lấy dữ liệu từ SharedPreferces
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        String username = preferences.getString("username", ""); //lưu trữ tên người dùng
-        token= preferences.getString("token", ""); //lưu trữ tên người dùng
-        txtusername.setText(username); // đặt tên người dùng trong textview
+
+    }
+
+    private void addBox(ItemChatBox box) {
+        // Thêm các item vào danh sách dữ liệu
+        dataList.add(box);
+        boxAdapter.notifyItemInserted(dataList.size() - 1);
+
     }
     private void requireAuth() {
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
@@ -268,54 +294,48 @@ public class ImageChat extends AppCompatActivity {
             return;
         }
     }
-    private void getBox(String type){
+    private void GetImageBoxes(String url){
         OkHttpClient client = new OkHttpClient();
 
-        String url ="https://android-huflit-server.vercel.app/box/get-box/" +type;
-
         Request request = new Request.Builder()
-                .url(url).get().build();
+                .url(url + "/box/get-boxes/image")
+                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
+                .build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
+                Toast.makeText(ImageChat.this, "Get boxes failure!!!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()){
-                    String responseData = response.body().string();
-                    final  String myResponse = response.body().string();
+                    final String myResponse = response.body().string();
                     ImageChat.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            Log.d("asdasdasd", myResponse);
+
                             try {
                                 JSONObject json = new JSONObject(myResponse);
-                                JSONArray jsonArray = json.getJSONArray("prompts");
+                                JSONArray jsonArray = json.getJSONArray("boxes");
+
                                 for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++){
-                                    JSONObject prompt = jsonArray.optJSONObject(i);
+                                    JSONObject box = jsonArray.optJSONObject(i);
 
                                     // get values
-                                    String _id = prompt.optString("_id");
-                                    String userId = prompt.optString("userId");
-                                    String chatId = prompt.optString("chatId");
+                                    String _id = box.optString("_id");
+                                    String userId = box.optString("userId");
 //                                   String type = prompt.optString("type");
 //                                   String from = prompt.optString("from");
-//                                   String text = prompt.optString("text");
-                                    String createdAt = prompt.optString("createdAt");
-                                    String updatedAt = prompt.optString("updatedAt");
-                                    JSONArray images = prompt.optJSONArray("images");
-
-                                    ArrayList<String> imageUrls = new ArrayList<>();
-                                    for (int j = 0; j < Objects.requireNonNull(images).length(); j++) {
-                                        String imageUrl = images.optString(i);
-                                        imageUrls.add(imageUrl);
-                                    }
+                                    String title = box.optString("title");
+//                                    String createdAt = box.optString("createdAt");
+//                                    String updatedAt = box.optString("updatedAt");
 
                                     // add each prompt to prompt list
-                                    Prompt newPrompt = new Prompt(_id,chatId, userId, createdAt, updatedAt, imageUrls);
-                                    prompts.add(newPrompt);
+                                    ItemChatBox newBox = new ItemChatBox(_id, userId, "image", title);
+                                    addBox(newBox);
                                 }
                                 // show prompts after get
                                 for(Prompt prompt: prompts) {
@@ -329,10 +349,6 @@ public class ImageChat extends AppCompatActivity {
                             }
                         }
                     });
-
-                }
-                else {
-
                 }
             }
         });
@@ -405,7 +421,6 @@ public class ImageChat extends AppCompatActivity {
         }
     }
 
-
     public void handleSentImagePrompt(View view) throws IOException {
         String messageText = edtImgChat.getText().toString().trim();
         if (!messageText.isEmpty()) {
@@ -447,7 +462,7 @@ public class ImageChat extends AppCompatActivity {
     private void GetUserPrompts(String url) throws IOException {
         Request request = new Request.Builder()
                 .url(url + "/image/get-prompts")
-                .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWQ1NmVmZWViZTdkNjA2MDk0MTBkNjgiLCJ1c2VybmFtZSI6ImdiYW8xMjMzIiwiZW1haWwiOiJnYmFvQGZhc2ZkYXMiLCJyb2xlIjoidXNlciIsInRoZW1lIjowLCJpYXQiOjE3MDg0ODY0NDN9.S31Nw2bqoH2YWkoc0YD-SC0fF4EKpvRiMOgjqPSDzl0") // Add the authorization header with bearer token
+                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
                 .build();
 
         client.newCall(request).enqueue(new Callback() {

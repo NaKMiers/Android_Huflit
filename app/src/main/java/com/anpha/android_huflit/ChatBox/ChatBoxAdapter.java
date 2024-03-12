@@ -38,7 +38,7 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ImageView btnedit = holder.itemView.findViewById(R.id.btnedit);
         ImageView btndelete = holder.itemView.findViewById(R.id.btndelete);
 
-        textView.setText("Box "+(position+1));
+        textView.setText(item.getItemText());
         btnedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

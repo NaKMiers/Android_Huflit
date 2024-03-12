@@ -1,4 +1,5 @@
 package com.anpha.android_huflit;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -21,6 +22,7 @@ import android.widget.PopupWindow;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anpha.android_huflit.ChatBox.ChatBoxAdapter;
 import com.anpha.android_huflit.ChatBox.ItemChatBox;
@@ -68,7 +70,7 @@ public class TextChat extends AppCompatActivity {
 
     OkHttpClient client = new OkHttpClient();
 
-    String token;
+    String token, userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,17 +90,7 @@ public class TextChat extends AppCompatActivity {
         txtMode = findViewById(R.id.txtMode);
         chatBox = findViewById(R.id.chatBox);
 
-        chatBox.setLayoutManager(new LinearLayoutManager(this));
-        // Khởi tạo danh sách dữ liệu
-        dataList = new ArrayList<>();
-        // Thêm các item vào danh sách dữ liệu
-        dataList.add(new ItemChatBox("Box 1"));
-        dataList.add(new ItemChatBox("Box 2"));
-        dataList.add(new ItemChatBox("Box 3"));
-        dataList.add(new ItemChatBox("Box 4"));
-        // Khởi tạo Adapter và gán cho RecyclerView
-        boxAdapter = new ChatBoxAdapter(dataList, this);
-        chatBox.setAdapter(boxAdapter);
+
 
 
         // Khởi tạo danh sách tin nhắn
@@ -238,13 +230,22 @@ public class TextChat extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
         token = preferences.getString("token", ""); //lưu trữ tên người dùng
+        userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
         txtusername.setText(username); // đặt tên người dùng trong textview
+
+        chatBox.setLayoutManager(new LinearLayoutManager(this));
+        // Khởi tạo danh sách dữ liệu
+        dataList = new ArrayList<>();
+        // Khởi tạo Adapter và gán cho RecyclerView
+        boxAdapter = new ChatBoxAdapter(dataList, this);
+        chatBox.setAdapter(boxAdapter);
 
         // check auth login
         requireAuth();
 
         try {
             GetUserPrompts("https://android-huflit-server.vercel.app");
+            GetChatBoxes("https://android-huflit-server.vercel.app");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -297,6 +298,12 @@ public class TextChat extends AppCompatActivity {
         messages.add(sentMessage);
         // Thông báo cho Adapter biết rằng có một mục mới được thêm vào cuối danh sách
         adapter.notifyItemInserted(messages.size() - 1);
+    }
+
+    private void addBox(ItemChatBox box) {
+        // Thêm các item vào danh sách dữ liệu
+        dataList.add(box);
+        boxAdapter.notifyItemInserted(dataList.size() - 1);
     }
 
     void GetUserPrompts(String url) throws IOException {
@@ -356,6 +363,63 @@ public class TextChat extends AppCompatActivity {
         });
     }
 
+    private void GetChatBoxes(String url){
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(url + "/box/get-boxes/chat")
+                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Toast.makeText(TextChat.this, "Get boxes failure!!!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    final String myResponse = response.body().string();
+                    TextChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject json = new JSONObject(myResponse);
+                                JSONArray jsonArray = json.getJSONArray("boxes");
+
+                                for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++){
+                                    JSONObject box = jsonArray.optJSONObject(i);
+
+                                    // get values
+                                    String _id = box.optString("_id");
+                                    String userId = box.optString("userId");
+//                                   String type = prompt.optString("type");
+//                                   String from = prompt.optString("from");
+                                    String title = box.optString("title");
+//                                    String createdAt = box.optString("createdAt");
+//                                    String updatedAt = box.optString("updatedAt");
+
+                                    // add each prompt to prompt list
+                                    ItemChatBox newBox = new ItemChatBox(_id, userId, "chat", title);
+                                    addBox(newBox);
+                                }
+                                // show prompts after get
+                                for(Prompt prompt: prompts) {
+                                    Log.d("Type", prompt.type);
+                                    addNewMessage(prompt.text, Objects.equals(prompt.from, "user"));
+                                }
+
+                            }catch (JSONException e)
+                            {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
     void CreatePrompt(String url) throws IOException {
         // prevent empty prompt
         if (edtTextChat.getText().toString().trim() == "") return;
