@@ -296,14 +296,14 @@ public class TextChat extends AppCompatActivity {
     }
 
     public void handleSendChatPrompt(View view) throws IOException {
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        String messageText = edtTextChat.getText().toString().trim();
-        if (token.isEmpty()) {
-            Intent intent = new Intent(TextChat.this, Login.class);
-            startActivity(intent);
-            return; // Kết thúc phương thức để không thực hiện gửi tin nhắn nếu chưa đăng nhập
-        }
+//        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+//        if (token.isEmpty()) {
+//            Intent intent = new Intent(TextChat.this, Login.class);
+//            startActivity(intent);
+//            return; // Kết thúc phương thức để không thực hiện gửi tin nhắn nếu chưa đăng nhập
+//        }
 
+        String messageText = edtTextChat.getText().toString().trim();
         if (!messageText.isEmpty()) {
             txtHiUser.setText("");
 

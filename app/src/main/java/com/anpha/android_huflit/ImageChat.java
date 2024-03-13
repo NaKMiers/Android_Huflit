@@ -506,6 +506,7 @@ public class ImageChat extends AppCompatActivity {
 
     public void handleSentImagePrompt(View view) throws IOException {
         String messageText = edtImgChat.getText().toString().trim();
+
         if (!messageText.isEmpty()) {
             txtHelp2.setText("");
 //            edtImgChat.setText("");
@@ -686,14 +687,14 @@ public class ImageChat extends AppCompatActivity {
         txtHelp2.setText("creating...");
 
 
-//        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-//        String amount = preferences.getString("amount", "1"); //lưu trữ tên người dùng
-//        String size = preferences.getString("size", "256x256"); //lưu trữ tên người dùng
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        String amount = preferences.getString("amount", "1"); //lưu trữ tên người dùng
+        String size = preferences.getString("size", "256x256"); //lưu trữ tên người dùng
 
         RequestBody formBody = new FormBody.Builder()
                 .add("prompt", edtImgChat.getText().toString().trim())
-                .add("amount", "1")
-                .add("size", "256x256")
+                .add("amount", amount)
+                .add("size", size)
 //                .add("chatId", "")
                 .build();
 
