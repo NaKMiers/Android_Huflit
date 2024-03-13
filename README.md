@@ -96,7 +96,7 @@ Forgot Password(post): /auth/forgot-password
 (email)
 
 Reset Password(post): /auth/reset-password
-(email, token, newPassword)
+(email, newPassword)
 
 ### BOX
 
@@ -104,10 +104,10 @@ Get Boxes(get): /box/get-boxes/:type (type là "image" hoặc "chat")
 
 Create Box(post): /box/create-box/:type  (type là "image" hoặc "chat")
 
-Edit Box(patch): /box/:id
+Edit Box(patch): /box/edit-box/:id
 (title)
 
-Delete Box(delete): /box/:id
+Delete Box(delete): /box/delete-box/:id
 
 ### USER
 
