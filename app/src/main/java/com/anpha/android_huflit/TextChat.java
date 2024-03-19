@@ -74,6 +74,7 @@ public class TextChat extends AppCompatActivity {
     // libraby tools
     OkHttpClient client = new OkHttpClient();
     String token, userId;
+    String boxId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +124,30 @@ public class TextChat extends AppCompatActivity {
         boxes = new ArrayList<>();
         boxAdapter = new ChatBoxAdapter(TextChat.this, R.layout.item_chatbox_layout, boxes);
         chatBox.setAdapter(boxAdapter);
+
+        chatBox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ItemChatBox box =  boxes.get(position);
+                boxId = box.get_id();
+
+                Log.d("ID-------", boxId);
+
+                prompts.clear();
+                messages.clear();
+                adapter.notifyDataSetChanged();
+
+                drawerLayout.closeDrawer(GravityCompat.START);
+
+                try {
+                    GetUserPrompts("https://android-huflit-server.vercel.app/chat/get-prompts/" + boxId);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                // close sidebar
+            }
+        });
 
         boxAdapter.setDeleteClickListener(new ChatBoxAdapter.OnDeleteClickListener() {
             @Override
@@ -383,7 +408,6 @@ public class TextChat extends AppCompatActivity {
 
             try {
                 CreatePrompt("https://android-huflit-server.vercel.app/chat/create-prompt");
-                CreateCompletion("https://android-huflit-server.vercel.app/chat/create-completion");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -397,23 +421,27 @@ public class TextChat extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
-    // IMPORTANT Methods
+    public void handleClearBoxOfChat(View view) {
+        ClearBoxOfChat("https://android-huflit-server.vercel.app/box/clear-boxes/chat");
+    }
+
+    // IMPORTANT Methods --------------------------------------
     void InitialGetData() {
-        try {
-            GetUserPrompts("https://android-huflit-server.vercel.app/chat/get-prompts");
-            GetChatBoxes("https://android-huflit-server.vercel.app/box/get-boxes/chat");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        //            GetUserPrompts("https://android-huflit-server.vercel.app/chat/get-prompts");
+        GetChatBoxes("https://android-huflit-server.vercel.app/box/get-boxes/chat");
     }
 
     void CreatePrompt(String url) throws IOException {
         // prevent empty prompt
         if (edtTextChat.getText().toString().trim() == "") return;
+        if (boxId.isEmpty()) {
+            Toast.makeText(TextChat.this, "Box ID Không tồn tại", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
 
         RequestBody formBody = new FormBody.Builder()
-//                .add("chatId", "")
+                .add("chatId", boxId)
                 .add("prompt", edtTextChat.getText().toString().trim())
                 .add("password", "test")
                 .build();
@@ -432,6 +460,8 @@ public class TextChat extends AppCompatActivity {
                     TextChat.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            Log.d("CreatePrompt RES: ", myResponse);
+
                             try {
                                 JSONObject json = new JSONObject(myResponse);
                                 JSONObject prompt = json.getJSONObject("prompt");
@@ -449,13 +479,14 @@ public class TextChat extends AppCompatActivity {
                                 prompts.add(newPrompt);
                                 addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
 
-
                                 // Cuộn xuống dưới cùng khi có tin nhắn mới
                                 recyclerView.scrollToPosition(messages.size() - 1);
                                 // clear text chat
                                 edtTextChat.setText("");
 
-                            } catch (JSONException e) {
+                                CreateCompletion("https://android-huflit-server.vercel.app/chat/create-completion");
+
+                            } catch (JSONException | IOException e) {
                                 throw new RuntimeException(e);
                             }
                         }
@@ -472,15 +503,21 @@ public class TextChat extends AppCompatActivity {
 
     void CreateCompletion(String url) throws IOException {        // prevent empty prompt
         if (edtTextChat.getText().toString().trim() == "") return;
+        if (boxId.isEmpty()) {
+            Toast.makeText(TextChat.this, "Box ID Không tồn tại", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        txtHiUser.setText("Generating...");
+        txtHiUser.setText(" Generating...");
+
+        Log.d("boxId ------", boxId);
 
         RequestBody formBody = new FormBody.Builder()
                 .add("prompt", ImprovedPrompt())
                 .add("model", "gpt-4")
                 .add("maxTokens", "1500")
                 .add("temperature", "1")
-//                .add("chatId", "")
+                .add("chatId", boxId)
                 .build();
 
         Request request = new Request.Builder()
@@ -497,7 +534,7 @@ public class TextChat extends AppCompatActivity {
                     TextChat.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            txtHiUser.setText(myResponse);
+                            Log.d("CreateCompletion RES: ", myResponse);
 
                             try {
                                 JSONObject json = new JSONObject(myResponse);
@@ -638,12 +675,23 @@ public class TextChat extends AppCompatActivity {
                                     Log.d("----------------", newBox.getItemText());
                                     addBox(newBox);
                                 }
-                                // show prompts after get
-                                for(Prompt prompt: prompts) {
-                                    addNewMessage(prompt.text, Objects.equals(prompt.from, "user"));
+
+                                if (boxes.size() == 0) {
+                                    CreateChatBox("https://android-huflit-server.vercel.app/box/create-box/chat");
+                                    return;
                                 }
 
-                            }catch (JSONException e)
+                                // set first box id as initial box
+                                ItemChatBox firstBox =  boxes.get(0);
+                                boxId = firstBox.get_id();
+
+                                // get prompts after got box id
+                                if (!boxId.isEmpty()) {
+                                    GetUserPrompts("https://android-huflit-server.vercel.app/chat/get-prompts/" + boxId);
+                                } else {
+                                    Toast.makeText(TextChat.this, "Box ID Không Tồn Tại", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException | IOException e)
                             {
                                 throw new RuntimeException(e);
                             }
@@ -690,6 +738,7 @@ public class TextChat extends AppCompatActivity {
 
                                 ItemChatBox newBox = new ItemChatBox(_id, userId, "chat", title);
                                 addBox(newBox);
+                                Toast.makeText(TextChat.this, "Đã tạo box mới", Toast.LENGTH_SHORT).show();
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -747,4 +796,45 @@ public class TextChat extends AppCompatActivity {
             }
         });
     }
+
+    void ClearBoxOfChat(String url) {
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .delete()
+                .addHeader("Authorization", "Bearer " + token)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    TextChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Xóa box khỏi danh sách
+                            boxes.clear();
+
+                            // Cập nhật adapter của RecyclerView hoặc ListView
+                            boxAdapter.notifyDataSetChanged(); // Đối với ArrayAdapter
+                            Toast.makeText(TextChat.this, "Tất cả box bị xóa", Toast.LENGTH_SHORT).show();
+
+                            try {
+                                CreateChatBox("https://android-huflit-server.vercel.app/box/create-box/chat");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
 }
