@@ -12,12 +12,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.view.View;
 import android.view.LayoutInflater;
@@ -51,26 +53,26 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class TextChat extends AppCompatActivity {
-    private RecyclerView recyclerView, chatBox;
+    // List
+    private RecyclerView recyclerView;
+    private ListView chatBox;
     private MessageAdapter adapter;
-
     private ChatBoxAdapter boxAdapter;
-
-    private List<ItemChatBox> dataList;
+    private ArrayList<ItemChatBox> boxes;
     private List<Message> messages;
-    PopupWindow popupWindow;
-    Toolbar toolbarChat;
-
-    ImageView btnSend, navigationIcon,imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon,imgChangetheme,imgDevinfo,imgAdmin, CrChatBoxBtn;
-    EditText edtTextChat;
-
-    DrawerLayout drawerLayout;
-    TextView txtHelp1, txtMode, txtusername,txtChangetheme,txtDevinfo,txtAdmin,txtHiUser;
-     Button btnLogOut;
     ArrayList<Prompt> prompts = new ArrayList<>();
 
-    OkHttpClient client = new OkHttpClient();
+    // Elements
+    ImageView btnSend, navigationIcon,imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon,imgChangetheme,imgDevinfo,imgAdmin;
+    EditText edtTextChat;
+    Toolbar toolbarChat;
+    PopupWindow popupWindow;
+    DrawerLayout drawerLayout;
+    TextView txtHelp1, txtMode, txtusername,txtChangetheme,txtDevinfo,txtAdmin,txtHiUser;
+    Button btnLogOut;
 
+    // libraby tools
+    OkHttpClient client = new OkHttpClient();
     String token, userId;
 
     @Override
@@ -78,7 +80,69 @@ public class TextChat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_chat);
 
+        // check auth login
+        requireAuth();
+
         // mapping
+        mapping();
+
+        // events
+        addEvents();
+
+        // Khởi tạo danh sách tin nhắn
+        messages = new ArrayList<>();
+        adapter = new MessageAdapter(messages);
+        recyclerView.setAdapter(adapter);
+
+        //Thiết lập con trỏ ở cuối văn bản EditText
+        edtTextChat.requestFocus();
+        edtTextChat.setSelection(edtTextChat.getText().length());
+
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+        String role = preferences.getString("role", "");
+        String username = preferences.getString("username", "");
+        userId = preferences.getString("userId", "");
+        token = preferences.getString("token", "");
+        String avatar = preferences.getString("avatar", "");
+        Picasso.get().load("https://android-huflit-server.vercel.app" + avatar).into(imgavatar);
+
+        // Kiểm tra và ẩn / hiển thị các phần tử dựa trên vai trò của người dùng
+        if (role.equals("admin")) {
+            // Nếu người dùng có vai trò là admin, hiển thị các phần tử imgAdmin và txtAdmin
+            imgAdmin.setVisibility(View.VISIBLE);
+            txtAdmin.setVisibility(View.VISIBLE);
+        } else {
+            // Nếu không phải admin, ẩn đi các phần tử imgAdmin và txtAdmin
+            imgAdmin.setVisibility(View.GONE);
+            txtAdmin.setVisibility(View.GONE);
+        }
+
+        txtusername.setText(username); // đặt tên người dùng trong textview
+        txtHiUser.setText(" Hi " + username );
+
+        boxes = new ArrayList<>();
+        boxAdapter = new ChatBoxAdapter(TextChat.this, R.layout.item_chatbox_layout, boxes);
+        chatBox.setAdapter(boxAdapter);
+
+        boxAdapter.setDeleteClickListener(new ChatBoxAdapter.OnDeleteClickListener() {
+            @Override
+            public void onDeleteClick(ItemChatBox itemChatBox) {
+                Log.d("------------Delete Clicked", "UserID: " + itemChatBox.getUserId()); // In ra title của box
+                Log.d("------------Delete Clicked", "BoxID: " + itemChatBox.get_id()); // In ra title của box
+
+                try {
+                    DeleteBox("https://android-huflit-server.vercel.app/box/delete-box/" + itemChatBox.get_id(), itemChatBox);
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        // get prompts and boxes
+        InitialGetData();
+    }
+
+    void mapping() {
         toolbarChat = findViewById(R.id.toolbarChat);
         btnSend = findViewById(R.id.btnSendImg);
         edtTextChat = findViewById(R.id.edtTextChat);
@@ -88,19 +152,7 @@ public class TextChat extends AppCompatActivity {
         txtMode = findViewById(R.id.txtMode);
         chatBox = findViewById(R.id.chatBox);
         txtHiUser=findViewById(R.id.txtHiUser);
-        CrChatBoxBtn = findViewById(R.id.CrChatBoxBtn);
 
-
-
-
-        // Khởi tạo danh sách tin nhắn
-        messages = new ArrayList<>();
-        // Khởi tạo adapter mới kết nối dữ liệu từ danh sách tin nhắn
-        adapter = new MessageAdapter(messages);
-        // Gán adapter vào recyclerView
-        recyclerView.setAdapter(adapter);
-        // Sắp xếp các mục tin nhắn dọc
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //Nạp layout từ tệp popup_chat_menu
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_chat_menu, null);
         //Tạo popupWindow
@@ -113,6 +165,7 @@ public class TextChat extends AppCompatActivity {
                 //Cho phép tương tác với các phần tử khác trên màn hình
                 true
         );
+
         btnLogOut=popupView.findViewById(R.id.btnLogOut);
         txtusername = popupView.findViewById(R.id.txtusername);
         imgavatar=popupView.findViewById(R.id.imgavatar);
@@ -127,27 +180,9 @@ public class TextChat extends AppCompatActivity {
         imgDevinfo=popupView.findViewById(R.id.imgDevinfo);
         imgAdmin=popupView.findViewById(R.id.imgAdmin);
         txtAdmin=popupView.findViewById(R.id.txtAdmin);
+    }
 
-        //Nhận sự kiện nhập liệu
-        edtTextChat.requestFocus();
-        //Thiết lập con trỏ ở cuối văn bản EditText
-        edtTextChat.setSelection(edtTextChat.getText().length());
-
-        // Lấy vai trò của người dùng từ Shared Preferences
-        SharedPreferences mypreferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        String role = mypreferences.getString("role", "");
-        // Kiểm tra và ẩn/hiển thị các phần tử dựa trên vai trò của người dùng
-        if (role.equals("admin")) {
-            // Nếu người dùng có vai trò là admin, hiển thị các phần tử imgAdmin và txtAdmin
-            imgAdmin.setVisibility(View.VISIBLE);
-            txtAdmin.setVisibility(View.VISIBLE);
-        } else {
-            // Nếu không phải admin, ẩn đi các phần tử imgAdmin và txtAdmin
-            imgAdmin.setVisibility(View.GONE);
-            txtAdmin.setVisibility(View.GONE);
-        }
-
-
+    private void addEvents() {
         navigationIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,50 +206,49 @@ public class TextChat extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-       txtusername.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-              Intent intent = new Intent(TextChat.this, ProfileView.class);
-              startActivity(intent);
-           }
-       });
+        txtusername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TextChat.this, ProfileView.class);
+                startActivity(intent);
+            }
+        });
 
-       // lấy dữ liệu từ SharedPreferces
-          txtChangetheme.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  Intent intent = new Intent(TextChat.this, ThemeView.class);
-                  startActivity(intent);
-              }
-          });
-          imgChangetheme.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  Intent intent = new Intent(TextChat.this, ThemeView.class);
-                  startActivity(intent);
-              }
-          });
-          imgDevinfo.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  Intent intent = new Intent(TextChat.this, DevInfo.class);
-                  startActivity(intent);
-              }
-          });
-          txtAdmin.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  Intent intent = new Intent(TextChat.this,AdminUser.class);
-                  startActivity(intent);
-              }
-          });
-          txtDevinfo.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  Intent intent = new Intent(TextChat.this, DevInfo.class);
-                  startActivity(intent);
-              }
-          });
+        txtChangetheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TextChat.this, ThemeView.class);
+                startActivity(intent);
+            }
+        });
+        imgChangetheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TextChat.this, ThemeView.class);
+                startActivity(intent);
+            }
+        });
+        imgDevinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TextChat.this, DevInfo.class);
+                startActivity(intent);
+            }
+        });
+        txtAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TextChat.this,AdminUser.class);
+                startActivity(intent);
+            }
+        });
+        txtDevinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TextChat.this, DevInfo.class);
+                startActivity(intent);
+            }
+        });
         //Mở popupWindow (chỉ set sự kiện được trong java)
         toolbarChat.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -229,87 +263,51 @@ public class TextChat extends AppCompatActivity {
                 return false;
             }
         });
-
-
-        // check
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        String username = preferences.getString("username", ""); //lưu trữ tên người dùng
-        token = preferences.getString("token", ""); //lưu trữ tên người dùng
-        userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
-        String avatar = preferences.getString("avatar", "");
-        Picasso.get().load("https://android-huflit-server.vercel.app" + avatar).into(imgavatar);
-
-        txtusername.setText(username); // đặt tên người dùng trong textview
-        txtHiUser.setText(" Hi " + username );
-
-
-        chatBox.setLayoutManager(new LinearLayoutManager(this));
-        // Khởi tạo danh sách dữ liệu
-        dataList = new ArrayList<>();
-        // Khởi tạo Adapter và gán cho RecyclerView
-        boxAdapter = new ChatBoxAdapter(dataList, this);
-        chatBox.setAdapter(boxAdapter);
-
-        // check auth login
-        requireAuth();
-
-        try {
-            GetUserPrompts("https://android-huflit-server.vercel.app");
-            GetChatBoxes("https://android-huflit-server.vercel.app");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        CrChatBoxBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    CreateImageBox();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
     }
 
     private void requireAuth() {
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         String userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
         if (userId == null || userId == "") {
             Intent intent = new Intent(TextChat.this, Login.class);
             startActivity(intent);
-//            finish();
-//            return;
+            finish();
         }
     }
 
     private void LogOutUser() {
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit(); // Sửa lỗi gán lại biến preferences
-//        editor.remove("token");
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.apply();
         Intent intent = new Intent(TextChat.this, TextChat.class);
-//         Xóa tất cả các hoạt động trước đó khỏi ngăn xếp và chuyển người dùng đến màn hình đăng nhập
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
-    public void handleSendChatPrompt(View view) throws IOException {
-//        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-//        if (token.isEmpty()) {
-//            Intent intent = new Intent(TextChat.this, Login.class);
-//            startActivity(intent);
-//            return; // Kết thúc phương thức để không thực hiện gửi tin nhắn nếu chưa đăng nhập
-//        }
+    String ImprovedPrompt() {
+        String improvedPrompt = "";
+        ArrayList<Prompt> newPrompts = new ArrayList<>(prompts.subList(Math.max(0, prompts.size() - 8), prompts.size()));
 
-        String messageText = edtTextChat.getText().toString().trim();
-        if (!messageText.isEmpty()) {
-            txtHiUser.setText("");
-
-            CreatePrompt("https://android-huflit-server.vercel.app");
-            CreateCompletion("https://android-huflit-server.vercel.app");
+        for (Prompt p: newPrompts) {
+            Log.d(p.getFrom(), p.getText());
         }
+        for(Prompt p: prompts) {
+            // if prompt is from user
+            if (Objects.equals(p.from, "user")) {
+                String line = "user: " + p.getText() + "\n";
+                improvedPrompt += line;
+            }
+            // if prompt if from AI
+            else {
+                String line = "AI: " + p.getText() + "\n";
+                improvedPrompt += line;
+            }
+        }
+        String lastLine = "user: " + edtTextChat.getText().toString().trim();
+        improvedPrompt += lastLine;
+
+        return improvedPrompt;
     }
 
     private void addNewMessage(String text, boolean isFromUser) {
@@ -323,13 +321,226 @@ public class TextChat extends AppCompatActivity {
 
     private void addBox(ItemChatBox box) {
         // Thêm các item vào danh sách dữ liệu
-        dataList.add(box);
-        boxAdapter.notifyItemInserted(dataList.size() - 1);
+        boxes.add(box);
+        boxAdapter.notifyDataSetChanged();
+    }
+
+    // Chuyển qua ImageChat
+    public void handleChangeToImageMode(View view) {
+        Intent intent = new Intent(TextChat.this,ImageChat.class);
+        startActivity(intent);
+        finish();
+    }
+
+    //  Sidebar
+    public void openSidebar(View view) {
+        //Nếu sidebar đang mở
+        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+            // Đóng lại
+            drawerLayout.closeDrawer(GravityCompat.START);
+        else {
+            // Còn không thì mở sidebar
+            drawerLayout.openDrawer(GravityCompat.START);
+        }
+    }
+
+    // Đi tới profileView
+    public void toProfileView(View view) {
+        Intent intent = new Intent(TextChat.this, ProfileView.class);
+        startActivity(intent);
+    }
+
+    // Click on Social Icons
+    public void toFb(View view) {
+        openWebPage("https://facebook.com");
+    }
+    public void toIns(View view) {
+        openWebPage("https://instagram.com");
+    }
+    public void toTw(View view) {
+        openWebPage("https://twitter.com");
+    }
+    public void toPin(View view) {
+        openWebPage("https://pinterest.com");
+    }
+    public void toGit(View view) {
+        openWebPage("https://github.com");
+    }
+    private void openWebPage(String url) {
+        //Tạp Uri từ địa chỉ url (Uri là chuỗi đại diện cho địa chỉ hoặc tài nguyên Internet)
+        Uri webpage = Uri.parse(url);
+        //Yêu cầu hệ thống mở dữ liệu bằng cách sử dụng ứng dụng mặc định của hệ thống (trình duyệt web)
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        //Nếu có thì sẽ gửi intent và mở trang web
+            startActivity(intent);
+
+    }
+
+    public void handleSendChatPrompt(View view) {
+        String messageText = edtTextChat.getText().toString().trim();
+        if (!messageText.isEmpty()) {
+            txtHiUser.setText("");
+
+            try {
+                CreatePrompt("https://android-huflit-server.vercel.app/chat/create-prompt");
+                CreateCompletion("https://android-huflit-server.vercel.app/chat/create-completion");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void handleCreateChatBox(View view) {
+        try {
+            CreateChatBox("https://android-huflit-server.vercel.app/box/create-box/chat");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // IMPORTANT Methods
+    void InitialGetData() {
+        try {
+            GetUserPrompts("https://android-huflit-server.vercel.app/chat/get-prompts");
+            GetChatBoxes("https://android-huflit-server.vercel.app/box/get-boxes/chat");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    void CreatePrompt(String url) throws IOException {
+        // prevent empty prompt
+        if (edtTextChat.getText().toString().trim() == "") return;
+
+
+        RequestBody formBody = new FormBody.Builder()
+//                .add("chatId", "")
+                .add("prompt", edtTextChat.getText().toString().trim())
+                .add("password", "test")
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .addHeader("Authorization", "Bearer " + token)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+
+                    TextChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject json = new JSONObject(myResponse);
+                                JSONObject prompt = json.getJSONObject("prompt");
+
+                                // get prompt values
+                                String _id = prompt.optString("_id");
+                                String userId = prompt.optString("userId");
+//                                    String chatId = prompt.optString("chatId");
+                                String type = prompt.optString("type");
+                                String from = prompt.optString("from");
+                                String text = prompt.optString("text");
+
+                                // add new prompt to message list
+                                Prompt newPrompt = new Prompt(_id, userId, type, from, text);
+                                prompts.add(newPrompt);
+                                addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
+
+
+                                // Cuộn xuống dưới cùng khi có tin nhắn mới
+                                recyclerView.scrollToPosition(messages.size() - 1);
+                                // clear text chat
+                                edtTextChat.setText("");
+
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    void CreateCompletion(String url) throws IOException {        // prevent empty prompt
+        if (edtTextChat.getText().toString().trim() == "") return;
+
+        txtHiUser.setText("Generating...");
+
+        RequestBody formBody = new FormBody.Builder()
+                .add("prompt", ImprovedPrompt())
+                .add("model", "gpt-4")
+                .add("maxTokens", "1500")
+                .add("temperature", "1")
+//                .add("chatId", "")
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+
+                    TextChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            txtHiUser.setText(myResponse);
+
+                            try {
+                                JSONObject json = new JSONObject(myResponse);
+                                JSONObject completion = json.getJSONObject("completion");
+
+                                // get prompt values
+                                String _id = completion.optString("_id");
+                                String userId = completion.optString("userId");
+//                                    String chatId = prompt.optString("chatId");
+                                String type = completion.optString("type");
+                                String from = completion.optString("from");
+                                String text = completion.optString("text");
+
+                                // add new prompt to message list
+                                Prompt newPrompt = new Prompt(_id, userId, type, from, text);
+                                prompts.add(newPrompt);
+                                addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
+
+                                //Cuộn xuống khi có tin nhắn mới
+                                recyclerView.scrollToPosition(messages.size() - 1);
+                                // clear text chat
+                                edtTextChat.setText("");
+                                // clear dòng chữ "How can I help you?"
+                                txtHiUser.setText("");
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     void GetUserPrompts(String url) throws IOException {
         Request request = new Request.Builder()
-                .url(url + "/chat/get-prompts")
+                .url(url)
                 .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
                 .build();
         client.newCall(request).enqueue(new Callback() {
@@ -388,7 +599,7 @@ public class TextChat extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url(url + "/box/get-boxes/chat")
+                .url(url)
                 .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
                 .build();
 
@@ -402,6 +613,7 @@ public class TextChat extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()){
                     final String myResponse = response.body().string();
+
                     TextChat.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -423,11 +635,11 @@ public class TextChat extends AppCompatActivity {
 
                                     // add each prompt to prompt list
                                     ItemChatBox newBox = new ItemChatBox(_id, userId, "chat", title);
+                                    Log.d("----------------", newBox.getItemText());
                                     addBox(newBox);
                                 }
                                 // show prompts after get
                                 for(Prompt prompt: prompts) {
-                                    Log.d("Type", prompt.type);
                                     addNewMessage(prompt.text, Objects.equals(prompt.from, "user"));
                                 }
 
@@ -442,13 +654,11 @@ public class TextChat extends AppCompatActivity {
         });
     }
 
-    private void CreateImageBox() throws IOException {
+    private void CreateChatBox(String url) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
-        String url = "https://android-huflit-server.vercel.app/box/create-box/image";
-
         RequestBody formBody = new FormBody.Builder()
-                .add("prompt", "Nothing")
+                .add("nothing", "Nothing")
                 .build();
 
         Request request = new Request.Builder()
@@ -468,6 +678,7 @@ public class TextChat extends AppCompatActivity {
                         public void run() {
                             try {
                                 JSONObject json = new JSONObject(myResponse);
+                                Log.d("--------------------", myResponse);
                                 JSONObject boxJSON = json.getJSONObject("newBox");
 
                                 // get prompt values
@@ -494,22 +705,15 @@ public class TextChat extends AppCompatActivity {
         });
     }
 
-    void CreatePrompt(String url) throws IOException {
-        // prevent empty prompt
-        if (edtTextChat.getText().toString().trim() == "") return;
-
-
-        RequestBody formBody = new FormBody.Builder()
-//                .add("chatId", "")
-                .add("prompt", edtTextChat.getText().toString().trim())
-                .add("password", "test")
-                .build();
+    private void DeleteBox(String url, ItemChatBox box) throws IOException {
+        OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url(url + "/chat/create-prompt")
-                .post(formBody)
+                .url(url)
+                .delete()
                 .addHeader("Authorization", "Bearer " + token)
                 .build();
+
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -519,31 +723,18 @@ public class TextChat extends AppCompatActivity {
                     TextChat.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            try {
-                                JSONObject json = new JSONObject(myResponse);
-                                JSONObject prompt = json.getJSONObject("prompt");
+                            int index = boxes.indexOf(box);
+                            Log.d("----index----", String.valueOf(index));
 
-                                // get prompt values
-                                String _id = prompt.optString("_id");
-                                String userId = prompt.optString("userId");
-//                                    String chatId = prompt.optString("chatId");
-                                String type = prompt.optString("type");
-                                String from = prompt.optString("from");
-                                String text = prompt.optString("text");
+                            if (index != -1) {
+                                Log.d("--------", myResponse);
 
-                                // add new prompt to message list
-                                Prompt newPrompt = new Prompt(_id, userId, type, from, text);
-                                prompts.add(newPrompt);
-                                addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
+                                // Xóa box khỏi danh sách
+                                boxes.remove(index);
 
-
-                                // Cuộn xuống dưới cùng khi có tin nhắn mới
-                                recyclerView.scrollToPosition(messages.size() - 1);
-                                // clear text chat
-                                edtTextChat.setText("");
-
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
+                                // Cập nhật adapter của RecyclerView hoặc ListView
+                                boxAdapter.notifyDataSetChanged(); // Đối với ArrayAdapter
+                                Toast.makeText(TextChat.this, "Box has been deleted", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -555,135 +746,5 @@ public class TextChat extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
-    }
-
-    void CreateCompletion(String url) throws IOException {        // prevent empty prompt
-        if (edtTextChat.getText().toString().trim() == "") return;
-
-        txtHiUser.setText("Generating...");
-
-        RequestBody formBody = new FormBody.Builder()
-                .add("prompt", edtTextChat.getText().toString().trim())
-                .add("model", "gpt-4")
-                .add("maxTokens", "1500")
-                .add("temperature", "1")
-//                .add("chatId", "")
-                .build();
-
-        Request request = new Request.Builder()
-                .url(url + "/chat/create-completion")
-                .post(formBody)
-                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    final String myResponse = response.body().string();
-
-                    TextChat.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            txtHiUser.setText(myResponse);
-
-                            try {
-                                JSONObject json = new JSONObject(myResponse);
-                                JSONObject completion = json.getJSONObject("completion");
-
-                                // get prompt values
-                                String _id = completion.optString("_id");
-                                String userId = completion.optString("userId");
-//                                    String chatId = prompt.optString("chatId");
-                                String type = completion.optString("type");
-                                String from = completion.optString("from");
-                                String text = completion.optString("text");
-
-                                // add new prompt to message list
-                                Prompt newPrompt = new Prompt(_id, userId, type, from, text);
-                                prompts.add(newPrompt);
-                                addNewMessage(newPrompt.text, Objects.equals(newPrompt.from, "user"));
-
-                                //Cuộn xuống khi có tin nhắn mới
-                                recyclerView.scrollToPosition(messages.size() - 1);
-                                // clear text chat
-                                edtTextChat.setText("");
-                                // clear dòng chữ "How can I help you?"
-                                txtHiUser.setText("");
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    });
-                }
-            }
-
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-    }
-
-    //Chuyển qua ImageChat
-    public void handleChangeToImageMode(View view) {
-        Intent intent = new Intent(TextChat.this,ImageChat.class);
-        startActivity(intent);
-        finish();
-    }
-
-    //Mở sidebar
-    public void openSidebar(View view) {
-        //Nếu sidebar đang mở
-        if(drawerLayout.isDrawerOpen(GravityCompat.START))
-            // Đóng lại
-            drawerLayout.closeDrawer(GravityCompat.START);
-        else {
-            // Còn không thì mở sidebar
-            drawerLayout.openDrawer(GravityCompat.START);
-        }
-    }
-
-    //Đăng xuất
-    public void logOutUser(View view) {
-        LogOutUser();
-    }
-
-    //Đi tới profileView
-    public void toProfileView(View view) {
-        Intent intent = new Intent(TextChat.this, ProfileView.class);
-        startActivity(intent);
-    }
-
-//    Nhấn vào icon Facebook
-    public void toFb(View view) {
-        openWebPage("https://facebook.com");
-    }
-    //Nhấn vào icon Instagram
-    public void toIns(View view) {
-        openWebPage("https://instagram.com");
-    }
-    //Nhấn vào icon Tw
-    public void toTw(View view) {
-        openWebPage("https://twitter.com");
-    }
-    //Nhấn vào icon Pinterest
-    public void toPin(View view) {
-        openWebPage("https://pinterest.com");
-    }
-    //Nhấn vào icon Github
-    public void toGit(View view) {
-        openWebPage("https://github.com");
-    }
-    //Hàm mở trang web tương ứng
-    private void openWebPage(String url) {
-        //Tạp Uri từ địa chỉ url (Uri là chuỗi đại diện cho địa chỉ hoặc tài nguyên Internet)
-        Uri webpage = Uri.parse(url);
-        //Yêu cầu hệ thống mở dữ liệu bằng cách sử dụng ứng dụng mặc định của hệ thống (trình duyệt web)
-        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-        //Nếu có thì sẽ gửi intent và mở trang web
-            startActivity(intent);
-
     }
 }

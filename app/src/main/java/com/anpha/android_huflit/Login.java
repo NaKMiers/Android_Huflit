@@ -131,7 +131,7 @@ import okhttp3.Response;
                        String authType = userJson.optString("authType");
 
     //                    Lưu username vào SharedPreferences
-                       SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+                       SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
                        SharedPreferences.Editor editor = preferences.edit();
                        editor.putString("username", username);
                        editor.putString("avatar", avatar);

@@ -10,12 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anpha.android_huflit.R;
@@ -23,6 +25,7 @@ import com.anpha.android_huflit.R;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
@@ -31,144 +34,71 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.ViewHolder> {
-    private List<ItemChatBox> dataList;
-    private Context context;
-    String token,userID;
+public class ChatBoxAdapter extends ArrayAdapter<ItemChatBox> {
+    Activity context;
+    int layout;
+    ArrayList<ItemChatBox> boxes;
 
-    public ChatBoxAdapter(List<ItemChatBox> dataList, Context context) {
-        this.dataList = dataList;
+    private OnEditClickListener editClickListener;
+    private OnDeleteClickListener deleteClickListener;
+
+    public ChatBoxAdapter(Activity context, int layout, ArrayList<ItemChatBox> boxes) {
+        super(context, layout, boxes);
         this.context = context;
+        this.layout = layout;
+        this.boxes = boxes;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chatbox_layout, parent, false);
-        return new ViewHolder(view);
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        LayoutInflater layoutInflater = context.getLayoutInflater();
+        convertView = layoutInflater.inflate(layout, null);
 
-    }
+        ItemChatBox box = boxes.get(position);
+        TextView titleTv = convertView.findViewById(R.id.chatBox);
+        ImageView editBtn = convertView.findViewById(R.id.btnedit);
+        ImageView deleteBtn = convertView.findViewById(R.id.btndelete);
+        titleTv.setText(box.getItemText());
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        ItemChatBox item = dataList.get(position);
-        TextView textView = holder.textView;
-        textView.setText(item.getType()); // Đặt giá trị từ item vào textView
-
-        SharedPreferences preferences = context.getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        String savedText = preferences.getString("textValue" + position, "");
-        token = preferences.getString("token", ""); //lưu trữ tên người dùng
-        userID = preferences.getString("userId", ""); //lưu trữ tên người dùng
-        if (!savedText.isEmpty()) {
-            textView.setText(savedText); // Nếu có giá trị từ SharedPreferences, đặt giá trị đó vào textView
-        }
-
-        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+        // Đặt sự kiện onClick cho nút edit
+        editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Tạo dialog input
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Nhập giá trị mới");
-
-                // Tạo đối tượng EditText để người dùng nhập giá trị mới
-                final EditText input = new EditText(context);
-                builder.setView(input);
-
-                // Thiết lập nút "OK" để cập nhật textView và lưu giá trị mới
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Lấy giá trị mới từ EditText
-                        String newText = input.getText().toString();
-
-                        // Cập nhật textView
-                        textView.setText(newText);
-
-                        // Lưu giá trị mới vào SharedPreferences
-                        SharedPreferences preferences = context.getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("textValue" + position, newText);
-                        editor.apply();
-                    }
-                });
-
-                // Hiển thị dialog
-                builder.show();
+                if (editClickListener != null) {
+                    editClickListener.onEditClick(box); // Gọi phương thức onEditClick với ItemChatBox tương ứng
+                }
             }
         });
 
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+        // Đặt sự kiện onClick cho nút delete
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onDeleteBox(position);
+                if (deleteClickListener != null) {
+                    deleteClickListener.onDeleteClick(box); // Gọi phương thức onDeleteClick với ItemChatBox tương ứng
+                }
             }
         });
+
+        return convertView;
     }
 
-    @Override
-    public int getItemCount() {
-        return dataList.size();
+    // Định nghĩa interface cho các sự kiện onClick
+    public interface OnEditClickListener {
+        void onEditClick(ItemChatBox itemChatBox);
     }
 
-    private void onDeleteBox(final int position) {
-        ItemChatBox item = dataList.get(position);
-        String boxId = item.get_id(); // Lấy ID của hộp chat cần xóa
-        OkHttpClient client = new OkHttpClient();
-
-        String url = "https://android-huflit-server.vercel.app/box/delete-box";
-        Request request = new Request.Builder()
-                .url(url + "/" + boxId)
-                .delete()
-                .addHeader("Authorization", "Bearer " + token)
-                .build();
-//
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                // Xử lý khi yêu cầu gửi không thành công
-                e.printStackTrace();
-            }
-//
-//            @Override
-public void onResponse(Call call, Response response) throws IOException {
-    if (response.isSuccessful()) {
-        // Xóa hộp chat khỏi dataList
-        dataList.remove(position);
-//         Thực hiện cập nhật giao diện trong luồng chính
-        ((Activity) context).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, dataList.size());
-                // Xóa TextView chatBox
-            }
-        });
-//        onDeleteBox(position);
-        Log.e("DeleteBox", "Request ok: " + response.code());
-    } else {
-        // Xử lý khi yêu cầu gửi thành công nhưng không thành công
-        Log.e("DeleteBox", "Request unsuccessful: " + response.code());
-    }
-}
-        });
-    }
-    public void clearTextValue() {
-        SharedPreferences preferences = context.getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
-        editor.apply();
+    public interface OnDeleteClickListener {
+        void onDeleteClick(ItemChatBox itemChatBox);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
-        ImageView btnEdit;
-        ImageView btnDelete;
+    // Setter để thiết lập các Listener
+    public void setEditClickListener(OnEditClickListener listener) {
+        this.editClickListener = listener;
+    }
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textView = itemView.findViewById(R.id.chatBox);
-            btnEdit = itemView.findViewById(R.id.btnedit);
-            btnDelete = itemView.findViewById(R.id.btndelete);
-        }
+    public void setDeleteClickListener(OnDeleteClickListener listener) {
+        this.deleteClickListener = listener;
     }
 }

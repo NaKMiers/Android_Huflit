@@ -56,7 +56,7 @@ public class ProfileView extends AppCompatActivity {
         txtAuthType = findViewById(R.id.txtAuthType);
 
         // Set user information
-        SharedPreferences preferences = getSharedPreferences("mypreferences", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("myPreferences", MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
         String id = preferences.getString("userId", ""); //lưu trữ tên người dùng
         String email =preferences.getString("email", ""); //lưu trữ tên người dùng
@@ -94,7 +94,7 @@ public class ProfileView extends AppCompatActivity {
         startActivityForResult(i, 1);
     }
     private void requireAuth() {
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         String userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
         if (userId == null || userId == "") {
             Intent intent = new Intent(ProfileView.this, Login.class);
@@ -176,7 +176,7 @@ public class ProfileView extends AppCompatActivity {
 
     // Method to handle profile view button click
 //    public void handleProfileView(View view) {
-//        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+//        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
 //        String email = preferences.getString("email", "");
 //
 //        // Lấy thông tin từ SharedPreferences

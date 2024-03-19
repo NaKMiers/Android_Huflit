@@ -53,7 +53,7 @@ public class AdminUser extends AppCompatActivity {
         adminUserAdapter = new AdminUserAdapter(AdminUser.this, R.layout.item_user, userList);
         ListUser.setAdapter(adminUserAdapter);
 
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         token = preferences.getString("token", ""); //lưu trữ tên người dùng
 
 

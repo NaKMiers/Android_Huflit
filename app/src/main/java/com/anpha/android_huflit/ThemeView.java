@@ -62,7 +62,7 @@ ArrayList<theme> arr_theme;
     }
 
     private void requireAuth() {
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         String userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
         if (userId == null || userId == "") {
             Intent intent = new Intent(ThemeView.this, Login.class);

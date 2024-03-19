@@ -15,7 +15,7 @@ public class DevInfo extends AppCompatActivity {
         setContentView(R.layout.activity_dev_info);
     }
     private void requireAuth() {
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         String userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
         if (userId == null || userId == "") {
             Intent intent = new Intent(DevInfo.this, Login.class);

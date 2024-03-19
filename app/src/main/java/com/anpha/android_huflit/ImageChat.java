@@ -123,8 +123,8 @@ public class ImageChat extends AppCompatActivity {
         dataList = new ArrayList<>();
 
         // Khởi tạo Adapter và gán cho RecyclerView
-        boxAdapter = new ChatBoxAdapter(dataList, this);
-        imageChatBox.setAdapter(boxAdapter);
+//        boxAdapter = new ChatBoxAdapter(dataList, this);
+//        imageChatBox.setAdapter(boxAdapter);
         //Khởi tạo danh sách dữ liệu tin nhắn
         messages = new ArrayList<>();
         // Khởi tạo Adapter và gán cho RecyclerView
@@ -153,7 +153,7 @@ public class ImageChat extends AppCompatActivity {
 
         txtAmount.setText(amount);
         txtSize.setText(size);
-        SharedPreferences mypreferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences mypreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         String role = mypreferences.getString("role", "");
 
 //        navigationIcon.setOnClickListener(new View.OnClickListener() {
@@ -215,7 +215,7 @@ public class ImageChat extends AppCompatActivity {
             }
         });
         // lấy dữ liệu từ SharedPreferces
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
         token = preferences.getString("token", ""); //lưu trữ tên người dùng
         userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
@@ -239,8 +239,8 @@ public class ImageChat extends AppCompatActivity {
 
 
         // Khởi tạo Adapter và gán cho RecyclerView
-        boxAdapter = new ChatBoxAdapter(dataList, this);
-        imageChatBox.setAdapter(boxAdapter);
+//        boxAdapter = new ChatBoxAdapter(dataList, this);
+//        imageChatBox.setAdapter(boxAdapter);
 
         try {
             GetUserPrompts("https://android-huflit-server.vercel.app");
@@ -341,11 +341,11 @@ public class ImageChat extends AppCompatActivity {
     private void addBox(ItemChatBox box) {
         // Thêm các item vào danh sách dữ liệu
         dataList.add(box);
-        boxAdapter.notifyItemInserted(dataList.size() - 1);
+//        boxAdapter.notifyItemInserted(dataList.size() - 1);
 
     }
     private void requireAuth() {
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         String userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
         if (userId == null || userId == "") {
             Intent intent = new Intent(ImageChat.this, Login.class);
@@ -407,7 +407,7 @@ public class ImageChat extends AppCompatActivity {
         });
     }
     private void LogOutUser() {
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit(); // Sửa lỗi gán lại biến preferences
 //        editor.remove("token");
         editor.clear();
@@ -687,7 +687,7 @@ public class ImageChat extends AppCompatActivity {
         txtHelp2.setText("creating...");
 
 
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         String amount = preferences.getString("amount", "1"); //lưu trữ tên người dùng
         String size = preferences.getString("size", "256x256"); //lưu trữ tên người dùng
 
@@ -803,7 +803,7 @@ public class ImageChat extends AppCompatActivity {
             amount = txtAmount.getText().toString();
             size = txtSize.getText().toString();
 
-            SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+            SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("amount", amount);
             editor.putString("size", size);

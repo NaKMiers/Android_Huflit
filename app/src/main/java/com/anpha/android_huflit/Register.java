@@ -87,7 +87,7 @@ public class Register extends AppCompatActivity {
 
         saveUserData(inputEmail ,username, password);
 
-//        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+//        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
 //        String email = preferences.getString("email", "");
 //        // Hiển thị email lên TextView
 //        txtEmailProfile.setText("Email: " + email);
@@ -133,7 +133,7 @@ public class Register extends AppCompatActivity {
                         String avatar = userJson.optString("avatar");
 
 //                        Lưu username vào SharedPreferences
-                        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+                        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("username", username);
                         editor.putString("avatar", avatar);
@@ -154,7 +154,7 @@ public class Register extends AppCompatActivity {
 
 
     private void saveUserData(String email, String username, String password) {
-        SharedPreferences sharedPreferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("email",email);
         editor.putString("username",username);

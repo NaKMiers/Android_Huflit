@@ -35,7 +35,7 @@ public class ProfileChange extends AppCompatActivity {
         txtemailprofilechange=findViewById(R.id.txtemailprofilechange);
         txtusernamechange=findViewById(R.id.txtusernamechange);
         i = getIntent();
-        SharedPreferences preferences = getSharedPreferences("mypreferences", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("myPreferences", MODE_PRIVATE);
         String username = preferences.getString("username", "");
         // Hiển thị tên người dùng trong TextView
         txtusernamechange.setText(username);
@@ -56,7 +56,7 @@ public class ProfileChange extends AppCompatActivity {
 
     public void saveInfo(View view) {
         // Lấy SharedPreferences và tạo SharedPreferences.Editor
-        SharedPreferences preferences = getSharedPreferences("mypreferences", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("myPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
         // Lấy các giá trị từ EditText
