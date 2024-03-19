@@ -6,9 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.TextClock;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -24,54 +26,118 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayOutputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileView extends AppCompatActivity {
-    TextView txtnameuser, txtEmailProfile;
-    SharedPreferences preferences;
+    // Elements
+    ImageView avatar, homeBtn, profileBtn, themeBtn, securityBtn, logoutBtn;
+    TextView editBtn;
+    TextView fullnameTv, emailTv, usernameTv, birthdayTv, jobTv, addressTv;
 
-    CircleImageView avatar;
-    TextView txtUsername, txtID, txtName, txtEmail, txtRole, txtAuthType;
-    ImageView selectedAvatarImageView;
-    ConstraintLayout profileLayout;
-    PopupWindow popupWindow;
-
-    LinearLayout informationView;
-
-
+    // values
+    String token, userId;
+    String API = "https://android-huflit-server.vercel.app";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
 
+        requireAuth();
+
         // mapping
-        txtUsername = findViewById(R.id.txtUsername);
-        txtID = findViewById(R.id.txtID);
-        txtName = findViewById(R.id.txtSetting);
-        txtEmail = findViewById(R.id.txtEmail);
-        txtRole = findViewById(R.id.txtRole);
-        txtAuthType = findViewById(R.id.txtAuthType);
+        mapping();
+
+        // events
+        addEvents();
+
 
         // Set user information
         SharedPreferences preferences = getSharedPreferences("myPreferences", MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
-        String id = preferences.getString("userId", ""); //lưu trữ tên người dùng
+        userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
+        token = preferences.getString("token", "");
         String email =preferences.getString("email", ""); //lưu trữ tên người dùng
         String role =preferences.getString("role","");
         String authType =preferences.getString("authType","");
+        String avt = preferences.getString("avatar", "");
+        String firstname = preferences.getString("firstname", "");
+        String lastname = preferences.getString("lastname", "");
+        String birthday = preferences.getString("birthday", "");
+        String job = preferences.getString("job", "");
+        String address = preferences.getString("address", "");
 
+        Picasso.get()
+                .load(API + avt)
+                .error(R.drawable.boy)
+                .into(avatar);
 
-        txtID.setText("Id: " + id);
-        txtEmail.setText("Email: " + email);
-        txtName.setText("Username: " + username);
-        txtUsername.setText(username);
-        txtRole.setText("Role: " + role);
-        txtAuthType.setText("AuthType: " + authType);
+        fullnameTv.setText(firstname + " " + lastname);
+        emailTv.setText(email);
+        usernameTv.setText(username);
+        birthdayTv.setText(birthday);
+        jobTv.setText(job);
+        addressTv.setText(address);
+    }
 
+    private void mapping() {
+        homeBtn = findViewById(R.id.homeBtn);
+        profileBtn = findViewById(R.id.profileBtn);
+        themeBtn = findViewById(R.id.themeBtn);
+        securityBtn = findViewById(R.id.securityBtn);
+        logoutBtn = findViewById(R.id.logoutBtn);
+        avatar = findViewById(R.id.avatar);
+        editBtn = findViewById(R.id.editBtn);
+        fullnameTv = findViewById(R.id.fullnameTv);
+        emailTv = findViewById(R.id.emailTv);
+        usernameTv = findViewById(R.id.usernameTv);
+        birthdayTv = findViewById(R.id.birthdayTv);
+        jobTv = findViewById(R.id.jobTv);
+        addressTv = findViewById(R.id.addressTv);
+    }
 
+    private void addEvents() {
+        homeBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, TextChat.class);
+            startActivity(intent);
+        });
+        profileBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, ProfileView.class);
+            startActivity(intent);
+        });
+        themeBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, ThemeView.class);
+            startActivity(intent);
+        });
+        securityBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, ImageChat.class);
+            startActivity(intent);
+        });
+        logoutBtn.setOnClickListener(view -> {
+            SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.apply();
+            Intent intent = new Intent(ProfileView.this, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
+    }
+
+    private void requireAuth() {
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+        String userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
+        if (userId == null || userId == "") {
+            Intent intent = new Intent(ProfileView.this, Login.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
@@ -82,77 +148,28 @@ public class ProfileView extends AppCompatActivity {
     }
 
     public void toProfileChange(View view) {
-        BitmapDrawable bitmapDrawable = (BitmapDrawable) avatar.getDrawable();
-        Bitmap bitmap = bitmapDrawable.getBitmap();
-        //Tạo một byte array output stream để ghi bitmap vào
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        // Chuyển đổi ByteArrayOutputStream thành mảng byte
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-        Intent i = new Intent(ProfileView.this, ProfileChange.class);
-        i.putExtra("currentAvatar", byteArray);
-        startActivityForResult(i, 1);
-    }
-    private void requireAuth() {
-        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
-        String userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
-        if (userId == null || userId == "") {
-            Intent intent = new Intent(ProfileView.this, Login.class);
-            startActivity(intent);
-            finish();
-            return;
-        }
+        Intent intent = new Intent(ProfileView.this, ProfileChange.class);
+        startActivity(intent);
     }
 
-    public void changeAvatar(View view) {
-        showAvatarSelectionPopup();
-    }
-
-    private void showAvatarSelectionPopup() {
-        //Khởi tạo popupView nạp layout từ avatar_selection_popup
-        View popupView = LayoutInflater.from(this).inflate(R.layout.avatar_selection_popup, null);
-        //Lấy imageView id là currentAvatar
-        ImageView currentAvatar = popupView.findViewById(R.id.currentAvatar);
-        //Thiết lập hình ảnh từ mainAvatar cho currentAvatar
-        currentAvatar.setImageDrawable(avatar.getDrawable());
-        //Khởi tạo popupWindow
-        popupWindow = new PopupWindow(
-                popupView,
-                //Độ rộng
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                //Độ cao
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                //Cho phép tương tác với các phần tử khác trên màn hình
-                true
-        );
-        //Khởi tạo popupWindow tại vị trí trung tâm màn hình
-        popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
-        //Set độ mờ cho informationView
-        informationView.setAlpha(0.4f);
-        //Tạo biến màu mờ
-        int dimColor = Color.parseColor("#80000000");
-        //Sau đó set cho layoutFile
-        profileLayout.setBackgroundColor(dimColor);
-    }
-       
 
     //Hàm đổi avatar khi nhấn vào các lựa chọn hình
     public void onNewAvatarSelected(View view) {
-        //Lấy ImageView được chọn và gán vào biến selectedAvatarImageView
-        selectedAvatarImageView = (ImageView) view;
-        //Lấy hình ảnh hiển thị trên selectedAvatarImageView và lưu vào biến drawable
-        Drawable drawable = selectedAvatarImageView.getDrawable();
-        //Thiết lập hình ảnh của mainAvatar bằng hình ảnh được chọn
-        avatar.setImageDrawable(drawable);
-        //Nếu popupWindow đã khởi tạo
-        if (popupWindow != null) {
-            //Đóng popupWindow
-            popupWindow.dismiss();
-            //Đặt màu nền cho layoutProfile là trong suốt
-            profileLayout.setBackgroundColor(Color.TRANSPARENT);
-            //Chỉnh lại alpha cho informationView
-            informationView.setAlpha(1.0f);
-        }
+//        //Lấy ImageView được chọn và gán vào biến selectedAvatarImageView
+//        selectedAvatarImageView = (ImageView) view;
+//        //Lấy hình ảnh hiển thị trên selectedAvatarImageView và lưu vào biến drawable
+//        Drawable drawable = selectedAvatarImageView.getDrawable();
+//        //Thiết lập hình ảnh của mainAvatar bằng hình ảnh được chọn
+//        avatar.setImageDrawable(drawable);
+//        //Nếu popupWindow đã khởi tạo
+//        if (popupWindow != null) {
+//            //Đóng popupWindow
+//            popupWindow.dismiss();
+//            //Đặt màu nền cho layoutProfile là trong suốt
+//            profileLayout.setBackgroundColor(Color.TRANSPARENT);
+//            //Chỉnh lại alpha cho informationView
+//            informationView.setAlpha(1.0f);
+//        }
     }
 
     @Override
@@ -169,33 +186,7 @@ public class ProfileView extends AppCompatActivity {
 //        }
     }
 
-//    public void handleChangeProfileChange(View view) {
-//        Intent intent = new Intent(ProfileView.this, ProfileChange.class);
-//        startActivity(intent);
-//    }
 
-    // Method to handle profile view button click
-//    public void handleProfileView(View view) {
-//        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
-//        String email = preferences.getString("email", "");
-//
-//        // Lấy thông tin từ SharedPreferences
-//        String ho = preferences.getString("ho", "");
-//        String ten = preferences.getString("ten", "");
-//        String ngaysinh = preferences.getString("ngaysinh", "");
-//        String diachi = preferences.getString("diachi", "");
-//        String nghe = preferences.getString("nghe", "");
-//
-//        // Hiển thị thông tin trong TextViews
-//        txtHo.setText("Họ: " + ho);
-//        txtTen.setText("Tên: " + ten);
-//        txtngaysinh.setText("Ngày sinh: " + ngaysinh);
-//        txtdiachi.setText("Địa chỉ: " + diachi);
-//        txtnghe.setText("Nghề nghiệp: " + nghe);
-//
-//        // Hiển thị email trong TextView
-//        txtEmailProfile.setText("Email: " + email);
-//    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -203,25 +194,6 @@ public class ProfileView extends AppCompatActivity {
 //        displayProfileInfo();
     }
 
-//    private void displayProfileInfo() {
-//        // Lấy thông tin từ SharedPreferences
-//        String ho = preferences.getString("ho", "");
-//        String ten = preferences.getString("ten", "");
-//        String ngaysinh = preferences.getString("ngaysinh", "");
-//        String diachi = preferences.getString("diachi", "");
-//        String nghe = preferences.getString("nghe", "");
-//
-//        // Hiển thị thông tin trong TextViews
-//        txtHo.setText("Họ: " + ho);
-//        txtTen.setText("Tên: " + ten);
-//        txtngaysinh.setText("Ngày sinh: " + ngaysinh);
-//        txtdiachi.setText("Địa chỉ: " + diachi);
-//        txtnghe.setText("Nghề nghiệp: " + nghe);
-//
-//        // Hiển thị email trong TextView
-//        String email = preferences.getString("email", "");
-//        txtEmailProfile.setText("Email: " + email);
-//    }
 
 
 }

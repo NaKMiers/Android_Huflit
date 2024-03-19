@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="30dp"
+    android:layout_margin="21dp"
     android:orientation="vertical"
     tools:context=".ProfileChange">
 
     <TextView
-        android:id="@+id/txtnameuser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -19,31 +18,31 @@
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="135dp"
+        android:layout_height="135dp"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/boy" />
+        android:layout_marginTop="15dp" />
 
     <TextView
-        android:id="@+id/txtusernamechange"
+        android:id="@+id/usernameTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="Username"
-        android:textColor="#000000"
-        android:textSize="18sp" />
+        android:textColor="@color/blue"
+        android:textSize="18sp"/>
 
     <TextView
-        android:id="@+id/txtemailprofilechange"
+        android:id="@+id/emailTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
-        android:text="EMAIL: levana@gmail.com"
-        android:textColor="#000000" />
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="Email: "
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/textView20"
@@ -52,76 +51,167 @@
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="Thông tin chi tiết"
-        android:textColor="#FF0000" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#333"
+        android:layout_marginBottom="12dp"/>
 
-    <EditText
-        android:id="@+id/edtSurName"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/edtprofile"
-        android:hint="Họ:"
-        android:inputType="text"
-        android:paddingLeft="15dp"
-        android:textColor="#000000" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
 
-    <EditText
-        android:id="@+id/edtName"
+        <TextView
+            android:text="Họ: "
+            android:textSize="20dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/lastnameEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edtprofile"
+            android:hint="..."
+            android:paddingHorizontal="20dp"
+            android:inputType="text"
+            android:textColorHint="#fff"
+            android:textColor="#fff"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/edtprofile"
-        android:hint="Tên: "
-        android:inputType="text"
-        android:paddingLeft="15dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
 
-    <EditText
-        android:id="@+id/edtBirthday"
+        <TextView
+            android:text="Tên: "
+            android:textSize="20dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/firstnameEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edtprofile"
+            android:hint="..."
+            android:paddingHorizontal="20dp"
+            android:inputType="text"
+            android:textColorHint="#fff"
+            android:textColor="#fff"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/edtprofile"
-        android:hint="Ngày sinh:"
-        android:inputType="text"
-        android:paddingLeft="15dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
 
-    <EditText
-        android:id="@+id/edtJob"
+        <TextView
+            android:text="Ngày sinh: "
+            android:textSize="20dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/birthdayEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edtprofile"
+            android:hint="..."
+            android:paddingHorizontal="20dp"
+            android:inputType="text"
+            android:textColorHint="#fff"
+            android:textColor="#fff"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/edtprofile"
-        android:hint="Nghề nghiệp: "
-        android:inputType="text"
-        android:paddingLeft="15dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
 
-    <EditText
-        android:id="@+id/edtAddress"
+        <TextView
+            android:text="Nghề nghiệp: "
+            android:textSize="20dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/jobEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edtprofile"
+            android:hint="..."
+            android:paddingHorizontal="20dp"
+            android:inputType="text"
+            android:textColorHint="#fff"
+            android:textColor="#fff"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/edtprofile"
-        android:hint="Địa chỉ:"
-        android:inputType="text"
-        android:paddingLeft="15dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
 
-    <Button
-        android:id="@+id/btnSaveInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="42dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/buttonlogout"
-        android:onClick="saveInfo"
-        android:text="SAVE" />
+        <TextView
+            android:text="Địa chỉ: "
+            android:textSize="20dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/addressEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edtprofile"
+            android:hint="..."
+            android:paddingHorizontal="20dp"
+            android:inputType="text"
+            android:textColorHint="#fff"
+            android:textColor="#fff"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonlogout"
+            android:onClick="saveInfo"
+            android:layout_margin="8dp"
+            android:text="Save" />
+
+        <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonlogout"
+            android:backgroundTint="#ddd"
+            android:onClick="saveInfo"
+            android:layout_margin="8dp"
+            android:text="Cancel" />
+    </LinearLayout>
+
+
 </LinearLayout>

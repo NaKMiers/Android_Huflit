@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
+
         <activity
             android:name=".AdminUser"
             android:exported="true">
-
         </activity>
         <activity
             android:name=".PopupOption"
@@ -29,12 +29,11 @@
             android:name=".ProfileView"
             android:exported="true" />
         <activity
+            android:name=".ProfileChange"
+            android:exported="true" />
+        <activity
             android:name=".Login"
-            android:exported="true">
-
-        </activity> <!-- <activity -->
-        <!-- android:name=".Profile" -->
-        <!-- android:exported="true" /> -->
+            android:exported="true"/>
         <activity
             android:name=".ResetPassword"
             android:exported="true" />
@@ -60,9 +59,6 @@
         </activity>
         <activity
             android:name=".ImageChat"
-            android:exported="true" />
-        <activity
-            android:name=".ProfileChange"
             android:exported="true" />
     </application>
 

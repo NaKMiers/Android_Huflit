@@ -19,6 +19,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -129,8 +134,23 @@ import okhttp3.Response;
                        String id = userJson.optString("_id");
                        String role = userJson.optString("role");
                        String authType = userJson.optString("authType");
+                       String firstname = userJson.optString("firstname");
+                       String lastname = userJson.optString("lastname");
+                       String birthday = userJson.optString("birthday");
+                       String job = userJson.optString("job");
+                       String address = userJson.optString("address");
 
-    //                    Lưu username vào SharedPreferences
+                       // Định dạng của ngày đầu vào
+                       SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+                       inputFormat.setTimeZone(TimeZone.getTimeZone("UTC")); // Đặt múi giờ là UTC
+
+                       // Định dạng của ngày đầu ra
+                       SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                       Date birthdayBefore = inputFormat.parse(birthday);
+                       assert birthdayBefore != null;
+                       String birthdayAfter = outputFormat.format(birthdayBefore);
+
+                       // Lưu username vào SharedPreferences
                        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
                        SharedPreferences.Editor editor = preferences.edit();
                        editor.putString("username", username);
@@ -139,13 +159,18 @@ import okhttp3.Response;
                        editor.putString("userId", id);
                        editor.putString("email", email);
                        editor.putString("role", role);
+                       editor.putString("firstname", firstname);
+                       editor.putString("lastname", lastname);
+                       editor.putString("birthday", birthdayAfter);
+                       editor.putString("job", job);
+                       editor.putString("address", address);
                        editor.putString("authType", authType);
                        editor.apply();
 
                        Class<?> nextActivity = role.equals("admin") ? TextChat.class : TextChat.class;
                        Intent intent = new Intent(Login.this, nextActivity);
                        startActivity(intent);
-                   } catch (JSONException e) {
+                   } catch (JSONException | ParseException e) {
                        throw new RuntimeException(e);
                    }
                } else {

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anpha.android_huflit.Models.Prompt;
 
@@ -40,7 +41,7 @@ public class ForgotPassword extends AppCompatActivity {
     OkHttpClient client = new OkHttpClient();
 
     String code;
-    Boolean isSent;
+    Boolean isSent = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class ForgotPassword extends AppCompatActivity {
     public void handleSendFP(View view) throws IOException {
         if (isSent) {
             // nếu nhập code đúng
-            if (codeFPEdt.getText().toString().trim() == code) {
+            if (codeFPEdt.getText().toString().trim().equals(code)) {
                 // reset when code is available
                 // Làm tiếp chỗ reset này
                 // Bước 1: Tạo cái request để reset password tương tự lại send mail
