@@ -36,14 +36,17 @@ class ImageGridAdapter extends ArrayAdapter<String> {
             imageView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200)); // Set your desired image size here
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_corners)); // Áp dụng rounded_corners.xml làm background
-            imageView.setClipToOutline(true); // Bật bo góc cho ImageView
+            imageView.setClipToOutline(true);
         } else {
 
             imageView = (ImageView) convertView;
         }
 
         // Load image using Picasso or any other library
-        Picasso.get().load(mImageUrls.get(position)).into(imageView);
+        Picasso.get()
+                .load(mImageUrls.get(position))
+                .error(R.drawable.not_found_image)
+                .into(imageView);
 
         return imageView;
     }

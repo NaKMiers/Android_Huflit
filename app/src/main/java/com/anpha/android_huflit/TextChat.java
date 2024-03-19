@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.view.View;
 import android.view.LayoutInflater;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,11 +72,16 @@ public class TextChat extends AppCompatActivity {
     DrawerLayout drawerLayout;
     TextView txtHelp1, txtMode, txtusername,txtChangetheme,txtDevinfo,txtAdmin,txtHiUser;
     Button btnLogOut;
+    ProgressBar loadingMessage;
 
     // libraby tools
     OkHttpClient client = new OkHttpClient();
+
+    // values
     String token, userId;
     String boxId;
+    String API = "https://android-huflit-server.vercel.app";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,17 +102,23 @@ public class TextChat extends AppCompatActivity {
         adapter = new MessageAdapter(messages);
         recyclerView.setAdapter(adapter);
 
+        // show boxes
+        boxes = new ArrayList<>();
+        boxAdapter = new ChatBoxAdapter(TextChat.this, R.layout.item_chatbox_layout, boxes);
+        chatBox.setAdapter(boxAdapter);
+
         //Thiết lập con trỏ ở cuối văn bản EditText
         edtTextChat.requestFocus();
         edtTextChat.setSelection(edtTextChat.getText().length());
 
+        // get global data
         SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         String role = preferences.getString("role", "");
         String username = preferences.getString("username", "");
         userId = preferences.getString("userId", "");
         token = preferences.getString("token", "");
         String avatar = preferences.getString("avatar", "");
-        Picasso.get().load("https://android-huflit-server.vercel.app" + avatar).into(imgavatar);
+        Picasso.get().load(API + avatar).into(imgavatar);
 
         // Kiểm tra và ẩn / hiển thị các phần tử dựa trên vai trò của người dùng
         if (role.equals("admin")) {
@@ -121,10 +134,7 @@ public class TextChat extends AppCompatActivity {
         txtusername.setText(username); // đặt tên người dùng trong textview
         txtHiUser.setText(" Hi " + username );
 
-        boxes = new ArrayList<>();
-        boxAdapter = new ChatBoxAdapter(TextChat.this, R.layout.item_chatbox_layout, boxes);
-        chatBox.setAdapter(boxAdapter);
-
+        // Item selected
         chatBox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -137,18 +147,72 @@ public class TextChat extends AppCompatActivity {
                 messages.clear();
                 adapter.notifyDataSetChanged();
 
+                // close sidebar
                 drawerLayout.closeDrawer(GravityCompat.START);
 
                 try {
-                    GetUserPrompts("https://android-huflit-server.vercel.app/chat/get-prompts/" + boxId);
+                    GetUserPrompts(API + "/chat/get-prompts/" + boxId);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
 
-                // close sidebar
             }
         });
 
+        // Click on edit button
+        boxAdapter.setEditClickListener(new ChatBoxAdapter.OnEditClickListener() {
+            @Override
+            public void onEditClick(ItemChatBox itemChatBox) {
+                // Lấy vị trí của item được nhấn
+                int position = boxes.indexOf(itemChatBox);
+
+                // Kiểm tra vị trí có hợp lệ không
+                if (position != -1) {
+                    // Lấy convertView của item được nhấn
+                    View view = chatBox.getChildAt(position - chatBox.getFirstVisiblePosition());
+                    if (view != null) {
+                        // Tìm TextView hiện tại và EditText mới
+                        TextView textView = view.findViewById(R.id.chatBox);
+                        EditText editText = new EditText(TextChat.this);
+
+                        // Lấy văn bản hiện tại từ TextView
+                        String currentText = textView.getText().toString();
+
+                        // Đặt văn bản hiện tại vào EditText
+                        editText.setText(currentText);
+
+                        // Thay thế TextView bằng EditText trong LinearLayout
+                        ViewGroup parentLayout = (ViewGroup) textView.getParent();
+                        int index = parentLayout.indexOfChild(textView);
+                        parentLayout.removeView(textView);
+
+                        parentLayout.addView(editText, index, new ViewGroup.LayoutParams(350, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                        // Thay đổi văn bản của nút chỉnh sửa thành "Save"
+                        ImageView editBtn = view.findViewById(R.id.btnedit);
+                        editBtn.setImageResource(R.drawable.save);
+
+                        // Focus vào EditText và di chuyển con trỏ đến cuối văn bản
+                        editText.requestFocus();
+                        editText.setSelection(editText.getText().length());
+
+                        editBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.d("Position------", position + "");
+                                Log.d("Box ID", itemChatBox.get_id());
+                                Log.d("New Value", editText.getText().toString());
+
+                                UpdateBoxName(API + "/box/edit-box/" + itemChatBox.get_id(), editText.getText().toString());
+                            }
+                        });
+
+                    }
+                }
+            }
+        });
+
+        // Click on delete button
         boxAdapter.setDeleteClickListener(new ChatBoxAdapter.OnDeleteClickListener() {
             @Override
             public void onDeleteClick(ItemChatBox itemChatBox) {
@@ -156,7 +220,7 @@ public class TextChat extends AppCompatActivity {
                 Log.d("------------Delete Clicked", "BoxID: " + itemChatBox.get_id()); // In ra title của box
 
                 try {
-                    DeleteBox("https://android-huflit-server.vercel.app/box/delete-box/" + itemChatBox.get_id(), itemChatBox);
+                    DeleteBox(API + "/box/delete-box/" + itemChatBox.get_id(), itemChatBox);
                 } catch(IOException e) {
                     e.printStackTrace();
                 }
@@ -199,12 +263,13 @@ public class TextChat extends AppCompatActivity {
         twIcon = popupView.findViewById(R.id.twIcon);
         pinIcon = popupView.findViewById(R.id.pinIcon);
         gitIcon = popupView.findViewById(R.id.gitIcon);
-        txtChangetheme=popupView.findViewById(R.id.txtChangetheme);
-        imgChangetheme=popupView.findViewById(R.id.imgChangetheme);
-        txtDevinfo=popupView.findViewById(R.id.txtDevinfo);
-        imgDevinfo=popupView.findViewById(R.id.imgDevinfo);
-        imgAdmin=popupView.findViewById(R.id.imgAdmin);
-        txtAdmin=popupView.findViewById(R.id.txtAdmin);
+        txtChangetheme = popupView.findViewById(R.id.txtChangetheme);
+        imgChangetheme = popupView.findViewById(R.id.imgChangetheme);
+        txtDevinfo = popupView.findViewById(R.id.txtDevinfo);
+        imgDevinfo = popupView.findViewById(R.id.imgDevinfo);
+        imgAdmin = popupView.findViewById(R.id.imgAdmin);
+        txtAdmin = popupView.findViewById(R.id.txtAdmin);
+        loadingMessage = findViewById(R.id.loadingMessage);
     }
 
     private void addEvents() {
@@ -317,6 +382,8 @@ public class TextChat extends AppCompatActivity {
         for (Prompt p: newPrompts) {
             Log.d(p.getFrom(), p.getText());
         }
+
+        improvedPrompt += "*Nội dung trước đó 1 đoạn* \n";
         for(Prompt p: prompts) {
             // if prompt is from user
             if (Objects.equals(p.from, "user")) {
@@ -329,25 +396,13 @@ public class TextChat extends AppCompatActivity {
                 improvedPrompt += line;
             }
         }
+
+        improvedPrompt += "*Nội dung dung mới* \n";
+
         String lastLine = "user: " + edtTextChat.getText().toString().trim();
         improvedPrompt += lastLine;
 
         return improvedPrompt;
-    }
-
-    private void addNewMessage(String text, boolean isFromUser) {
-        //Khởi tạo lớp Message sentMessage với tham số là text kiểu chuỗi và isFromUser(do người dùng gửi)
-        Message sentMessage = new Message(text, isFromUser);
-        // Thêm tin nhắn gửi vào cuối danh sách
-        messages.add(sentMessage);
-        // Thông báo cho Adapter biết rằng có một mục mới được thêm vào cuối danh sách
-        adapter.notifyItemInserted(messages.size() - 1);
-    }
-
-    private void addBox(ItemChatBox box) {
-        // Thêm các item vào danh sách dữ liệu
-        boxes.add(box);
-        boxAdapter.notifyDataSetChanged();
     }
 
     // Chuyển qua ImageChat
@@ -401,13 +456,37 @@ public class TextChat extends AppCompatActivity {
 
     }
 
+    // Essentials -----------------------------------------------
+    void setLoading(Boolean value) {
+        if (value) {
+            loadingMessage.setVisibility(View.VISIBLE);
+        } else {
+            loadingMessage.setVisibility(View.GONE);
+        }
+    }
+
+    private void addNewMessage(String text, boolean isFromUser) {
+        //Khởi tạo lớp Message sentMessage với tham số là text kiểu chuỗi và isFromUser(do người dùng gửi)
+        Message sentMessage = new Message(text, isFromUser);
+        // Thêm tin nhắn gửi vào cuối danh sách
+        messages.add(sentMessage);
+        // Thông báo cho Adapter biết rằng có một mục mới được thêm vào cuối danh sách
+        adapter.notifyItemInserted(messages.size() - 1);
+    }
+
+    private void addBox(ItemChatBox box) {
+        // Thêm các item vào danh sách dữ liệu
+        boxes.add(box);
+        boxAdapter.notifyDataSetChanged();
+    }
+
     public void handleSendChatPrompt(View view) {
         String messageText = edtTextChat.getText().toString().trim();
         if (!messageText.isEmpty()) {
             txtHiUser.setText("");
 
             try {
-                CreatePrompt("https://android-huflit-server.vercel.app/chat/create-prompt");
+                CreatePrompt(API + "/chat/create-prompt");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -416,34 +495,98 @@ public class TextChat extends AppCompatActivity {
 
     public void handleCreateChatBox(View view) {
         try {
-            CreateChatBox("https://android-huflit-server.vercel.app/box/create-box/chat");
+            CreateChatBox(API + "/box/create-box/chat");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
     public void handleClearBoxOfChat(View view) {
-        ClearBoxOfChat("https://android-huflit-server.vercel.app/box/clear-boxes/chat");
+        ClearBoxOfChat(API + "/box/clear-boxes/chat");
     }
 
     // IMPORTANT Methods --------------------------------------
     void InitialGetData() {
-        //            GetUserPrompts("https://android-huflit-server.vercel.app/chat/get-prompts");
-        GetChatBoxes("https://android-huflit-server.vercel.app/box/get-boxes/chat");
+        GetChatBoxes(API + "/box/get-boxes/chat");
     }
 
-    void CreatePrompt(String url) throws IOException {
-        // prevent empty prompt
-        if (edtTextChat.getText().toString().trim() == "") return;
-        if (boxId.isEmpty()) {
-            Toast.makeText(TextChat.this, "Box ID Không tồn tại", Toast.LENGTH_SHORT).show();
+    private void GetChatBoxes(String url){
+        if (token.isEmpty()) {
+            Toast.makeText(TextChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Toast.makeText(TextChat.this, "Get boxes failure!!!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    final String myResponse = response.body().string();
+
+                    TextChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject json = new JSONObject(myResponse);
+                                JSONArray jsonArray = json.getJSONArray("boxes");
+
+                                for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++){
+                                    JSONObject box = jsonArray.optJSONObject(i);
+
+                                    // get values
+                                    String _id = box.optString("_id");
+                                    String userId = box.optString("userId");
+                                    String title = box.optString("title");
+
+                                    // add each prompt to prompt list
+                                    ItemChatBox newBox = new ItemChatBox(_id, userId, "chat", title);
+                                    Log.d("----------------", newBox.getItemText());
+                                    addBox(newBox);
+                                }
+
+                                if (boxes.size() == 0) {
+                                    CreateChatBox(API + "/box/create-box/chat");
+                                    return;
+                                }
+
+                                // set first box id as initial box
+                                ItemChatBox firstBox =  boxes.get(0);
+                                boxId = firstBox.get_id();
+
+                                // get prompts after got box id
+                                if (!boxId.isEmpty()) {
+                                    GetUserPrompts(API + "/chat/get-prompts/" + boxId);
+                                } else {
+                                    Toast.makeText(TextChat.this, "Box ID Không Tồn Tại", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            catch (JSONException | IOException e)
+                            {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void CreateChatBox(String url) throws IOException {
+        if (token.isEmpty()) {
+            Toast.makeText(TextChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         RequestBody formBody = new FormBody.Builder()
-                .add("chatId", boxId)
-                .add("prompt", edtTextChat.getText().toString().trim())
-                .add("password", "test")
+                .add("nothing", "Nothing")
                 .build();
 
         Request request = new Request.Builder()
@@ -460,7 +603,274 @@ public class TextChat extends AppCompatActivity {
                     TextChat.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d("CreatePrompt RES: ", myResponse);
+                            try {
+                                JSONObject json = new JSONObject(myResponse);
+                                Log.d("--------------------", myResponse);
+                                JSONObject boxJSON = json.getJSONObject("newBox");
+
+                                // get prompt values
+                                String _id = boxJSON.optString("_id");
+                                String userId = boxJSON.optString("userId");
+                                String title = boxJSON.optString("title");
+//                                String createdAt = boxJSON.optString("createdAt");
+//                                String updatedAt = boxJSON.optString("updatedAt");
+
+                                ItemChatBox newBox = new ItemChatBox(_id, userId, "chat", title);
+                                addBox(newBox);
+
+                                Toast.makeText(TextChat.this, "Đã tạo box mới", Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void UpdateBoxName(String url, String value) {
+        if (boxId.isEmpty()) {
+            Toast.makeText(TextChat.this, "Box ID không tồn tại", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (token.isEmpty()) {
+            Toast.makeText(TextChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        RequestBody formBody = new FormBody.Builder()
+                .add("title", value)
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .patch(formBody)
+                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+
+                    TextChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d("Update Box Name RES: ", myResponse);
+
+                            // clear messages and prompts and boxes to get again
+                            prompts.clear();
+                            messages.clear();
+                            adapter.notifyDataSetChanged();
+                            boxes.clear();
+                            boxAdapter.notifyDataSetChanged();
+
+                            GetChatBoxes(API + "/box/get-boxes/chat");
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void DeleteBox(String url, ItemChatBox box) throws IOException {
+        if (token.isEmpty()) {
+            Toast.makeText(TextChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Request request = new Request.Builder()
+                .url(url)
+                .delete()
+                .addHeader("Authorization", "Bearer " + token)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+
+                    TextChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            int index = boxes.indexOf(box);
+                            Log.d("----index----", String.valueOf(index));
+
+                            if (index != -1) {
+                                Log.d("--------", myResponse);
+
+                                // Xóa box khỏi danh sách
+                                boxes.remove(index);
+
+                                // Cập nhật adapter ListView
+                                boxAdapter.notifyDataSetChanged();
+
+                                Toast.makeText(TextChat.this, "Box has been deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    void ClearBoxOfChat(String url) {
+        if (token.isEmpty()) {
+            Toast.makeText(TextChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Request request = new Request.Builder()
+                .url(url)
+                .delete()
+                .addHeader("Authorization", "Bearer " + token)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    TextChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // clear messages
+                            messages.clear();
+                            adapter.notifyDataSetChanged();
+
+                            // clear boxes
+                            boxes.clear();
+                            boxAdapter.notifyDataSetChanged(); // Đối với ArrayAdapter
+
+                            Toast.makeText(TextChat.this, "Tất cả box đã bị xóa", Toast.LENGTH_SHORT).show();
+
+                            try {
+                                CreateChatBox(API + "/box/create-box/chat");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    void GetUserPrompts(String url) throws IOException {
+        if (token.isEmpty()) {
+            Toast.makeText(TextChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", "Bearer " + token)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+
+                    TextChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject json = new JSONObject(myResponse);
+                                JSONArray jsonArray = json.getJSONArray("prompts");
+
+                                for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++){
+                                    JSONObject prompt = jsonArray.optJSONObject(i);
+
+                                    // get values
+                                    String _id = prompt.optString("_id");
+                                    String userId = prompt.optString("userId");
+                                    // String chatId = prompt.optString("chatId");
+                                    String type = prompt.optString("type");
+                                    String from = prompt.optString("from");
+                                    String text = prompt.optString("text");
+
+                                    // add each prompt to prompt list
+                                    Prompt newPrompt = new Prompt(_id, userId, type, from, text);
+                                    prompts.add(newPrompt);
+                                }
+
+                                // show prompts after get
+                                for(Prompt prompt: prompts) {
+                                    addNewMessage(prompt.text, Objects.equals(prompt.from, "user"));
+                                }
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    void CreatePrompt(String url) throws IOException {
+        // prevent empty prompt
+        if (edtTextChat.getText().toString().trim() == "") return;
+        if (boxId.isEmpty()) {
+            Toast.makeText(TextChat.this, "Box ID không tồn tại", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (token.isEmpty()) {
+            Toast.makeText(TextChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        RequestBody formBody = new FormBody.Builder()
+                .add("chatId", boxId)
+                .add("prompt", edtTextChat.getText().toString().trim())
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .addHeader("Authorization", "Bearer " + token)
+                .build();
+
+        // loading true
+        setLoading(true);
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+
+                    TextChat.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d("CreatePrompt CHAT RES: ", myResponse);
 
                             try {
                                 JSONObject json = new JSONObject(myResponse);
@@ -469,7 +879,7 @@ public class TextChat extends AppCompatActivity {
                                 // get prompt values
                                 String _id = prompt.optString("_id");
                                 String userId = prompt.optString("userId");
-//                                    String chatId = prompt.optString("chatId");
+                                // String chatId = prompt.optString("chatId");
                                 String type = prompt.optString("type");
                                 String from = prompt.optString("from");
                                 String text = prompt.optString("text");
@@ -484,7 +894,8 @@ public class TextChat extends AppCompatActivity {
                                 // clear text chat
                                 edtTextChat.setText("");
 
-                                CreateCompletion("https://android-huflit-server.vercel.app/chat/create-completion");
+                                // create completion after prompt was created
+                                CreateCompletion(API + "/chat/create-completion");
 
                             } catch (JSONException | IOException e) {
                                 throw new RuntimeException(e);
@@ -504,7 +915,11 @@ public class TextChat extends AppCompatActivity {
     void CreateCompletion(String url) throws IOException {        // prevent empty prompt
         if (edtTextChat.getText().toString().trim() == "") return;
         if (boxId.isEmpty()) {
-            Toast.makeText(TextChat.this, "Box ID Không tồn tại", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TextChat.this, "Box ID không tồn tại", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (token.isEmpty()) {
+            Toast.makeText(TextChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -523,7 +938,7 @@ public class TextChat extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(url)
                 .post(formBody)
-                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
+                .addHeader("Authorization", "Bearer " + token)
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -555,70 +970,13 @@ public class TextChat extends AppCompatActivity {
 
                                 //Cuộn xuống khi có tin nhắn mới
                                 recyclerView.scrollToPosition(messages.size() - 1);
-                                // clear text chat
                                 edtTextChat.setText("");
-                                // clear dòng chữ "How can I help you?"
                                 txtHiUser.setText("");
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
-                            }
-                        }
-                    });
-                }
-            }
-
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    void GetUserPrompts(String url) throws IOException {
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    final String myResponse = response.body().string();
-
-                    TextChat.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                JSONObject json = new JSONObject(myResponse);
-                                JSONArray jsonArray = json.getJSONArray("prompts");
-//
-                                for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++){
-                                    JSONObject prompt = jsonArray.optJSONObject(i);
-
-                                    // get values
-                                    String _id = prompt.optString("_id");
-                                    String userId = prompt.optString("userId");
-//                                    String chatId = prompt.optString("chatId");
-                                    String type = prompt.optString("type");
-                                    String from = prompt.optString("from");
-                                    String text = prompt.optString("text");
-//                                    String createdAt = prompt.optString("createdAt");
-//                                    String updatedAt = prompt.optString("updatedAt");
-//                                    JSONArray images = prompt.optJSONArray("images");
-
-//                                     add each prompt to prompt list
-                                    Prompt newPrompt = new Prompt(_id, userId, type, from, text);
-                                    prompts.add(newPrompt);
-                                }
-
-                                // show prompts after get
-                                for(Prompt prompt: prompts) {
-                                    Log.d("Type", prompt.type);
-                                    addNewMessage(prompt.text, Objects.equals(prompt.from, "user"));
-                                }
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
+                            } finally {
+                                // loading true
+                                setLoading(false);
                             }
                         }
                     });
@@ -631,210 +989,4 @@ public class TextChat extends AppCompatActivity {
             }
         });
     }
-
-    private void GetChatBoxes(String url){
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("Authorization", "Bearer " + token) // Add the authorization header with bearer token
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Toast.makeText(TextChat.this, "Get boxes failure!!!", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful()){
-                    final String myResponse = response.body().string();
-
-                    TextChat.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                JSONObject json = new JSONObject(myResponse);
-                                JSONArray jsonArray = json.getJSONArray("boxes");
-
-                                for(int i = 0; i < Objects.requireNonNull(jsonArray).length(); i++){
-                                    JSONObject box = jsonArray.optJSONObject(i);
-
-                                    // get values
-                                    String _id = box.optString("_id");
-                                    String userId = box.optString("userId");
-//                                   String type = prompt.optString("type");
-//                                   String from = prompt.optString("from");
-                                    String title = box.optString("title");
-//                                    String createdAt = box.optString("createdAt");
-//                                    String updatedAt = box.optString("updatedAt");
-
-                                    // add each prompt to prompt list
-                                    ItemChatBox newBox = new ItemChatBox(_id, userId, "chat", title);
-                                    Log.d("----------------", newBox.getItemText());
-                                    addBox(newBox);
-                                }
-
-                                if (boxes.size() == 0) {
-                                    CreateChatBox("https://android-huflit-server.vercel.app/box/create-box/chat");
-                                    return;
-                                }
-
-                                // set first box id as initial box
-                                ItemChatBox firstBox =  boxes.get(0);
-                                boxId = firstBox.get_id();
-
-                                // get prompts after got box id
-                                if (!boxId.isEmpty()) {
-                                    GetUserPrompts("https://android-huflit-server.vercel.app/chat/get-prompts/" + boxId);
-                                } else {
-                                    Toast.makeText(TextChat.this, "Box ID Không Tồn Tại", Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (JSONException | IOException e)
-                            {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-    private void CreateChatBox(String url) throws IOException {
-        OkHttpClient client = new OkHttpClient();
-
-        RequestBody formBody = new FormBody.Builder()
-                .add("nothing", "Nothing")
-                .build();
-
-        Request request = new Request.Builder()
-                .url(url)
-                .post(formBody)
-                .addHeader("Authorization", "Bearer " + token)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    final String myResponse = response.body().string();
-
-                    TextChat.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                JSONObject json = new JSONObject(myResponse);
-                                Log.d("--------------------", myResponse);
-                                JSONObject boxJSON = json.getJSONObject("newBox");
-
-                                // get prompt values
-                                String _id = boxJSON.optString("_id");
-                                String userId = boxJSON.optString("userId");
-                                String title = boxJSON.optString("title");
-//                                String createdAt = boxJSON.optString("createdAt");
-//                                String updatedAt = boxJSON.optString("updatedAt");
-
-                                ItemChatBox newBox = new ItemChatBox(_id, userId, "chat", title);
-                                addBox(newBox);
-                                Toast.makeText(TextChat.this, "Đã tạo box mới", Toast.LENGTH_SHORT).show();
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private void DeleteBox(String url, ItemChatBox box) throws IOException {
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url(url)
-                .delete()
-                .addHeader("Authorization", "Bearer " + token)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    final String myResponse = response.body().string();
-
-                    TextChat.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            int index = boxes.indexOf(box);
-                            Log.d("----index----", String.valueOf(index));
-
-                            if (index != -1) {
-                                Log.d("--------", myResponse);
-
-                                // Xóa box khỏi danh sách
-                                boxes.remove(index);
-
-                                // Cập nhật adapter của RecyclerView hoặc ListView
-                                boxAdapter.notifyDataSetChanged(); // Đối với ArrayAdapter
-                                Toast.makeText(TextChat.this, "Box has been deleted", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    void ClearBoxOfChat(String url) {
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url(url)
-                .delete()
-                .addHeader("Authorization", "Bearer " + token)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    TextChat.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Xóa box khỏi danh sách
-                            boxes.clear();
-
-                            // Cập nhật adapter của RecyclerView hoặc ListView
-                            boxAdapter.notifyDataSetChanged(); // Đối với ArrayAdapter
-                            Toast.makeText(TextChat.this, "Tất cả box bị xóa", Toast.LENGTH_SHORT).show();
-
-                            try {
-                                CreateChatBox("https://android-huflit-server.vercel.app/box/create-box/chat");
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
 }

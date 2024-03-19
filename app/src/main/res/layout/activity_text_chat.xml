@@ -33,20 +33,6 @@
                 android:onClick="openSidebar"
                 android:src="@drawable/altsidebar" />
 
-<!--            <ImageView-->
-<!--                android:id="@+id/userIcon"-->
-<!--                android:layout_width="30dp"-->
-<!--                android:layout_height="25dp"-->
-<!--                android:layout_marginLeft="30dp"-->
-<!--                android:src="@drawable/user1" />-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/chatIcon"-->
-<!--                android:layout_width="30dp"-->
-<!--                android:layout_height="25dp"-->
-<!--                android:layout_marginLeft="15dp"-->
-<!--                android:src="@drawable/chat" />-->
-
             <TextView
                 android:id="@+id/txtMode"
                 android:layout_width="wrap_content"
@@ -61,7 +47,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="680dp"
+            android:layout_height="669dp"
             android:layout_marginBottom="10dp">
 
 
@@ -96,13 +82,22 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewImage"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="654dp"
                 android:clipToPadding="false"
                 android:orientation="vertical"
                 android:overScrollMode="never"
                 android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:stackFromEnd="true" />
+
+            <ProgressBar
+                android:id="@+id/loadingMessage"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:indeterminate="true"
+                android:visibility="gone" />
         </FrameLayout>
 
 
@@ -112,6 +107,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/imageView"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
@@ -160,13 +156,13 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:visibility="visible"
-        >
+        tools:visibility="gone">
 
         <LinearLayout
-            android:paddingTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -213,15 +209,15 @@
                 android:id="@+id/chatBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16px"/>
+                android:layout_margin="16px" />
 
             <ImageView
                 android:id="@+id/btnCLearBox"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:src="@drawable/broom"
-                android:onClick="handleClearBoxOfChat"/>
+                android:onClick="handleClearBoxOfChat"
+                android:src="@drawable/broom" />
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 

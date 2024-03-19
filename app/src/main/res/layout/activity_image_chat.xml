@@ -59,7 +59,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="680dp"
+            android:layout_height="669dp"
             android:layout_marginBottom="10dp">
 
             <ImageView
@@ -81,13 +81,23 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewImage"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="654dp"
                 android:clipToPadding="false"
                 android:orientation="vertical"
                 android:overScrollMode="never"
+                android:paddingBottom="32dp"
                 android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:stackFromEnd="true" />
+
+            <ProgressBar
+                android:id="@+id/loadingMessage"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:visibility="gone"
+                android:indeterminate="true" />
         </FrameLayout>
 
         <LinearLayout
@@ -96,6 +106,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/imageView"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
@@ -147,13 +158,14 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:visibility="visible">
+        android:visibility="visible"
+        tools:visibility="visible">
 
         <LinearLayout
-            android:paddingTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -185,6 +197,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
+                    android:onClick="handleCreateImageBox"
                     android:src="@drawable/chat" />
             </LinearLayout>
 
@@ -312,17 +325,18 @@
                 android:layout_marginTop="10dp"
                 android:text="Chat Boxes" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <ListView
                 android:id="@+id/imageChatBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp" />
+                android:layout_margin="16px" />
 
             <ImageView
                 android:id="@+id/clearImageBox"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
+                android:onClick="handleClearBoxOfImage"
                 android:src="@drawable/broom" />
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
