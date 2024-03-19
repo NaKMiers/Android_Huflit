@@ -163,6 +163,7 @@ public class ImageChat extends AppCompatActivity {
                 prompts.clear();
                 messages.clear();
                 adapter.notifyDataSetChanged();
+                setLoading(false);
 
                 // close sidebar
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -949,11 +950,13 @@ public class ImageChat extends AppCompatActivity {
 
                                 // Cuộn xuống dưới cùng khi có tin nhắn mới
                                 recyclerViewImage.scrollToPosition(messages.size() - 1);
+
                                 // clear text chat
+                                String promptString = edtImgChat.getText().toString();
                                 edtImgChat.setText("");
 
                                 // create images after prompt was created
-                                CreateImages(API + "/image/create-images");
+                                CreateImages(API + "/image/create-images", promptString);
 
                             } catch (JSONException | IOException e ) {
                                 throw new RuntimeException(e);
@@ -970,9 +973,9 @@ public class ImageChat extends AppCompatActivity {
         });
     }
 
-    void CreateImages(String url) throws IOException {
+    void CreateImages(String url, String prompt) throws IOException {
         // prevent empty prompt
-        if (edtImgChat.getText().toString().trim() == "") return;
+        if (prompt.trim() == "") return;
         if (boxId.isEmpty()) {
             Toast.makeText(ImageChat.this, "Box ID không tồn tại", Toast.LENGTH_SHORT).show();
             return;
@@ -982,18 +985,24 @@ public class ImageChat extends AppCompatActivity {
             return;
         }
 
-        Log.d("boxId ------", boxId);
+
 
         SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         String amount = preferences.getString("amount", "1");
         String size = preferences.getString("size", "256x256");
 
         RequestBody formBody = new FormBody.Builder()
-                .add("prompt", edtImgChat.getText().toString().trim())
+                .add("prompt", prompt)
                 .add("amount", amount)
                 .add("size", size)
                 .add("chatId", boxId)
                 .build();
+
+        Log.d("boxId ------", boxId);
+        Log.d("token ------", token);
+        Log.d("prompt ------", edtImgChat.getText().toString().trim());
+        Log.d("size ------", size);
+        Log.d("amount ------", amount);
 
         Request request = new Request.Builder()
                 .url(url)

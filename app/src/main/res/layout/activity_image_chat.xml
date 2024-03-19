@@ -17,7 +17,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarImage"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="45dp"
             android:layout_marginBottom="10dp"
             android:background="@color/white"
             android:minHeight="?attr/actionBarSize"
@@ -26,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/navigationIcon"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
                 android:layout_gravity="start"
                 android:onClick="openSidebarImage"
                 android:src="@drawable/altsidebar" />
@@ -53,13 +53,14 @@
                 android:layout_gravity="center"
                 android:onClick="handleChangeChatMode"
                 android:text="IMAGE"
+                android:textStyle="bold"
                 android:textColor="#a8daf9"
-                android:textSize="20sp" />
+                android:textSize="24sp" />
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="669dp"
+            android:layout_height="655dp"
             android:layout_marginBottom="10dp">
 
             <ImageView
@@ -81,7 +82,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewImage"
                 android:layout_width="match_parent"
-                android:layout_height="654dp"
+                android:layout_height="642dp"
                 android:clipToPadding="false"
                 android:orientation="vertical"
                 android:overScrollMode="never"
@@ -96,8 +97,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:visibility="gone"
-                android:indeterminate="true" />
+                android:indeterminate="true"
+                android:visibility="gone" />
         </FrameLayout>
 
         <LinearLayout
@@ -159,7 +160,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:visibility="visible"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"

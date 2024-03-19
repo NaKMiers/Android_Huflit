@@ -146,6 +146,7 @@ public class TextChat extends AppCompatActivity {
                 prompts.clear();
                 messages.clear();
                 adapter.notifyDataSetChanged();
+                setLoading(false);
 
                 // close sidebar
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -375,7 +376,7 @@ public class TextChat extends AppCompatActivity {
         startActivity(intent);
     }
 
-    String ImprovedPrompt() {
+    String ImprovedPrompt(String prompt) {
         String improvedPrompt = "";
         ArrayList<Prompt> newPrompts = new ArrayList<>(prompts.subList(Math.max(0, prompts.size() - 8), prompts.size()));
 
@@ -399,7 +400,7 @@ public class TextChat extends AppCompatActivity {
 
         improvedPrompt += "*Nội dung dung mới* \n";
 
-        String lastLine = "user: " + edtTextChat.getText().toString().trim();
+        String lastLine = "user: " + prompt.trim();
         improvedPrompt += lastLine;
 
         return improvedPrompt;
@@ -891,11 +892,15 @@ public class TextChat extends AppCompatActivity {
 
                                 // Cuộn xuống dưới cùng khi có tin nhắn mới
                                 recyclerView.scrollToPosition(messages.size() - 1);
+
+                                // clear text chat
+                                String promptString = edtTextChat.getText().toString();
+
                                 // clear text chat
                                 edtTextChat.setText("");
 
                                 // create completion after prompt was created
-                                CreateCompletion(API + "/chat/create-completion");
+                                CreateCompletion(API + "/chat/create-completion", promptString);
 
                             } catch (JSONException | IOException e) {
                                 throw new RuntimeException(e);
@@ -912,8 +917,8 @@ public class TextChat extends AppCompatActivity {
         });
     }
 
-    void CreateCompletion(String url) throws IOException {        // prevent empty prompt
-        if (edtTextChat.getText().toString().trim() == "") return;
+    void CreateCompletion(String url, String prompt) throws IOException {        // prevent empty prompt
+        if (prompt.trim() == "") return;
         if (boxId.isEmpty()) {
             Toast.makeText(TextChat.this, "Box ID không tồn tại", Toast.LENGTH_SHORT).show();
             return;
@@ -928,7 +933,7 @@ public class TextChat extends AppCompatActivity {
         Log.d("boxId ------", boxId);
 
         RequestBody formBody = new FormBody.Builder()
-                .add("prompt", ImprovedPrompt())
+                .add("prompt", ImprovedPrompt(prompt))
                 .add("model", "gpt-4")
                 .add("maxTokens", "1500")
                 .add("temperature", "1")
