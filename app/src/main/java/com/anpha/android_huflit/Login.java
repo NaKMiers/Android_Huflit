@@ -140,15 +140,17 @@ import okhttp3.Response;
                        String job = userJson.optString("job");
                        String address = userJson.optString("address");
 
-                       // Định dạng của ngày đầu vào
-                       SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-                       inputFormat.setTimeZone(TimeZone.getTimeZone("UTC")); // Đặt múi giờ là UTC
+                       if (!birthday.isEmpty()) {
+                           // Định dạng của ngày đầu vào
+                           SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+                           inputFormat.setTimeZone(TimeZone.getTimeZone("UTC")); // Đặt múi giờ là UTC
 
-                       // Định dạng của ngày đầu ra
-                       SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                       Date birthdayBefore = inputFormat.parse(birthday);
-                       assert birthdayBefore != null;
-                       String birthdayAfter = outputFormat.format(birthdayBefore);
+                           // Định dạng của ngày đầu ra
+                           SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                           Date birthdayBefore = inputFormat.parse(birthday);
+                           assert birthdayBefore != null;
+                           birthday = outputFormat.format(birthdayBefore);
+                       }
 
                        // Lưu username vào SharedPreferences
                        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
@@ -161,14 +163,13 @@ import okhttp3.Response;
                        editor.putString("role", role);
                        editor.putString("firstname", firstname);
                        editor.putString("lastname", lastname);
-                       editor.putString("birthday", birthdayAfter);
+                       editor.putString("birthday", birthday);
                        editor.putString("job", job);
                        editor.putString("address", address);
                        editor.putString("authType", authType);
                        editor.apply();
 
-                       Class<?> nextActivity = role.equals("admin") ? TextChat.class : TextChat.class;
-                       Intent intent = new Intent(Login.this, nextActivity);
+                       Intent intent = new Intent(Login.this, TextChat.class);
                        startActivity(intent);
                    } catch (JSONException | ParseException e) {
                        throw new RuntimeException(e);
