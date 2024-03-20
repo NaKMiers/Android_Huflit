@@ -14,17 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
-
+        <activity
+            android:name=".AdminUserDetail"
+            android:exported="true" />
         <activity
             android:name=".AdminUser"
-            android:exported="true">
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".PopupOption"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".ThemeView"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".ProfileView"
             android:exported="true" />
@@ -33,7 +34,7 @@
             android:exported="true" />
         <activity
             android:name=".Login"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".ResetPassword"
             android:exported="true" />
@@ -42,7 +43,7 @@
             android:exported="true" />
         <activity
             android:name=".ForgotPassword"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />
@@ -54,6 +55,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

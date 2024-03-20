@@ -3,9 +3,12 @@ package com.anpha.android_huflit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.anpha.android_huflit.ListUser.AdminUserAdapter;
@@ -47,6 +50,11 @@ public class AdminUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_user);
+
+        // require admin
+        requireAdmin();
+
+        // mapping
         mapping();
 
         userList = new ArrayList<>();
@@ -56,6 +64,16 @@ public class AdminUser extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         token = preferences.getString("token", ""); //lưu trữ tên người dùng
 
+        ListUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User user = userList.get(position);
+
+                Intent intent = new Intent(AdminUser.this, AdminUserDetail.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
+            }
+        });
 
         try {
             LoadDataFromApi("https://android-huflit-server.vercel.app");
@@ -68,6 +86,18 @@ public class AdminUser extends AppCompatActivity {
         ListUser = findViewById(R.id.ListUser);
         userListTV = findViewById(R.id.userListTV);
     }
+
+    private void requireAdmin() {
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+        String role = preferences.getString("role", "");
+
+        if (!role.equals("admin")) {
+            Intent intent = new Intent(AdminUser.this, Login.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
 
     void LoadDataFromApi(String url) throws IOException {
         Request request = new Request.Builder()
@@ -97,9 +127,16 @@ public class AdminUser extends AppCompatActivity {
                                     String email = user.optString("email");
                                     String username = user.optString("username");
                                     String avatar = user.optString("avatar");
+                                    String firstname = user.optString("firstname");
+                                    String lastname = user.optString("lastname");
+                                    String birthday = user.optString("birthday");
+                                    String job = user.optString("job");
+                                    String address = user.optString("address");
+                                    String role = user.optString("role");
+                                    String authType = user.optString("authType");
 
 //                                     add each prompt to prompt list
-                                    User newUser = new User(_id, email, username, avatar);
+                                    User newUser = new User(_id, email, username, avatar, firstname, lastname, birthday, job, address, role, authType);
                                     userList.add(newUser);
                                     adminUserAdapter.notifyDataSetChanged();
                                 }
@@ -118,13 +155,9 @@ public class AdminUser extends AppCompatActivity {
         });
     }
 
-    private void showToast(final String message) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(AdminUser.this, message, Toast.LENGTH_SHORT).show();
-            }
-        });
+    public void handleBackToHome(View view) {
+        Intent intent = new Intent(AdminUser.this, TextChat.class);
+        startActivity(intent);
     }
 }
 

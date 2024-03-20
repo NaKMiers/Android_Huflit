@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -870,7 +871,7 @@ public class ImageChat extends AppCompatActivity {
 
                                             for (int j = 0; j < chunkSize; j++) {
                                                 if (i + j < imageUrls.size()) {
-                                                    imgUrls.add(imageUrls.get(j));
+                                                    imgUrls.add(imageUrls.get(i + j));
                                                 }
                                             }
 
@@ -1024,13 +1025,17 @@ public class ImageChat extends AppCompatActivity {
                                 // lấy ra mảng image urls
                                 JSONArray images = response.getJSONArray("images");
 
+                                for (int i = 0; i < Objects.requireNonNull(images).length(); i++) {
+                                    Log.d("url---: ", images.optString(i));
+                                }
+
 
                                 for (int i = 0; i < Objects.requireNonNull(images).length(); i+= chunkSize) {
                                     ArrayList<String> imgUrls = new ArrayList<>();
 
                                     for (int j = 0; j < chunkSize; j++) {
                                         if (i + j < Objects.requireNonNull(images).length()) {
-                                            imgUrls.add(images.optString(i));
+                                            imgUrls.add(images.optString(i+ j));
                                         }
                                     }
 

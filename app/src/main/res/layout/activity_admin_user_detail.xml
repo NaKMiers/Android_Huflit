@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical"
+    tools:context=".AdminUserDetail">
+
+    <ImageView
+        android:layout_marginTop="32dp"
+        android:id="@+id/imageViewAvatar"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/boy"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/usernameTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Username"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:layout_marginBottom="12dp"
+        android:textAlignment="center"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:text="Tên: "
+            android:textSize="20dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:layout_marginRight="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/fullnameTv"
+            android:text="... "
+            android:textSize="20dp"
+            android:textColor="#555"
+            android:textStyle="bold"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:text="Email: "
+            android:textSize="20dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:layout_marginRight="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/emailTv"
+            android:text="... "
+            android:textSize="20dp"
+            android:textColor="#555"
+            android:textStyle="bold"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:text="Ngày sinh: "
+            android:textSize="20dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:layout_marginRight="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/birthdayTv"
+            android:text="... "
+            android:textSize="20dp"
+            android:textColor="#555"
+            android:textStyle="bold"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:text="Nghề nghiệp: "
+            android:textSize="20dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:layout_marginRight="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/jobTv"
+            android:text="... "
+            android:textSize="20dp"
+            android:textColor="#555"
+            android:textStyle="bold"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:text="Địa chỉ: "
+            android:textSize="20dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:layout_marginRight="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/addressTv"
+            android:text="... "
+            android:textSize="20dp"
+            android:textColor="#555"
+            android:textStyle="bold"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:text="Role: "
+            android:textSize="20dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:layout_marginRight="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/roleTv"
+            android:text="... "
+            android:textSize="20dp"
+            android:textColor="#555"
+            android:textStyle="bold"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:text="Auth Type: "
+            android:textSize="20dp"
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:layout_marginRight="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/authTypeTv"
+            android:text="... "
+            android:textSize="20dp"
+            android:textColor="#555"
+            android:textStyle="bold"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/deleteBtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="#f44336"
+            android:onClick="handleDeleteUser"
+            android:text="Xóa"
+            android:textColor="#fff"
+            android:layout_margin="8dp"
+            android:textSize="18dp" />
+
+        <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="#ddd"
+            android:onClick="handleBack"
+            android:text="Quay lại"
+            android:textColor="#333"
+            android:layout_margin="8dp"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

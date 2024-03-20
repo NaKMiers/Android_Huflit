@@ -9,24 +9,41 @@
 
     <ImageView
         android:id="@+id/imageView17"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         app:srcCompat="@drawable/owl" />
 
-    <TextView
-        android:id="@+id/userListTV"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="10dp"
-        android:text="Danh sách người dùng  "
-        android:textColor="#232222"
-        android:textSize="20sp" />
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/userListTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="Danh sách người dùng  "
+            android:textColor="#333"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textSize="28sp" />
+
+        <Button
+            android:id="@+id/homeBtn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textColor="#333"
+            android:textStyle="italic"
+            android:onClick="handleBackToHome"
+            android:text="(Home)"/>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/ListUser"
+        android:padding="12dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
