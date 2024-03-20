@@ -141,11 +141,9 @@ import okhttp3.Response;
                        String address = userJson.optString("address");
 
                        if (!birthday.isEmpty()) {
-                           // Định dạng của ngày đầu vào
                            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
                            inputFormat.setTimeZone(TimeZone.getTimeZone("UTC")); // Đặt múi giờ là UTC
 
-                           // Định dạng của ngày đầu ra
                            SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                            Date birthdayBefore = inputFormat.parse(birthday);
                            assert birthdayBefore != null;
