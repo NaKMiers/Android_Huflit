@@ -1,22 +1,16 @@
 package com.anpha.android_huflit.adapter_theme;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.anpha.android_huflit.Models.theme;
+import com.anpha.android_huflit.Models.Theme;
 import com.anpha.android_huflit.R;
 
 import java.util.ArrayList;
@@ -36,10 +30,10 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ViewHolder> 
 
     //khai báo biến
     Context context; // Change Activity to Context
-    ArrayList<theme> arr_theme;
+    ArrayList<Theme> arr_theme;
 
 
-    public ThemeAdapter(Context context,ArrayList<theme> arr_theme) {
+    public ThemeAdapter(Context context,ArrayList<Theme> arr_theme) {
         this.context = context;
         this.arr_theme = arr_theme;
     }
@@ -59,7 +53,7 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ViewHolder> 
 //Sử lý dữ liệu chọn layout hiện thị
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        theme tm=arr_theme.get(position);
+        Theme tm=arr_theme.get(position);
         holder.image_color.setImageResource(tm.getImage_color());
         holder.txtcolor.setText(tm.getTxtcolor());
     }

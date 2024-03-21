@@ -1,5 +1,6 @@
 package com.anpha.android_huflit;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -11,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -43,6 +46,7 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.SplittableRandom;
 
@@ -141,22 +145,7 @@ public class TextChat extends AppCompatActivity {
                 ItemChatBox box =  boxes.get(position);
                 boxId = box.get_id();
 
-                Log.d("ID-------", boxId);
-
-                prompts.clear();
-                messages.clear();
-                adapter.notifyDataSetChanged();
-                setLoading(false);
-
-                // close sidebar
-                drawerLayout.closeDrawer(GravityCompat.START);
-
-                try {
-                    GetUserPrompts(API + "/chat/get-prompts/" + boxId);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
+                GoToNewBox(boxId);
             }
         });
 
@@ -393,14 +382,14 @@ public class TextChat extends AppCompatActivity {
             }
             // if prompt if from AI
             else {
-                String line = "AI: " + p.getText() + "\n";
+                String line = p.getText() + "\n";
                 improvedPrompt += line;
             }
         }
 
-        improvedPrompt += "*Nội dung dung mới* \n";
+        improvedPrompt += "*Nội dung dung mới cần được trả lời* \n";
 
-        String lastLine = "user: " + prompt.trim();
+        String lastLine = prompt.trim();
         improvedPrompt += lastLine;
 
         return improvedPrompt;
@@ -481,6 +470,55 @@ public class TextChat extends AppCompatActivity {
         boxAdapter.notifyDataSetChanged();
     }
 
+    private void GoToNewBox(String boxId) {
+        Log.d("ID-------", boxId);
+
+        prompts.clear();
+        messages.clear();
+        adapter.notifyDataSetChanged();
+        setLoading(false);
+
+        // close sidebar
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        Toast.makeText(this, "Đã tới box mới", Toast.LENGTH_SHORT).show();
+
+        try {
+            GetUserPrompts(API + "/chat/get-prompts/" + boxId);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void handleSpeak(View view) {
+        if (!SpeechRecognizer.isRecognitionAvailable(this)) {
+            Toast.makeText(this, "Speech không sẵn sàng", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hãy nói gì đó nào");
+
+        try {
+            startActivityForResult(intent, 131);
+        } catch (Exception e) {
+            Toast.makeText(this, String.valueOf(e.getMessage()), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 131 && resultCode == RESULT_OK && data != null) {
+            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            Toast.makeText(this, result.get(0).toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void handleSendChatPrompt(View view) {
         String messageText = edtTextChat.getText().toString().trim();
         if (!messageText.isEmpty()) {
@@ -501,6 +539,7 @@ public class TextChat extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
+
     public void handleClearBoxOfChat(View view) {
         ClearBoxOfChat(API + "/box/clear-boxes/chat");
     }
@@ -620,6 +659,9 @@ public class TextChat extends AppCompatActivity {
                                 addBox(newBox);
 
                                 Toast.makeText(TextChat.this, "Đã tạo box mới", Toast.LENGTH_SHORT).show();
+
+                                // go to the box that has just been created
+                                GoToNewBox(_id);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -719,7 +761,22 @@ public class TextChat extends AppCompatActivity {
                                 // Cập nhật adapter ListView
                                 boxAdapter.notifyDataSetChanged();
 
-                                Toast.makeText(TextChat.this, "Box has been deleted", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(TextChat.this, "Box đã được xóa", Toast.LENGTH_SHORT).show();
+
+                                // auto create new box when all boxes is empty
+                                if (boxes.size() == 0) {
+                                    try {
+                                        CreateChatBox(API + "/box/create-box/chat");
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+
+                                // if the box that has just been delete is current box -> move to the first box
+                                Log.d("----box.get_id().equals(boxId)----", box.get_id() + " " + boxId);
+                                if (box.get_id().equals(boxId)) {
+                                    GoToNewBox(boxes.get(0).get_id());
+                                }
                             }
                         }
                     });

@@ -157,24 +157,9 @@ public class ImageChat extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ItemChatBox box =  boxes.get(position);
+
                 boxId = box.get_id();
-
-                Log.d("ID-------", boxId);
-
-                prompts.clear();
-                messages.clear();
-                adapter.notifyDataSetChanged();
-                setLoading(false);
-
-                // close sidebar
-                drawerLayout.closeDrawer(GravityCompat.START);
-
-                try {
-                    GetUserPrompts(API + "/image/get-prompts/" + boxId);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
+                GoToNewBox(boxId);
             }
         });
 
@@ -487,6 +472,7 @@ public class ImageChat extends AppCompatActivity {
             loadingMessage.setVisibility(View.GONE);
         }
     }
+
     private void addNewMessage(String text, boolean isFromUser) {
         // Khởi tạo tin nhắn gửi với constructor 2 tham số là text (chữ) và isFromUser (Do người dùng gửi)
         ImageMessage sentMessage = new ImageMessage(text, isFromUser);
@@ -511,6 +497,26 @@ public class ImageChat extends AppCompatActivity {
         // Thêm các item vào danh sách dữ liệu
         boxes.add(box);
         boxAdapter.notifyDataSetChanged();
+    }
+
+    private void GoToNewBox(String boxId) {
+        Log.d("ID-------", boxId);
+
+        prompts.clear();
+        messages.clear();
+        adapter.notifyDataSetChanged();
+        setLoading(false);
+
+        // close sidebar
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        Toast.makeText(this, "Đã tới box mới", Toast.LENGTH_SHORT).show();
+
+        try {
+            GetUserPrompts(API + "/image/get-prompts/" + boxId);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void handleSentImagePrompt(View view) throws IOException {
@@ -652,6 +658,9 @@ public class ImageChat extends AppCompatActivity {
                                 addBox(newBox);
 
                                 Toast.makeText(ImageChat.this, "Đã tạo box mới", Toast.LENGTH_SHORT).show();
+
+                                // go to the box that has just been created
+                                GoToNewBox(_id);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -751,7 +760,22 @@ public class ImageChat extends AppCompatActivity {
                                 // Cập nhật adapter ListView
                                 boxAdapter.notifyDataSetChanged();
 
-                                Toast.makeText(ImageChat.this, "Box has been deleted", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ImageChat.this, "Box đã được xóa", Toast.LENGTH_SHORT).show();
+
+                                // auto create new box when all boxes is empty
+                                if (boxes.size() == 0) {
+                                    try {
+                                        CreateImageBox(API + "/box/create-box/image");
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+
+                                // if the box that has just been delete is current box -> move to the first box
+                                Log.d("----box.get_id().equals(boxId)----", box.get_id() + " " + boxId);
+                                if (box.get_id().equals(boxId)) {
+                                    GoToNewBox(boxes.get(0).get_id());
+                                }
                             }
                         }
                     });

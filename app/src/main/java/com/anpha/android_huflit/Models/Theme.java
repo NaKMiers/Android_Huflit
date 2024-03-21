@@ -2,12 +2,12 @@ package com.anpha.android_huflit.Models;
 
 import java.io.Serializable;
 
-public class theme implements Serializable {
+public class Theme implements Serializable {
     private  int image_color;
     private String txtcolor;
 
     //tạo Contructor có tham số
-    public theme(int image_color, String txtcolor) {
+    public Theme(int image_color, String txtcolor) {
         this.image_color = image_color;
         this.txtcolor = txtcolor;
     }
@@ -29,7 +29,7 @@ public class theme implements Serializable {
         this.txtcolor = txtcolor;
     }
 
-    public theme() {
+    public Theme() {
 
     }
 }

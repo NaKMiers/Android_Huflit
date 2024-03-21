@@ -38,7 +38,7 @@ public class Prompt {
         this.userId = userId;
         this.type = type;
         this.from = from;
-        this.text = text;
+        this.text = text.trim();
 
         if (!images.isEmpty()) {
             this.images = images;

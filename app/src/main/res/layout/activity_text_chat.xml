@@ -8,19 +8,19 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+<!--    Main     -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="12dp"
         tools:context=".ImageChat">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarChat"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
+            android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:menu="@menu/menu_image">
@@ -41,33 +41,31 @@
                 android:gravity="center"
                 android:onClick="handleChangeToImageMode"
                 android:text="CHAT"
-                android:textStyle="bold"
                 android:textColor="#a8daf9"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="655dp"
-            android:layout_marginBottom="10dp">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
 
             <ImageView
                 android:id="@+id/backgroundImg"
-                android:layout_width="257dp"
+                android:layout_width="wrap_content"
                 android:layout_height="257dp"
                 android:layout_gravity="center"
                 android:alpha="0.7"
-
                 android:src="@drawable/owl" />
 
             <TextView
                 android:id="@+id/txtHiUser"
-                android:layout_width="170dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="68dp"
                 android:layout_marginTop="145dp"
-                android:paddingLeft="10dp"
+                android:layout_gravity="center_horizontal"
                 android:text="Hi"
                 android:textSize="24sp" />
 
@@ -83,10 +81,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewImage"
                 android:layout_width="match_parent"
-                android:layout_height="642dp"
+                android:layout_height="850dp"
                 android:clipToPadding="false"
                 android:orientation="vertical"
                 android:overScrollMode="never"
+                android:paddingBottom="16dp"
                 android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:stackFromEnd="true" />
@@ -101,56 +100,42 @@
                 android:visibility="gone" />
         </FrameLayout>
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="44dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
-                android:visibility="gone"
-                android:id="@+id/imageView"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:src="@drawable/voicesearch" />
+                android:id="@+id/voiceBtn"
+                android:layout_width="45dp"
+                android:layout_height="36dp"
+                android:src="@drawable/voicesearch"
+                android:onClick="handleSpeak"/>
 
-            <FrameLayout
+            <EditText
+                android:id="@+id/edtTextChat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/edtcustom"
+                android:hint="Nhập câu lệnh tại đây..."
                 android:layout_weight="1"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:inputType="textMultiLine"
+                android:paddingHorizontal="21dp"
+                android:layout_marginHorizontal="8dp"
+                android:scrollHorizontally="false" />
 
-                <EditText
-                    android:id="@+id/edtTextChat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/edtcustom"
-                    android:hint="Nhập câu lệnh tại đây..."
-                    android:inputType="textMultiLine"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="50dp"
-                    android:scrollHorizontally="false" />
-
-                <ImageView
-                    android:id="@+id/btnSendImg"
-                    android:layout_width="59dp"
-                    android:layout_height="26dp"
-                    android:layout_gravity="center|end"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/buttonlogout"
-                    android:onClick="handleSendChatPrompt"
-                    android:src="@drawable/send" />
-            </FrameLayout>
-
+            <ImageView
+                android:id="@+id/btnSendImg"
+                android:layout_width="50dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center|end"
+                android:onClick="handleSendChatPrompt"
+                android:src="@drawable/send" />
         </LinearLayout>
-
-
     </LinearLayout>
 
+<!--    Navigator   -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="wrap_content"
