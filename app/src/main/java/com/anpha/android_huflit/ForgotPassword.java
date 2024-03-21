@@ -1,5 +1,6 @@
 package com.anpha.android_huflit;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -41,7 +42,7 @@ public class ForgotPassword extends AppCompatActivity {
     OkHttpClient client = new OkHttpClient();
 
     String code;
-    Boolean isSent = false;
+    Boolean isSent = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,11 @@ public class ForgotPassword extends AppCompatActivity {
 
         mapping();
         generateRandomString(6);
+
+        isSent = true;
+        SharedPreferences preferences = getSharedPreferences("myPreferences", MODE_PRIVATE);
+        String emailReset = preferences.getString("emailReset", ""); //lưu trữ tên người dùng
+        emailBackground.setText(emailReset);
     }
 
     //Ánh xạ
@@ -89,33 +95,72 @@ public class ForgotPassword extends AppCompatActivity {
     public void handleSendFP(View view) throws IOException {
         if (isSent) {
             // nếu nhập code đúng
+//            if (codeFPEdt.getText().toString().trim() == code)
             if (codeFPEdt.getText().toString().trim().equals(code)) {
-                // reset when code is available
-                // Làm tiếp chỗ reset này
-                // Bước 1: Tạo cái request để reset password tương tự lại send mail
+                if (codeFPEdt.getText().toString().equals(code)) {
+                    // reset when code is available
+                    // Làm tiếp chỗ reset này
 
-                // Bước 2: Sau khi nhập phản hồi từ yêu cầu đổi reset pass
-                //      - Nếu thành công: chuyển tới trang login
-                //      - Nếu thất bại: báo lỗi bằng Toast ra màn hình rồi xử lí sao j j đó để người dùng nhập lại
-            }
-            // Nếu nhập code sai
-            else {
-                // Báo lỗi rồi xử lí gì gì đó để người dùng nhập lại (Hãy đặt mình vào vị trí người dùng sẽ tự biết phải làm gì)
-            }
+                    //Bước 1: Tạo cái request để reset password tương tự lại send mail
+                    String token = "YOUR_TOKEN";
+                    String newPassword = "YOUR NEW PASSWORD";
+                    RequestBody formBody = new FormBody.Builder()
 
-        } else {
-            // send email to get code
-            SendMail("https://android-huflit-server.vercel.app");
+                            .add("email", emailFPEdt.getText().toString().trim())
+                            .add("token", token)
+                            .add("newPassword", newPassword)
+                            .build();
+//
+//                Request request = new Request.Builder()
+//                        .url(url + "/auth/reset-password")
+//                        .post(formBody)
+//                        .build();
+                    String resetPasswordUrl = "https://android-huflit-server.vercel.app";
+
+                    Request request = new Request.Builder()
+                            .url(resetPasswordUrl) // Set the URL based on your endpoint
+                            .post(formBody)
+                            .build();
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                            if (response.isSuccessful()) {
+                                // Bước 2: Sau khi nhập phản hồi từ yêu cầu đổi reset pass
+                                Intent intent = new Intent(ForgotPassword.this, ResetPassword.class);
+                                startActivity(intent);
+                            }
+                            // Nếu nhập code sai
+                            else {
+                                Toast.makeText(ForgotPassword.this, "Code không hợp lệ. Hãy nhập lại!!!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+                        }
+                    });
+
+                } else {
+                    // Báo lỗi rồi xử lí gì gì đó để người dùng nhập lại (Hãy đặt mình vào vị trí người dùng sẽ tự biết phải làm gì)
+                    Toast.makeText(ForgotPassword.this, "Mã xác nhận không đúng", Toast.LENGTH_SHORT).show();
+                }
+
+            } else {
+// send email to get code
+                SendMail("https://android-huflit-server.vercel.app");
+            }
         }
     }
 
     void SendMail(String url) throws IOException {
         // prevent empty prompt
-        if (emailFPEdt.getText().toString().trim() == "") return;
-        code = generateRandomString(6);
+        if (emailFPEdt.getText().toString().trim().equals("")) return;
+        //code = generateRandomString(6);
+//        code = generateRandomString(6);
+        code = "ASDASD";
 
         RequestBody formBody = new FormBody.Builder()
-//                .add("chatId", "")
                 .add("email", emailFPEdt.getText().toString().trim())
                 .add("code", code)
                 .build();
@@ -127,7 +172,7 @@ public class ForgotPassword extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
+                if (response.body() != null) {
                     final String myResponse = response.body().string();
 
                     ForgotPassword.this.runOnUiThread(new Runnable() {
@@ -148,7 +193,6 @@ public class ForgotPassword extends AppCompatActivity {
                     });
                 }
             }
-
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
@@ -156,6 +200,4 @@ public class ForgotPassword extends AppCompatActivity {
         });
     }
 
-
 }
-
