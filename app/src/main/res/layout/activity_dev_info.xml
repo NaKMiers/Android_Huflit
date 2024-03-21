@@ -183,7 +183,7 @@
         app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5"
-        app:srcCompat="@drawable/huu" />
+        app:srcCompat="@drawable/boy" />
 
     <TextView
         android:id="@+id/textView33"
