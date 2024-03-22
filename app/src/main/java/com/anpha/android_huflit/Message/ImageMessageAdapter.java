@@ -3,8 +3,13 @@ package com.anpha.android_huflit.Message;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
-import android.view.ContextMenu;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,13 +19,17 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import com.squareup.picasso.Picasso;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.anpha.android_huflit.R;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
-import java.lang.reflect.Array;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,48 +110,93 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    // ViewHolder cho tin nhắn nhận với hình ảnh
+
     public static class ReceivedImageMessageViewHolder extends RecyclerView.ViewHolder {
-        //Khai báo biến imageViewMessage, đại diện cho ImageView trong tin nhắn nhận
         private GridView receivedImageGrid;
-        //Context truyền vào khi tạo mục viewHolder
         private Context context;
 
         public ReceivedImageMessageViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
-            //Tìm kiếm và tham chiếu đến phần tử có id receivedImage (imageView)
-//            imageViewMessage = itemView.findViewById(R.id.receivedImage);
             receivedImageGrid = itemView.findViewById(R.id.receivedImageGrid);
             this.context = context;
-            //Tìm kiếm và tham chiếu đến phần tử có id imageOption(icon 3 chấm)
             ImageView imageOption = itemView.findViewById(R.id.imageOption);
-            //Sự kiện khi nhấn vào icon 3 chấm
-            imageOption.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showPopupMenu(v);
-                }
-            });
-        }
-
-        private void showPopupMenu(View v) {
-            //Khởi tạo PopupMenu
-            PopupMenu popupMenu = new PopupMenu(context, v);
-            //Inflate file menu
-            MenuInflater mnuPopup = popupMenu.getMenuInflater();
-            mnuPopup.inflate(R.menu.option_menu, popupMenu.getMenu());
-            //Hiển thị popupMenu
-            popupMenu.show();
+//            imageOption.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    showPopupMenu(v);
+//                }
+//            });
         }
 
         public void bind(ImageMessage message) {
             ArrayList<String> imageUrls = message.getImageUrls();
 
             if (imageUrls != null && !imageUrls.isEmpty()) {
-                // Create and set adapter for GridView
                 ImageGridAdapter adapter = new ImageGridAdapter((Activity) context, imageUrls);
                 receivedImageGrid.setAdapter(adapter);
             }
         }
+
+//        private void showPopupMenu(View v) {
+////
+//            PopupMenu popupMenu = new PopupMenu(context, v);
+////            // Inflate file menu
+//            MenuInflater mnuPopup = popupMenu.getMenuInflater();
+//            mnuPopup.inflate(R.menu.option_menu, popupMenu.getMenu());
+////            // Hiển thị PopupMenu
+//            popupMenu.show();
+//            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                @Override
+//                public boolean onMenuItemClick(MenuItem item) {
+//                    int itemId = item.getItemId();
+//                    if (itemId == R.id.saveImage) {
+//                        saveImage();
+//                        return true;
+//                    } else if (itemId == R.id.copyImage) {
+//                        copyImage();
+//                        return true;
+//                    } else {
+//                        return false;
+//                    }
+//                }
+//            });
+//        }
+//
+//        private void saveImage() {
+//            Bitmap bitmap = receivedImageGrid.getDrawingCache();
+//            if (bitmap != null) {
+//                try {
+//                    File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "HUFLITBIRD");
+//                    if (!directory.exists()) {
+//                        directory.mkdirs();
+//                    }
+//                    String fileName = "image_" + System.currentTimeMillis() + ".jpg";
+//                    File file = new File(directory, fileName);
+//                    FileOutputStream outputStream = new FileOutputStream(file);
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+//                    outputStream.close();
+//                    Toast.makeText(context, "Image saved successfully", Toast.LENGTH_SHORT).show();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    Toast.makeText(context, "Failed to save image", Toast.LENGTH_SHORT).show();
+//                }
+//            } else {
+//                Toast.makeText(context, "No image to save", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//
+//        private void copyImage() {
+//            Bitmap bitmap = receivedImageGrid.getDrawingCache();
+//            if (bitmap != null) {
+//                ClipData clipData = ClipData.newPlainText("image", "Image from your app");
+//                clipData.addItem(new ClipData.Item(new BitmapDrawable(context.getResources(), bitmap).toString()));
+//                ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+//                clipboardManager.setPrimaryClip(clipData);
+//                Toast.makeText(context, "Image copied to Clipboard", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(context, "No image to copy", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
     }
 }
