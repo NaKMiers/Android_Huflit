@@ -119,13 +119,8 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(itemView);
             receivedImageGrid = itemView.findViewById(R.id.receivedImageGrid);
             this.context = context;
-            ImageView imageOption = itemView.findViewById(R.id.imageOption);
-//            imageOption.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    showPopupMenu(v);
-//                }
-//            });
+//            ImageView imageOption = itemView.findViewById(R.id.imageOption);
+//
         }
 
         public void bind(ImageMessage message) {
@@ -137,66 +132,5 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
         }
 
-//        private void showPopupMenu(View v) {
-////
-//            PopupMenu popupMenu = new PopupMenu(context, v);
-////            // Inflate file menu
-//            MenuInflater mnuPopup = popupMenu.getMenuInflater();
-//            mnuPopup.inflate(R.menu.option_menu, popupMenu.getMenu());
-////            // Hiển thị PopupMenu
-//            popupMenu.show();
-//            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                @Override
-//                public boolean onMenuItemClick(MenuItem item) {
-//                    int itemId = item.getItemId();
-//                    if (itemId == R.id.saveImage) {
-//                        saveImage();
-//                        return true;
-//                    } else if (itemId == R.id.copyImage) {
-//                        copyImage();
-//                        return true;
-//                    } else {
-//                        return false;
-//                    }
-//                }
-//            });
-//        }
-//
-//        private void saveImage() {
-//            Bitmap bitmap = receivedImageGrid.getDrawingCache();
-//            if (bitmap != null) {
-//                try {
-//                    File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "HUFLITBIRD");
-//                    if (!directory.exists()) {
-//                        directory.mkdirs();
-//                    }
-//                    String fileName = "image_" + System.currentTimeMillis() + ".jpg";
-//                    File file = new File(directory, fileName);
-//                    FileOutputStream outputStream = new FileOutputStream(file);
-//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-//                    outputStream.close();
-//                    Toast.makeText(context, "Image saved successfully", Toast.LENGTH_SHORT).show();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(context, "Failed to save image", Toast.LENGTH_SHORT).show();
-//                }
-//            } else {
-//                Toast.makeText(context, "No image to save", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//
-//        private void copyImage() {
-//            Bitmap bitmap = receivedImageGrid.getDrawingCache();
-//            if (bitmap != null) {
-//                ClipData clipData = ClipData.newPlainText("image", "Image from your app");
-//                clipData.addItem(new ClipData.Item(new BitmapDrawable(context.getResources(), bitmap).toString()));
-//                ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-//                clipboardManager.setPrimaryClip(clipData);
-//                Toast.makeText(context, "Image copied to Clipboard", Toast.LENGTH_SHORT).show();
-//            } else {
-//                Toast.makeText(context, "No image to copy", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
     }
 }
