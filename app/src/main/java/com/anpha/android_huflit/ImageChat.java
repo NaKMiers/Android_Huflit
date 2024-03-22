@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -50,6 +53,7 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import okhttp3.Call;
@@ -489,8 +493,6 @@ public class ImageChat extends AppCompatActivity {
         messages.add(receivedImage);
         // Thông báo cho Adapter biết rằng có một mục mới được thêm vào cuối danh sách
         adapter.notifyItemInserted(messages.size() - 1);
-
-
     }
 
     private void addBox(ItemChatBox box) {
@@ -519,13 +521,48 @@ public class ImageChat extends AppCompatActivity {
         }
     }
 
+    public void handleSpeak(View view) {
+        if (!SpeechRecognizer.isRecognitionAvailable(this)) {
+            Toast.makeText(this, "Speech không sẵn sàng", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hãy nói gì đó nào");
+
+        try {
+            startActivityForResult(intent, 131);
+        } catch (Exception e) {
+            Toast.makeText(this, String.valueOf(e.getMessage()), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 131 && resultCode == RESULT_OK && data != null) {
+            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            String text = result.get(0).toString();
+
+            try {
+                CreatePrompt(API + "/chat/create-prompt", text);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     public void handleSentImagePrompt(View view) throws IOException {
         String messageText = edtImgChat.getText().toString().trim();
 
         if (!messageText.isEmpty()) {
             txtHelp2.setText("");
 
-            CreatePrompt(API + "/image/create-prompt");
+            CreatePrompt(API + "/image/create-prompt", edtImgChat.getText().toString());
         }
     }
 
@@ -919,9 +956,9 @@ public class ImageChat extends AppCompatActivity {
         });
     }
 
-    void CreatePrompt(String url) throws IOException {
+    void CreatePrompt(String url, String text) throws IOException {
         // prevent empty prompt
-        if (edtImgChat.getText().toString().trim() == "") return;
+        if (text.isEmpty()) return;
         if (boxId.isEmpty()) {
             Toast.makeText(ImageChat.this, "Box ID không tồn tại", Toast.LENGTH_SHORT).show();
             return;
@@ -933,7 +970,7 @@ public class ImageChat extends AppCompatActivity {
 
         RequestBody formBody = new FormBody.Builder()
                 .add("chatId", boxId)
-                .add("prompt", edtImgChat.getText().toString().trim())
+                .add("prompt", text)
                 .build();
 
         Request request = new Request.Builder()

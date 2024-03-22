@@ -515,7 +515,13 @@ public class TextChat extends AppCompatActivity {
 
         if (requestCode == 131 && resultCode == RESULT_OK && data != null) {
             ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            Toast.makeText(this, result.get(0).toString(), Toast.LENGTH_SHORT).show();
+            String text = result.get(0).toString();
+
+            try {
+                CreatePrompt(API + "/chat/create-prompt", text);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -525,7 +531,7 @@ public class TextChat extends AppCompatActivity {
             txtHiUser.setText("");
 
             try {
-                CreatePrompt(API + "/chat/create-prompt");
+                CreatePrompt(API + "/chat/create-prompt", edtTextChat.getText().toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -894,9 +900,9 @@ public class TextChat extends AppCompatActivity {
         });
     }
 
-    void CreatePrompt(String url) throws IOException {
+    void CreatePrompt(String url, String text) throws IOException {
         // prevent empty prompt
-        if (edtTextChat.getText().toString().trim() == "") return;
+        if (text.trim().isEmpty()) return;
         if (boxId.isEmpty()) {
             Toast.makeText(TextChat.this, "Box ID không tồn tại", Toast.LENGTH_SHORT).show();
             return;
@@ -908,7 +914,7 @@ public class TextChat extends AppCompatActivity {
 
         RequestBody formBody = new FormBody.Builder()
                 .add("chatId", boxId)
-                .add("prompt", edtTextChat.getText().toString().trim())
+                .add("prompt", text)
                 .build();
 
         Request request = new Request.Builder()
