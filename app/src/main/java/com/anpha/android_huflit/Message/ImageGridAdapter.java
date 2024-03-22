@@ -7,7 +7,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +27,7 @@ import com.anpha.android_huflit.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -163,12 +166,29 @@ class ImageGridAdapter extends ArrayAdapter<String> {
     private void copyBitmapToClipboard(Bitmap bitmap) {
         if (bitmap != null) {
             ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clipData = ClipData.newPlainText("image", "Image from your app");
-            clipData.addItem(new ClipData.Item(new BitmapDrawable(context.getResources(), bitmap).toString()));
+
+            // Convert Bitmap to Uri
+            Uri imageUri = getImageUri(context, bitmap);
+
+            // Create ClipData
+            ClipData clipData = ClipData.newUri(context.getContentResolver(), "image", imageUri);
+
+            // Set ClipData to Clipboard
             clipboardManager.setPrimaryClip(clipData);
+
+            // Show Toast
             Toast.makeText(context, "Image copied to Clipboard", Toast.LENGTH_SHORT).show();
         } else {
+            // Show Toast if no image is available
             Toast.makeText(context, "No image to copy", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // Function to get Uri from Bitmap
+    private Uri getImageUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Image", null);
+        return Uri.parse(path);
     }
 }
