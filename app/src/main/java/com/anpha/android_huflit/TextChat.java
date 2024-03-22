@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,6 +29,7 @@ import android.widget.PopupWindow;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,19 +79,23 @@ public class TextChat extends AppCompatActivity {
     TextView txtHelp1, txtMode, txtusername,txtChangetheme,txtDevinfo,txtAdmin,txtHiUser;
     Button btnLogOut;
     ProgressBar loadingMessage;
+    Switch speakSwitch;
 
     // libraby tools
     OkHttpClient client = new OkHttpClient();
+    TextToSpeech textToSpeech;
 
     // values
     String token, userId;
     String boxId;
     String API = "https://android-huflit-server.vercel.app";
+    Boolean isSpeak;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // set theme
         SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         int themeId = preferences.getInt("themeId", R.style.Theme1);
         setTheme(themeId);
@@ -115,15 +121,26 @@ public class TextChat extends AppCompatActivity {
         boxAdapter = new ChatBoxAdapter(TextChat.this, R.layout.item_chatbox_layout, boxes);
         chatBox.setAdapter(boxAdapter);
 
-        //Thiết lập con trỏ ở cuối văn bản EditText
+        // Thiết lập con trỏ ở cuối văn bản EditText
         edtTextChat.requestFocus();
         edtTextChat.setSelection(edtTextChat.getText().length());
+
+        // text to speak
+        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status != TextToSpeech.ERROR) {
+                    textToSpeech.setLanguage(Locale.getDefault());
+                }
+            }
+        });
 
         // get global data
         String role = preferences.getString("role", "");
         String username = preferences.getString("username", "");
         userId = preferences.getString("userId", "");
         token = preferences.getString("token", "");
+        isSpeak = preferences.getBoolean("isSpeak", false);
         String avatar = preferences.getString("avatar", "");
         Picasso.get().load(API + avatar).into(imgavatar);
 
@@ -233,7 +250,8 @@ public class TextChat extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         txtMode = findViewById(R.id.txtMode);
         chatBox = findViewById(R.id.chatBox);
-        txtHiUser=findViewById(R.id.txtHiUser);
+        txtHiUser = findViewById(R.id.txtHiUser);
+        speakSwitch = findViewById(R.id.speakSwitch);
 
         //Nạp layout từ tệp popup_chat_menu
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_chat_menu, null);
@@ -345,6 +363,20 @@ public class TextChat extends AppCompatActivity {
                 return false;
             }
         });
+
+        speakSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Lấy trạng thái hiện tại của Switch
+                boolean isChecked = ((Switch) v).isChecked();
+
+                isSpeak = isChecked;
+                SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean("isSpeak", isChecked);
+                editor.apply();
+            }
+        });
     }
 
     private void requireAuth() {
@@ -379,7 +411,7 @@ public class TextChat extends AppCompatActivity {
         for(Prompt p: prompts) {
             // if prompt is from user
             if (Objects.equals(p.from, "user")) {
-                String line = "user: " + p.getText() + "\n";
+                String line = p.getText() + "\n";
                 improvedPrompt += line;
             }
             // if prompt if from AI
@@ -389,7 +421,7 @@ public class TextChat extends AppCompatActivity {
             }
         }
 
-        improvedPrompt += "*Nội dung dung mới cần được trả lời* \n";
+        improvedPrompt += "*Nội dung dung mới cần được trả lời không được quá 50 từ* \n";
 
         String lastLine = prompt.trim();
         improvedPrompt += lastLine;
@@ -528,12 +560,12 @@ public class TextChat extends AppCompatActivity {
     }
 
     public void handleSendChatPrompt(View view) {
-        String messageText = edtTextChat.getText().toString().trim();
-        if (!messageText.isEmpty()) {
+        String text = edtTextChat.getText().toString().trim();
+        if (!text.isEmpty()) {
             txtHiUser.setText("");
 
             try {
-                CreatePrompt(API + "/chat/create-prompt", edtTextChat.getText().toString());
+                CreatePrompt(API + "/chat/create-prompt", text);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -1034,6 +1066,10 @@ public class TextChat extends AppCompatActivity {
                                 String type = completion.optString("type");
                                 String from = completion.optString("from");
                                 String text = completion.optString("text");
+
+                                if (isSpeak) {
+                                    textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+                                }
 
                                 // add new prompt to message list
                                 Prompt newPrompt = new Prompt(_id, userId, type, from, text);

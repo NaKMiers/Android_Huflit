@@ -167,13 +167,13 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:visibility="visible"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingTop="20dp">
+            android:paddingVertical="21dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -195,8 +195,8 @@
                     android:layout_gravity="center"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:text="New chat"
-                    android:textColor="#000000"
+                    android:text="Huflit Birds"
+                    android:textColor="?attr/colorPrimaryVariant"
                     android:textSize="16sp" />
 
                 <ImageView
@@ -219,6 +219,7 @@
             <ListView
                 android:id="@+id/chatBox"
                 android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_margin="16px" />
 
@@ -229,6 +230,15 @@
                 android:layout_gravity="center"
                 android:onClick="handleClearBoxOfChat"
                 android:src="@drawable/broom" />
+
+            <Switch
+                android:id="@+id/speakSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="12dp"
+                android:text="Speak" />
+
+
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 

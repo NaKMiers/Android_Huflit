@@ -71,7 +71,7 @@ public class ThemeView extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Theme theme = themes.get(position);
-                Toast.makeText(ThemeView.this, "Đã chọn theme: " + theme.getTitle() + " : " + theme.getThemeId(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ThemeView.this, "Đã chọn theme: " + theme.getTitle(), Toast.LENGTH_SHORT).show();
 
                 SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
