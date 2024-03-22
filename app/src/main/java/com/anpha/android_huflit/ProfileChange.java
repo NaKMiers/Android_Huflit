@@ -118,10 +118,10 @@ public class ProfileChange extends AppCompatActivity {
 
     private void UpdateProfile(String url) {
         // prevent empty prompt
-        if (token.isEmpty()) {
-            Toast.makeText(ProfileChange.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (token.isEmpty()) {
+//            Toast.makeText(ProfileChange.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         // new birthday
         String birthday = birthdayEdt.getText().toString();
@@ -205,7 +205,7 @@ public class ProfileChange extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                Toast.makeText(ProfileChange.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ProfileChange.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
             }
         });
     }

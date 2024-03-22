@@ -41,7 +41,7 @@
         android:drawableLeft="@drawable/icon_khoa"
         android:drawablePadding="8dp"
         android:ems="10"
-        android:hint="Password: "
+        android:hint="Password "
         android:inputType="textPassword"
         android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"

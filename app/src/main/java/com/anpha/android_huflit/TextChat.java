@@ -511,10 +511,10 @@ public class TextChat extends AppCompatActivity {
     }
 
     private void GetChatBoxes(String url){
-        if (token.isEmpty()) {
-            Toast.makeText(TextChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (token.isEmpty()) {
+//            Toast.makeText(TextChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         Request request = new Request.Builder()
                 .url(url)

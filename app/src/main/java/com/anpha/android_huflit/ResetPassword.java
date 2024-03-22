@@ -47,8 +47,6 @@ public class ResetPassword extends AppCompatActivity {
         setContentView(R.layout.activity_reset_password);
         mappings();
 
-        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-        String emailReset = preferences.getString("emailReset", "");
 
     }
 
@@ -67,7 +65,7 @@ public class ResetPassword extends AppCompatActivity {
             Toast.makeText(ResetPassword.this, "Mật khẩu không trùng khớp. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
             return; // Thoát khỏi phương thức nếu mật khẩu không trùng khớp
         } else {
-            SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+            SharedPreferences preferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
             String emailReset = preferences.getString("emailReset", "");
 
             RequestBody formBody = new FormBody.Builder()
@@ -83,92 +81,21 @@ public class ResetPassword extends AppCompatActivity {
                     .build();
             Log.d("emailReset", emailReset);
 
+            Toast.makeText(ResetPassword.this,"Đổi mật khẩu thành công!",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(ResetPassword.this, Login.class);
             startActivity(intent);
         }
         client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                // Xử lý khi gặp lỗi trong quá trình gửi yêu cầu
-                ResetPassword.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-//                        Toast.makeText(ResetPassword.this, "Có lỗi xảy ra. Vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
-                        
-
-                    }
-                });
-            }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                // Xử lý phản hồi từ máy chủ
-                if (response.isSuccessful()) {
-                    final String Response = response.body().string();
-                    Log.d("Update Password RES: ", Response);
-                    // Phản hồi thành công, chuyển hướng đến màn hình đăng nhập
-                    Intent intent = new Intent(ResetPassword.this, Login.class);
-                    startActivity(intent);
-                } else {
-                    // Phản hồi không thành công, hiển thị thông báo lỗi
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(ResetPassword.this, "Có lỗi xảy ra khi đặt lại mật khẩu. Vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
             }
         });
     }
-
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-//                if (response.isSuccessful()) {
-//                    try {
-//                        String responseBody = response.body().string();
-//                        Log.d("--------- Reset Password RESPONSE -------", responseBody);
-//
-//                        JSONObject jsonResponse = new JSONObject(responseBody);
-//                        JSONObject userJson = jsonResponse.optJSONObject("user");
-//
-//                        if (userJson != null) {
-//                            String newPassword = userJson.optString("email");
-//
-//                            // Lưu newPassword vào SharedPreferences
-//                            SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
-//                            SharedPreferences.Editor editor = preferences.edit();
-//                            editor.putString("newPassword", newPassword);
-//                            editor.apply();
-//
-//                            // Chuyển hướng sang màn hình Login
-//                            Intent intent = new Intent(ResetPassword.this, Login.class);
-//                            startActivity(intent);
-//                        } else {
-//                            runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    Toast.makeText(ResetPassword.this, "Không tìm thấy dữ liệu người dùng.", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//                        }
-//                    } catch (JSONException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                    } else {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(ResetPassword.this, "Có lỗi xảy ra khi đặt lại mật khẩu. Vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                }
-//            }
-//        });
 }

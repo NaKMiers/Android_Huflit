@@ -114,10 +114,10 @@ public class AdminUserDetail extends AppCompatActivity {
             return;
         }
 
-        if (token == null || token.isEmpty()) {
-            Toast.makeText(this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (token == null || token.isEmpty()) {
+//            Toast.makeText(this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         showDeleteConfirmationDialog();
     }
 

@@ -53,9 +53,16 @@ public class ForgotPassword extends AppCompatActivity {
         generateRandomString(6);
 
         isSent = true;
-        SharedPreferences preferences = getSharedPreferences("myPreferences", MODE_PRIVATE);
-        String emailReset = preferences.getString("emailReset", ""); //lưu trữ tên người dùng
-        emailBackground.setText(emailReset);
+//        SharedPreferences preferences  = getSharedPreferences("Preferences", MODE_PRIVATE);
+//        // Tạo một đối tượng Editor từ SharedPreferences
+//        SharedPreferences.Editor editor = preferences .edit();
+//        // Lấy dữ liệu từ EditText emailFPEdt
+//        String email = emailFPEdt.getText().toString();
+//        // Đưa dữ liệu vào SharedPreferences
+//        editor.putString("emailReset", email);
+//        // Lưu thay đổi vào SharedPreferences
+//        editor.apply();
+//        Log.d("ForgotPassword", "Email saved in SharedPreferences: " + emailReset);
     }
 
     //Ánh xạ
@@ -94,6 +101,17 @@ public class ForgotPassword extends AppCompatActivity {
 
     public void handleSendFP(View view) throws IOException {
         if (isSent) {
+            String emailReset = emailFPEdt.getText().toString();
+
+            // Lưu dữ liệu email vào SharedPreferences
+            SharedPreferences preferences = getSharedPreferences("Preferences", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("emailReset", emailReset);
+            editor.apply();
+
+            // Ghi log để kiểm tra xem dữ liệu đã được lưu vào SharedPreferences hay không
+            Log.d("ForgotPassword", "Email saved in SharedPreferences: " + emailReset);
+
             // nếu nhập code đúng
 //            if (codeFPEdt.getText().toString().trim() == code)
             if (codeFPEdt.getText().toString().trim().equals(code)) {
@@ -147,7 +165,7 @@ public class ForgotPassword extends AppCompatActivity {
                 }
 
             } else {
-// send email to get code
+                // send email to get code
                 SendMail("https://android-huflit-server.vercel.app");
             }
         }

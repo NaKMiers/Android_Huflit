@@ -541,10 +541,10 @@ public class ImageChat extends AppCompatActivity {
     }
 
     private void GetImageBoxes(String url){
-        if (token.isEmpty()) {
-            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (token.isEmpty()) {
+//            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         Request request = new Request.Builder()
                 .url(url)
@@ -614,10 +614,10 @@ public class ImageChat extends AppCompatActivity {
     }
 
     private void CreateImageBox(String url) throws IOException {
-        if (token.isEmpty()) {
-            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (token.isEmpty()) {
+//            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         RequestBody formBody = new FormBody.Builder()
                 .add("nothing", "Nothing")
@@ -672,10 +672,10 @@ public class ImageChat extends AppCompatActivity {
             Toast.makeText(ImageChat.this, "Box ID không tồn tại", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (token.isEmpty()) {
-            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (token.isEmpty()) {
+//            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         RequestBody formBody = new FormBody.Builder()
                 .add("title", value)
@@ -719,10 +719,10 @@ public class ImageChat extends AppCompatActivity {
     }
 
     private void DeleteBox(String url, ItemChatBox box) throws IOException {
-        if (token.isEmpty()) {
-            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (token.isEmpty()) {
+//            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         Request request = new Request.Builder()
                 .url(url)
@@ -767,10 +767,10 @@ public class ImageChat extends AppCompatActivity {
 
     void ClearBoxOfImage(String url) {
         OkHttpClient client = new OkHttpClient();
-        if (token.isEmpty()) {
-            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (token.isEmpty()) {
+//            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         Request request = new Request.Builder()
                 .url(url)
@@ -813,10 +813,10 @@ public class ImageChat extends AppCompatActivity {
     }
 
     private void GetUserPrompts(String url) throws IOException {
-        if (token.isEmpty()) {
-            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (token.isEmpty()) {
+//            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         Request request = new Request.Builder()
                 .url(url)
@@ -902,10 +902,10 @@ public class ImageChat extends AppCompatActivity {
             Toast.makeText(ImageChat.this, "Box ID không tồn tại", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (token.isEmpty()) {
-            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (token.isEmpty()) {
+//            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         RequestBody formBody = new FormBody.Builder()
                 .add("chatId", boxId)
@@ -981,10 +981,10 @@ public class ImageChat extends AppCompatActivity {
             Toast.makeText(ImageChat.this, "Box ID không tồn tại", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (token.isEmpty()) {
-            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (token.isEmpty()) {
+//            Toast.makeText(ImageChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
 
 
