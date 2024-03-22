@@ -24,6 +24,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.anpha.android_huflit.R;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -108,159 +110,93 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    // ViewHolder cho tin nhắn nhận với hình ảnh
+
     public static class ReceivedImageMessageViewHolder extends RecyclerView.ViewHolder {
-        //Khai báo biến imageViewMessage, đại diện cho ImageView trong tin nhắn nhận
         private GridView receivedImageGrid;
-        //Context truyền vào khi tạo mục viewHolder
         private Context context;
 
         public ReceivedImageMessageViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
-            //Tìm kiếm và tham chiếu đến phần tử có id receivedImage (imageView)
-//            imageViewMessage = itemView.findViewById(R.id.receivedImage);
             receivedImageGrid = itemView.findViewById(R.id.receivedImageGrid);
             this.context = context;
-            //Tìm kiếm và tham chiếu đến phần tử có id imageOption(icon 3 chấm)
             ImageView imageOption = itemView.findViewById(R.id.imageOption);
-            //Sự kiện khi nhấn vào icon 3 chấm
-            imageOption.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showPopupMenu(v);
-                }
-
-            });
-            receivedImageGrid.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    showPopupMenu(v);
-                    return true;
-                }
-            });
-
+//            imageOption.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    showPopupMenu(v);
+//                }
+//            });
         }
 
         public void bind(ImageMessage message) {
             ArrayList<String> imageUrls = message.getImageUrls();
 
             if (imageUrls != null && !imageUrls.isEmpty()) {
-                // Create and set adapter for GridView
                 ImageGridAdapter adapter = new ImageGridAdapter((Activity) context, imageUrls);
                 receivedImageGrid.setAdapter(adapter);
             }
         }
 
-        private void showPopupMenu(View v) {
-            // Khởi tạo PopupMenu
-            PopupMenu popupMenu = new PopupMenu(context, v);
-            // Inflate file menu
-            MenuInflater mnuPopup = popupMenu.getMenuInflater();
-            mnuPopup.inflate(R.menu.option_menu, popupMenu.getMenu());
-            // Hiển thị PopupMenu
-            popupMenu.show();
-
-            // Đặt lắng nghe sự kiện cho các MenuItem
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    // Xác định MenuItem được click bằng ID
-                    int itemId = item.getItemId();
-                    if (itemId == R.id.saveImage) {
-                        // Thực hiện lệnh lưu ảnh ở đây
-                        saveImage(receivedImageGrid.getDrawingCache());
-                        return true; // Báo hiệu rằng sự kiện click đã được xử lý
-                    } else if (itemId == R.id.copyImage) {
-                        // Thực hiện lệnh copy ảnh ở đây
-                        copyImage("hihihihihi");
-                        return true; // Báo hiệu rằng sự kiện click đã được xử lý
-                    } else {
-                        return false; // Trả về false nếu không xử lý được sự kiện click
-                    }
-                }
-            });
-        }
-
-        // Hàm thực hiện lệnh lưu ảnh
-        private void saveImage(Bitmap bitmap) {
-            if (bitmap != null) {
-                try {
-                    // Tạo thư mục để lưu ảnh (bạn có thể thay đổi thư mục lưu theo nhu cầu)
-                    File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "HUFLITBIRD");
-                    if (!directory.exists()) {
-                        directory.mkdirs(); // Tạo thư mục nếu nó không tồn tại
-                    }
-
-                    // Tạo tên file cho ảnh
-                    String fileName = "image_" + System.currentTimeMillis() + ".jpg";
-
-                    // Tạo đường dẫn đầy đủ cho file ảnh
-                    File file = new File(directory, fileName);
-
-                    // Tạo luồng đầu ra để ghi dữ liệu vào file
-                    FileOutputStream outputStream = new FileOutputStream(file);
-
-                    // Lưu ảnh dướng dạng JPEG với chất lượng 100%
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-
-                    // Đóng luồng đầu ra
-                    outputStream.close();
-
-                    // Thông báo cho người dùng biết rằng ảnh đã được lưu thành công
-                    Toast.makeText(context, "Image saved successfully", Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    // Xử lý nếu có lỗi xảy ra trong quá trình lưu ảnh
-                    e.printStackTrace();
-                    Toast.makeText(context, "Failed to save image", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                // Thông báo cho người dùng biết rằng không có ảnh để lưu
-                Toast.makeText(context, "No image to save", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-
-        // Hàm thực hiện lệnh copy ảnh
-//        private void copyImage(Bitmap bitmap) {
-//            // Kiểm tra xem Bitmap có tồn tại không
+//        private void showPopupMenu(View v) {
+////
+//            PopupMenu popupMenu = new PopupMenu(context, v);
+////            // Inflate file menu
+//            MenuInflater mnuPopup = popupMenu.getMenuInflater();
+//            mnuPopup.inflate(R.menu.option_menu, popupMenu.getMenu());
+////            // Hiển thị PopupMenu
+//            popupMenu.show();
+//            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                @Override
+//                public boolean onMenuItemClick(MenuItem item) {
+//                    int itemId = item.getItemId();
+//                    if (itemId == R.id.saveImage) {
+//                        saveImage();
+//                        return true;
+//                    } else if (itemId == R.id.copyImage) {
+//                        copyImage();
+//                        return true;
+//                    } else {
+//                        return false;
+//                    }
+//                }
+//            });
+//        }
+//
+//        private void saveImage() {
+//            Bitmap bitmap = receivedImageGrid.getDrawingCache();
 //            if (bitmap != null) {
-//                // Tạo một ClipData để chứa dữ liệu cắt
+//                try {
+//                    File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "HUFLITBIRD");
+//                    if (!directory.exists()) {
+//                        directory.mkdirs();
+//                    }
+//                    String fileName = "image_" + System.currentTimeMillis() + ".jpg";
+//                    File file = new File(directory, fileName);
+//                    FileOutputStream outputStream = new FileOutputStream(file);
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+//                    outputStream.close();
+//                    Toast.makeText(context, "Image saved successfully", Toast.LENGTH_SHORT).show();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    Toast.makeText(context, "Failed to save image", Toast.LENGTH_SHORT).show();
+//                }
+//            } else {
+//                Toast.makeText(context, "No image to save", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//
+//        private void copyImage() {
+//            Bitmap bitmap = receivedImageGrid.getDrawingCache();
+//            if (bitmap != null) {
 //                ClipData clipData = ClipData.newPlainText("image", "Image from your app");
-//
-//                // Tạo một Item cho ClipData, với một đối tượng ClipData.Item chứa ảnh dưới dạng Parcelable
 //                clipData.addItem(new ClipData.Item(new BitmapDrawable(context.getResources(), bitmap).toString()));
-//
-//                // Nhận dịch vụ ClipboardManager
 //                ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-//
-//                // Đặt dữ liệu cắt vào Clipboard
 //                clipboardManager.setPrimaryClip(clipData);
-//
-//                // Thông báo cho người dùng biết rằng ảnh đã được sao chép vào Clipboard thành công
 //                Toast.makeText(context, "Image copied to Clipboard", Toast.LENGTH_SHORT).show();
 //            } else {
-//                // Thông báo cho người dùng biết rằng không có ảnh để sao chép
 //                Toast.makeText(context, "No image to copy", Toast.LENGTH_SHORT).show();
 //            }
 //        }
-        private void copyImage(String textToCopy) {
-            if ( textToCopy!= null && !textToCopy.isEmpty()) {
-            // Tạo một ClipData để chứa dữ liệu văn bản cần sao chép
-            ClipData clipData = ClipData.newPlainText("text", textToCopy);
-
-            // Nhận dịch vụ ClipboardManager
-            ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-
-            // Đặt dữ liệu cắt vào Clipboard
-            clipboardManager.setPrimaryClip(clipData);
-
-            // Thông báo cho người dùng biết rằng văn bản đã được sao chép vào Clipboard thành công
-            Toast.makeText(context, "Text copied to Clipboard", Toast.LENGTH_SHORT).show();
-        } else {
-            // Thông báo cho người dùng biết rằng không có văn bản để sao chép
-            Toast.makeText(context, "No text to copy", Toast.LENGTH_SHORT).show();
-        }
-        }
-
+//    }
     }
 }

@@ -117,7 +117,9 @@ public class ImageChat extends AppCompatActivity {
 
         // Khởi tạo Adapter và gán cho RecyclerView
         messages = new ArrayList<>();
+//        
         adapter = new ImageMessageAdapter(messages);
+
         recyclerViewImage.setAdapter(adapter);
 
         // show boxes
