@@ -28,6 +28,6 @@
         android:layout_height="30dp"
         android:layout_gravity="center|left"
         android:src="@drawable/menu_vertical"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
 </LinearLayout>

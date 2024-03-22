@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,7 +107,6 @@ public class ImageChat extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_chat);
-
         requireAuth();
 
         // mapping
@@ -1059,6 +1060,10 @@ public class ImageChat extends AppCompatActivity {
                 Toast.makeText(ImageChat.this, "Create Images Failed", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
+
         });
     }
+
+
+
 }
