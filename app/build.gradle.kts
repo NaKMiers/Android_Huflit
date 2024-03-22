@@ -61,6 +61,9 @@ dependencies {
     // render image from link
     implementation ("com.squareup.picasso:picasso:2.8")
 
+    implementation   ("de.hdodenhof:circleimageview:1.2.1")  
+
+
     //thư viện firebase
 
 
