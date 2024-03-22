@@ -795,7 +795,7 @@ public class ImageChat extends AppCompatActivity {
                                 Log.d("--------", myResponse);
 
                                 // Xóa box khỏi danh sách
-                                boxes.remove(index);
+                                boxes.remove(box);
 
                                 // Cập nhật adapter ListView
                                 boxAdapter.notifyDataSetChanged();
@@ -804,6 +804,8 @@ public class ImageChat extends AppCompatActivity {
 
                                 // auto create new box when all boxes is empty
                                 if (boxes.size() == 0) {
+                                    Log.d("asldkajsld", "laskjdaljkds");
+
                                     try {
                                         CreateImageBox(API + "/box/create-box/image");
                                     } catch (IOException e) {

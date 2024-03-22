@@ -87,11 +87,11 @@ import okhttp3.Response;
            return;
        }
 
-       // Tạo request body với thông tin đăng nhập
-       RequestBody requestBody = new FormBody.Builder()
-               .add("emailOrUsername",username)
-               .add("password", password)
-               .build();
+           // Tạo request body với thông tin đăng nhập
+           RequestBody requestBody = new FormBody.Builder()
+                   .add("emailOrUsername",username)
+                   .add("password", password)
+                   .build();
 
        // Tạo request POST
        Request request = new Request.Builder()
@@ -121,7 +121,6 @@ import okhttp3.Response;
                    try {
                        Log.d("--------- Logined In RES -------", myResponse);
                        JSONObject json = new JSONObject(myResponse);
-
 
                        // get data from response
                        JSONObject userJson = json.optJSONObject("user");

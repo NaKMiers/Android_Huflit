@@ -762,7 +762,7 @@ public class TextChat extends AppCompatActivity {
                                 Log.d("--------", myResponse);
 
                                 // Xóa box khỏi danh sách
-                                boxes.remove(index);
+                                boxes.remove(box);
 
                                 // Cập nhật adapter ListView
                                 boxAdapter.notifyDataSetChanged();
@@ -771,6 +771,8 @@ public class TextChat extends AppCompatActivity {
 
                                 // auto create new box when all boxes is empty
                                 if (boxes.size() == 0) {
+                                    Log.d("asldkajsld", "laskjdaljkds");
+
                                     try {
                                         CreateChatBox(API + "/box/create-box/chat");
                                     } catch (IOException e) {
