@@ -1,35 +1,47 @@
 package com.anpha.android_huflit.Models;
 
-import java.io.Serializable;
+public class Theme {
+    int themeId;
+    String background;
+    String textColor;
+    String title;
 
-public class Theme implements Serializable {
-    private  int image_color;
-    private String txtcolor;
-
-    //tạo Contructor có tham số
-    public Theme(int image_color, String txtcolor) {
-        this.image_color = image_color;
-        this.txtcolor = txtcolor;
+    public Theme(int themeId, String background, String textColor, String title) {
+        this.themeId = themeId;
+        this.background = background;
+        this.textColor = textColor;
+        this.title = title;
     }
 
-    //tạo thuộc tính get, set
-    public int getImage_color() {
-        return image_color;
+    public int getThemeId() {
+        return themeId;
     }
 
-    public void setImage_color(int image_color) {
-        this.image_color = image_color;
+    public void setThemeId(int themeId) {
+        this.themeId = themeId;
     }
 
-    public String getTxtcolor() {
-        return txtcolor;
+    public String getBackground() {
+        return background;
     }
 
-    public void setTxtcolor(String txtcolor) {
-        this.txtcolor = txtcolor;
+    public void setBackground(String background) {
+        this.background = background;
     }
 
-    public Theme() {
+    public String getTextColor() {
+        return textColor;
+    }
 
+    public void setTextColor(String textColor) {
+        this.textColor = textColor;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
