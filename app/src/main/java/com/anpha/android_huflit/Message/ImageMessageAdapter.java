@@ -117,6 +117,9 @@ public class ImageMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ReceivedImageMessageViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
+            receivedImageGrid = itemView.findViewById(R.id.receivedImageGrid);
+            this.context = context;
+//            ImageView imageOption = itemView.findViewById(R.id.imageOption);
 //
         }
 

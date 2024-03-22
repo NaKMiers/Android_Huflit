@@ -35,6 +35,7 @@ import java.util.ArrayList;
 
 class ImageGridAdapter extends ArrayAdapter<String> {
     private Context context;
+
     private ArrayList<String> mImageUrls;
 
     public ImageGridAdapter(Activity context, ArrayList<String> imageUrls) {
