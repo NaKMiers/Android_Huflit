@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ID: "
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorPrimaryVariant"
                     android:textSize="16dp" />
 
                 <TextView
@@ -44,7 +44,7 @@
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:hint="ID"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorPrimaryVariant"
                     android:textSize="16dp" />
             </LinearLayout>
         </LinearLayout>
@@ -59,14 +59,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username: "
-                android:textColor="@color/black"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16dp" />
             <TextView
                 android:id="@+id/UserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Username"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16dp" />
         </LinearLayout>
         <LinearLayout
@@ -78,14 +78,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email: "
-                android:textColor="@color/black"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16dp" />
             <TextView
                 android:id="@+id/EmailUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16dp" />
         </LinearLayout>
     </LinearLayout>

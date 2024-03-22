@@ -12,6 +12,11 @@ public class DevInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+        int themeId = preferences.getInt("themeId", R.style.Theme1);
+        setTheme(themeId);
+
         setContentView(R.layout.activity_dev_info);
     }
     private void requireAuth() {

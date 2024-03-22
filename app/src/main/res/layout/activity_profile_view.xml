@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:padding="21dp"
     android:gravity="center_horizontal"
+    android:background="?attr/colorSecondaryVariant"
     tools:context=".ProfileView">
 
     <LinearLayout
@@ -66,7 +67,7 @@
         android:layout_marginTop="15dp"
         android:gravity="center_horizontal"
         android:text="Tài khoản của tôi"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorPrimaryVariant"
         android:layout_marginBottom="12dp"
         android:textSize="20dp" />
 
@@ -90,7 +91,7 @@
             android:layout_weight="1"
             android:gravity="center|center_horizontal|center_vertical"
             android:text="Thông tin chi tiết"
-            android:textColor="#333"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textSize="18dp" />
 
         <TextView
@@ -126,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="Họ tên: "
-                android:textColor="@color/black"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="15sp" />
 
             <TextView
@@ -135,7 +136,8 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="..."
-                android:textColor="@color/black"
+                android:textColorHint="?attr/colorPrimaryVariant"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="15sp" />
         </LinearLayout>
         <LinearLayout
@@ -147,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="Email: "
-                android:textColor="@color/black"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="15sp" />
 
             <TextView
@@ -156,7 +158,8 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="..."
-                android:textColor="@color/black"
+                android:textColorHint="?attr/colorPrimaryVariant"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="15sp" />
         </LinearLayout>
         <LinearLayout
@@ -168,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="Username: "
-                android:textColor="@color/black"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="15sp" />
 
             <TextView
@@ -177,7 +180,8 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="..."
-                android:textColor="@color/black"
+                android:textColorHint="?attr/colorPrimaryVariant"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="15sp" />
         </LinearLayout>
         <LinearLayout
@@ -189,7 +193,7 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="Birthday: "
-                android:textColor="@color/black"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="15sp" />
 
             <TextView
@@ -198,7 +202,8 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="..."
-                android:textColor="@color/black"
+                android:textColorHint="?attr/colorPrimaryVariant"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="15sp" />
         </LinearLayout>
         <LinearLayout
@@ -210,7 +215,7 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="Job: "
-                android:textColor="@color/black"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="15sp" />
 
             <TextView
@@ -219,7 +224,8 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="..."
-                android:textColor="@color/black"
+                android:textColorHint="?attr/colorPrimaryVariant"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="15sp" />
         </LinearLayout>
         <LinearLayout
@@ -231,7 +237,7 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="Address: "
-                android:textColor="@color/black"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="15sp" />
 
             <TextView
@@ -240,7 +246,8 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="..."
-                android:textColor="@color/black"
+                android:textColorHint="?attr/colorPrimaryVariant"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
@@ -267,15 +274,17 @@
             android:layout_weight="1"
             android:gravity="center|center_horizontal|center_vertical"
             android:text="HUFLIT BIRD"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:background="@drawable/custom_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_marginLeft="21dp"
+        android:paddingHorizontal="21px"
+        android:layout_marginTop="12dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -290,13 +299,15 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="Đưa ra câu trả lời nhanh và chính xác"
-            android:textColor="@color/black" />
+            android:textColor="?attr/colorPrimaryVariant" />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:background="@drawable/custom_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_marginLeft="21dp"
+        android:paddingHorizontal="21px"
+        android:layout_marginTop="12dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -311,13 +322,15 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="Đầy đủ tính năng"
-            android:textColor="@color/black" />
+            android:textColor="?attr/colorPrimaryVariant"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:background="@drawable/custom_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_marginLeft="21dp"
+        android:paddingHorizontal="21px"
+        android:layout_marginTop="12dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -332,7 +345,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="Thanh toán nhanh chóng"
-            android:textColor="@color/black" />
+            android:textColor="?attr/colorPrimaryVariant" />
     </LinearLayout>
 
 

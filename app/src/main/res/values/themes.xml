@@ -1,9 +1,81 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Android_Huflit" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <!--    Material    -->
+    <style name="Theme1" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#69E6FA</item>
+        <item name="colorSecondary">#7426FA</item>
+        <item name="colorPrimaryVariant">#333333</item>
+        <item name="colorSecondaryVariant">#FFFFFF</item>
     </style>
 
-    <style name="Theme.Android_Huflit" parent="Base.Theme.Android_Huflit" />
+    <!--    Dark Material    -->
+    <style name="Theme2" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#BB86FC</item>
+        <item name="colorSecondary">#03DAC6</item>
+        <item name="colorPrimaryVariant">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#121212</item>
+    </style>
+
+    <!--    Twilight     -->
+    <style name="Theme3" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#512DA8</item>
+        <item name="colorSecondary">#FF4081</item>
+        <item name="colorPrimaryVariant">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#F5F5F5</item>
+    </style>
+
+    <!--    Deep Ocean    -->
+    <style name="Theme4" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#1976D2</item>
+        <item name="colorSecondary">#FF4081</item>
+        <item name="colorPrimaryVariant">#000000</item>
+        <item name="colorSecondaryVariant">#E0E0E0</item>
+    </style>
+
+    <!--    Sunset     -->
+    <style name="Theme5" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#FF5722</item>
+        <item name="colorSecondary">#FFC107</item>
+        <item name="colorPrimaryVariant">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#FFEB3B</item>
+    </style>
+
+    <!--    Nature      -->
+    <style name="Theme6" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#388E3C</item>
+        <item name="colorSecondary">#689F38</item>
+        <item name="colorPrimaryVariant">#212121</item>
+        <item name="colorSecondaryVariant">#FFFFFF</item>
+    </style>
+
+    <!--    Fire     -->
+    <style name="Theme7" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#03A9F4</item>
+        <item name="colorSecondary">#FFC107</item>
+        <item name="colorPrimaryVariant">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#212121</item>
+    </style>
+
+    <!--    Earth     -->
+    <style name="Theme8" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#795548</item>
+        <item name="colorSecondary">#A1887F</item>
+        <item name="colorPrimaryVariant">#212121</item>
+        <item name="colorSecondaryVariant">#F5F5F5</item>
+    </style>
+
+    <!--    Coral      -->
+    <style name="Theme9" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#FF5722</item>
+        <item name="colorSecondary">#EF5350</item>
+        <item name="colorPrimaryVariant">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#FBE9E7</item>
+    </style>
+
+    <!--    Sky       -->
+    <style name="Theme10" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#0288D1</item>
+        <item name="colorSecondary">#03A9F4</item>
+        <item name="colorPrimaryVariant">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#E3F2FD</item>
+    </style>
 </resources>

@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="12dp"
+        android:background="?attr/colorSecondaryVariant"
         tools:context=".ImageChat">
 
         <androidx.appcompat.widget.Toolbar
@@ -43,7 +44,7 @@
                 android:gravity="center"
                 android:onClick="handleChangeToImageMode"
                 android:text="CHAT"
-                android:textColor="#a8daf9"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
@@ -69,6 +70,7 @@
                 android:layout_marginTop="145dp"
                 android:layout_gravity="center_horizontal"
                 android:text="Hi"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="24sp" />
 
             <TextView
@@ -78,6 +80,7 @@
                 android:layout_marginLeft="85dp"
                 android:layout_marginTop="190dp"
                 android:text="How can I help you today?"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="24sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -142,6 +145,8 @@
                     android:hint="Nhập câu lệnh tại đây..."
                     android:inputType="textMultiLine"
                     android:paddingHorizontal="21dp"
+                    android:textColorHint="?attr/colorPrimaryVariant"
+                    android:textColor="?attr/colorPrimaryVariant"
                     android:scrollHorizontally="false"/>
 
                 <ImageView

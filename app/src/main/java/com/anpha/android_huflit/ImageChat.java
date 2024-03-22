@@ -3,6 +3,7 @@ package com.anpha.android_huflit;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -81,10 +82,10 @@ public class ImageChat extends AppCompatActivity {
     ArrayList<String> imageUrls  = new ArrayList<>();
 
     // Elements
-    TextView txtHelp2,txtusername, txtAmount, txtSize,txtAdminimg,txtDevinfo;
+    TextView txtHelp2,txtusername, txtAmount, txtSize,txtAdminimg, txtDevinfo, txtChangetheme;
     EditText edtImgChat;
     NavigationView navigationView;
-    ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon, receivedImage,imgAdminimg,imgDevinfo;
+    ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon, receivedImage,imgAdminimg,imgDevinfo, imgChangetheme;
     PopupWindow popupWindow;
     Toolbar toolbarImage;
     Button btnSave,btnLogout;
@@ -110,7 +111,14 @@ public class ImageChat extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+        int themeId = preferences.getInt("themeId", R.style.Theme1);
+        setTheme(themeId);
+
         setContentView(R.layout.activity_image_chat);
+
+        // auth
         requireAuth();
 
         // mapping
@@ -132,7 +140,6 @@ public class ImageChat extends AppCompatActivity {
         imageChatBox.setAdapter(boxAdapter);
 
         // get global data
-        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         String role = preferences.getString("role", "");
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
         token = preferences.getString("token", ""); //lưu trữ tên người dùng
@@ -255,13 +262,15 @@ public class ImageChat extends AppCompatActivity {
                 //Cho phép tương tác với các phần tử khác trên màn hình
                 true
         );
-        imgAdminimg=popupView.findViewById(R.id.imgAdminimg);
-        txtAdminimg=popupView.findViewById(R.id.txtAdminimg);
-        btnLogout=popupView.findViewById(R.id.btnLogOut);
+        imgAdminimg = popupView.findViewById(R.id.imgAdminimg);
+        txtAdminimg = popupView.findViewById(R.id.txtAdminimg);
+        btnLogout = popupView.findViewById(R.id.btnLogOut);
         recyclerViewImage = findViewById(R.id.recyclerViewImage);
-        txtusername=popupView.findViewById(R.id.txtusername);
-        imgDevinfo=popupView.findViewById(R.id.imgDevinfo);
-        txtDevinfo=popupView.findViewById(R.id.txtDevinfo);
+        txtusername = popupView.findViewById(R.id.txtusername);
+        imgDevinfo = popupView.findViewById(R.id.imgDevinfo);
+        txtDevinfo = popupView.findViewById(R.id.txtDevinfo);
+        txtChangetheme = popupView.findViewById(R.id.txtChangetheme);
+        imgChangetheme = popupView.findViewById(R.id.imgChangetheme);
 
         txtHelp2 = findViewById(R.id.txtHelp2);
         edtImgChat = findViewById(R.id.edtImgChat);
@@ -292,6 +301,20 @@ public class ImageChat extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ImageChat.this, ProfileView.class);
+                startActivity(intent);
+            }
+        });
+        txtChangetheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageChat.this, ThemeView.class);
+                startActivity(intent);
+            }
+        });
+        imgChangetheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageChat.this, ThemeView.class);
                 startActivity(intent);
             }
         });

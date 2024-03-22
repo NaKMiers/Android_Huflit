@@ -57,6 +57,11 @@ public class ProfileChange extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+        int themeId = preferences.getInt("themeId", R.style.Theme1);
+        setTheme(themeId);
+
         setContentView(R.layout.activity_profile_change);
 
         // mapping
@@ -66,7 +71,6 @@ public class ProfileChange extends AppCompatActivity {
         addEvents();
 
         // Set user information
-        SharedPreferences preferences = getSharedPreferences("myPreferences", MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
         userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
         token = preferences.getString("token", "");

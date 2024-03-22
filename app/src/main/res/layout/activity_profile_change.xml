@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="21dp"
+    android:padding="21dp"
+    android:background="?attr/colorSecondaryVariant"
     android:orientation="vertical"
     tools:context=".ProfileChange">
 
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Tài khoản của tôi"
-        android:textColor="#000000"
+        android:textColor="?attr/colorPrimaryVariant"
         android:textSize="18sp" />
 
     <ImageView
@@ -50,10 +51,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:gravity="center"
-        android:text="Thông tin chi tiết"
+        android:textColor="?attr/colorPrimaryVariant"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="#333"
         android:layout_marginBottom="12dp"/>
 
     <LinearLayout
@@ -64,7 +64,7 @@
         <TextView
             android:text="Họ: "
             android:textSize="20dp"
-            android:textColor="#333"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textStyle="bold"
             android:layout_marginRight="12dp"
             android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
         <TextView
             android:text="Tên: "
             android:textSize="20dp"
-            android:textColor="#333"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textStyle="bold"
             android:layout_marginRight="12dp"
             android:layout_width="wrap_content"
@@ -116,7 +116,7 @@
         <TextView
             android:text="Ngày sinh: "
             android:textSize="20dp"
-            android:textColor="#333"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textStyle="bold"
             android:layout_marginRight="12dp"
             android:layout_width="wrap_content"
@@ -142,7 +142,7 @@
         <TextView
             android:text="Nghề nghiệp: "
             android:textSize="20dp"
-            android:textColor="#333"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textStyle="bold"
             android:layout_marginRight="12dp"
             android:layout_width="wrap_content"
@@ -168,7 +168,7 @@
         <TextView
             android:text="Địa chỉ: "
             android:textSize="20dp"
-            android:textColor="#333"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textStyle="bold"
             android:layout_marginRight="12dp"
             android:layout_width="wrap_content"

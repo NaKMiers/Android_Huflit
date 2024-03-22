@@ -86,10 +86,14 @@ public class TextChat extends AppCompatActivity {
     String boxId;
     String API = "https://android-huflit-server.vercel.app";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+        int themeId = preferences.getInt("themeId", R.style.Theme1);
+        setTheme(themeId);
+
         setContentView(R.layout.activity_text_chat);
 
         // check auth login
@@ -116,7 +120,6 @@ public class TextChat extends AppCompatActivity {
         edtTextChat.setSelection(edtTextChat.getText().length());
 
         // get global data
-        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
         String role = preferences.getString("role", "");
         String username = preferences.getString("username", "");
         userId = preferences.getString("userId", "");
@@ -293,7 +296,6 @@ public class TextChat extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         txtChangetheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -9,8 +9,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="21dp"
-    android:gravity="center_horizontal"
-    tools:context=".PopupOption">
+    android:gravity="center_horizontal"    tools:context=".PopupOption">
 
     <LinearLayout
         android:layout_width="250dp"

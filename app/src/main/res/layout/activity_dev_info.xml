@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="?attr/colorSecondaryVariant"
     tools:context=".DevInfo">
 
     <ScrollView
@@ -29,6 +30,7 @@
                 android:gravity="center"
                 android:text="ABOUT US"
                 android:textSize="35sp"
+                android:textColor="?attr/colorPrimaryVariant"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +42,7 @@
                 android:layout_height="70dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="40dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/akhoa" />
 
             <TextView
@@ -49,7 +52,7 @@
                 android:layout_marginLeft="95dp"
                 android:layout_marginTop="-70dp"
                 android:text="Name : Nguyễn Anh Khoa"
-                android:textColor="#151414"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -58,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="Student Id : 22DH11161"
-                android:textColor="#0B0A0A"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -67,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="Work :"
-                android:textColor="#131313"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -76,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="-  Express Server"
-                android:textColor="#191818"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="14sp" />
 
             <TextView
@@ -85,7 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="- Chức năng gửi prompt nhận completion"
-                android:textColor="#252424" />
+                android:textColor="?attr/colorPrimaryVariant"
+                />
 
             <TextView
                 android:id="@+id/textView34"
@@ -93,7 +97,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="- Hiển thị ra view các chứng năng trên "
-                android:textColor="#171616" />
+                android:textColor="?attr/colorPrimaryVariant"
+                />
 
             <ImageView
                 android:id="@+id/imageView8"
@@ -110,7 +115,7 @@
                 android:layout_marginLeft="95dp"
                 android:layout_marginTop="-70dp"
                 android:text="Name : Lê Tiên Nhất Linh "
-                android:textColor="#131313"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -119,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="Student Id : 22dh111941"
-                android:textColor="#101010"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -128,7 +133,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="Work :"
-                android:textColor="#191818"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -137,7 +142,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="- Thiết kế giao diện app"
-                android:textColor="#1B1A1A" />
+                android:textColor="?attr/colorPrimaryVariant"
+                />
 
             <TextView
                 android:id="@+id/textView39"
@@ -145,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="- Chức năng login và regsiter"
-                android:textColor="#0C0C0C"
+                android:textColor="?attr/colorPrimaryVariant"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -155,7 +161,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="- Change Theme"
-                android:textColor="#171616" />
+                android:textColor="?attr/colorPrimaryVariant"
+                />
 
             <ImageView
                 android:id="@+id/imageView9"
@@ -163,6 +170,7 @@
                 android:layout_height="70dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="40dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/bao" />
 
             <TextView
@@ -172,7 +180,7 @@
                 android:layout_marginLeft="95dp"
                 android:layout_marginTop="-70dp"
                 android:text="Name : Đào Gia Bảo"
-                android:textColor="#131313"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -181,8 +189,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="Student Id : 22DH110227"
-                android:textColor="#131313"
-
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -191,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="Work :"
-                android:textColor="#0C0C0C"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -200,7 +207,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="- Tạo chat mới, xóa chat, rename chat, delete chat, delete all chat"
-                android:textColor="#040303" />
+                android:textColor="?attr/colorPrimaryVariant"
+                />
 
             <TextView
                 android:id="@+id/textView45"
@@ -208,7 +216,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="-  Điều chỉnh thuộc tính của image mode"
-                android:textColor="#090909" />
+                android:textColor="?attr/colorPrimaryVariant"
+                />
 
             <TextView
                 android:id="@+id/textView46"
@@ -216,7 +225,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="- Gửi prompt image, nhận images, hiển thị images ra view"
-                android:textColor="#131313" />
+                android:textColor="?attr/colorPrimaryVariant"
+                />
 
             <TextView
                 android:id="@+id/textView47"
@@ -224,7 +234,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="- Save images, copy image và completion vào clipboard"
-                android:textColor="#0E0E0E" />
+                android:textColor="?attr/colorPrimaryVariant"
+                />
 
             <ImageView
                 android:id="@+id/imageView11"
@@ -232,6 +243,7 @@
                 android:layout_height="70dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/huu" />
 
             <TextView
@@ -241,7 +253,7 @@
                 android:layout_marginLeft="95dp"
                 android:layout_marginTop="-70dp"
                 android:text="Name : Lưu Hồng Hữu"
-                android:textColor="#0C0C0C"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -250,7 +262,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="Student Id : 22DH111468"
-                android:textColor="#121111"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -259,7 +271,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="Work : "
-                android:textColor="#090808"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -268,7 +280,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="- View và chức năng forgot password "
-                android:textColor="#171616" />
+                android:textColor="?attr/colorPrimaryVariant"
+                />
 
             <TextView
                 android:id="@+id/textView52"
@@ -276,7 +289,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="- View profile view,theme view,change theme"
-                android:textColor="#151515" />
+                android:textColor="?attr/colorPrimaryVariant"
+                />
 
             <ImageView
                 android:id="@+id/imageView32"
@@ -284,6 +298,7 @@
                 android:layout_height="70dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="40dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/tuan" />
 
             <TextView
@@ -293,7 +308,7 @@
                 android:layout_marginLeft="95dp"
                 android:layout_marginTop="-70dp"
                 android:text="Name : Lê Hoàng Tuấn "
-                android:textColor="#151414"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -302,7 +317,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="Student Id : 22DH1114054"
-                android:textColor="#100F0F"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -311,7 +326,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:text="Work :"
-                android:textColor="#121111"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="16sp" />
 
             <TextView
@@ -321,7 +336,7 @@
                 android:layout_marginLeft="95dp"
                 android:text="- View text chat ,image chat,change avatar,update profile"
                 android:textAlignment="textStart"
-                android:textColor="#040303"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="14sp" />
         </LinearLayout>
     </ScrollView>

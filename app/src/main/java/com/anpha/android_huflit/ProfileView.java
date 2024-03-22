@@ -47,6 +47,11 @@ public class ProfileView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
+        int themeId = preferences.getInt("themeId", R.style.Theme1);
+        setTheme(themeId);
+
         setContentView(R.layout.activity_profile_view);
 
         requireAuth();
@@ -59,7 +64,6 @@ public class ProfileView extends AppCompatActivity {
 
 
         // Set user information
-        SharedPreferences preferences = getSharedPreferences("myPreferences", MODE_PRIVATE);
         String username = preferences.getString("username", ""); //lưu trữ tên người dùng
         userId = preferences.getString("userId", ""); //lưu trữ tên người dùng
         token = preferences.getString("token", "");
@@ -124,7 +128,7 @@ public class ProfileView extends AppCompatActivity {
             SharedPreferences.Editor editor = preferences.edit();
             editor.clear();
             editor.apply();
-            Intent intent = new Intent(ProfileView.this, Login.class);
+            Intent intent = new Intent(this, Login.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });

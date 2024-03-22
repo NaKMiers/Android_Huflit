@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <size android:height="50dp"
         android:width="250dp"/>
-    <gradient android:startColor="#8BBEFB"/>
-    <gradient android:endColor="#8BBEFB"/>
+    <solid android:color="?attr/colorSecondary"/>
     <corners android:radius="40dp"/>
 </shape>

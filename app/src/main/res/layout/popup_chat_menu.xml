@@ -16,6 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/colorSecondaryVariant"
         android:orientation="vertical">
 
         <FrameLayout
@@ -68,6 +69,7 @@
                 android:gravity="center|start"
                 android:hint="Username"
                 android:paddingLeft="5dp"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:onClick="toProfileView"
@@ -96,6 +98,7 @@
                 android:gravity="center|start"
                 android:paddingLeft="5dp"
                 android:text="Change Theme"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -122,6 +125,7 @@
                 android:gravity="center|start"
                 android:paddingLeft="5dp"
                 android:text="DevInfo"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -148,6 +152,7 @@
                 android:gravity="center|start"
                 android:paddingLeft="5dp"
                 android:text="Admin"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -162,6 +167,7 @@
             android:layout_marginTop="50dp"
             android:background="@drawable/buttonlogout"
             android:text="Log out"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textAllCaps="false"
             android:textSize="14sp"
             android:onClick="logOutUser"
@@ -173,6 +179,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="270dp"
             android:text="Các trang Social khác"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -200,6 +207,7 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
+                android:background="?attr/colorSecondary"
                 android:onClick="toFb"
                 android:src="@drawable/fb" />
 

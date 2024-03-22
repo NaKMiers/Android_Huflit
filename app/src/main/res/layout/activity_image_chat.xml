@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="12dp"
+        android:background="?attr/colorSecondaryVariant"
         tools:context=".ImageChat">
 
         <androidx.appcompat.widget.Toolbar
@@ -43,7 +44,7 @@
                 android:onClick="handleChangeChatMode"
                 android:text="IMAGE"
                 android:textStyle="bold"
-                android:textColor="#a8daf9"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="24sp" />
         </androidx.appcompat.widget.Toolbar>
 
@@ -67,6 +68,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
                 android:gravity="center"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:text="How can I help you today?"
                 android:textSize="20sp" />
 
@@ -90,7 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:indeterminate="true"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -104,7 +107,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/voicesearch"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -131,6 +135,8 @@
                     android:background="@drawable/edtcustom"
                     android:hint="Nhập câu lệnh tại đây..."
                     android:inputType="textMultiLine"
+                    android:textColorHint="?attr/colorPrimaryVariant"
+                    android:textColor="?attr/colorPrimaryVariant"
                     android:paddingHorizontal="21dp"
                     android:scrollHorizontally="false"/>
 
@@ -154,12 +160,13 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:visibility="visible"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:background="?attr/colorSecondaryVariant"
             android:paddingTop="20dp">
 
             <LinearLayout
@@ -183,7 +190,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:text="New chat"
-                    android:textColor="#000000"
+                    android:textColor="?attr/colorPrimaryVariant"
                     android:textSize="16sp" />
 
                 <ImageView
@@ -317,6 +324,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
+                android:textColor="?attr/colorPrimaryVariant"
                 android:text="Chat Boxes" />
 
             <ListView

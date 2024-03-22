@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="?attr/colorSecondaryVariant"
     tools:context=".AdminUser">
 
     <ImageView
@@ -26,7 +27,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:text="Danh sách người dùng  "
-            android:textColor="#333"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textStyle="bold"
             android:textAlignment="center"
             android:textSize="28sp" />
@@ -35,7 +36,8 @@
             android:id="@+id/homeBtn"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:textColor="#333"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:background="?attr/colorSecondaryVariant"
             android:textStyle="italic"
             android:onClick="handleBackToHome"
             android:text="(Home)"/>
@@ -44,6 +46,7 @@
     <ListView
         android:id="@+id/ListUser"
         android:padding="12dp"
+        android:textColor="?attr/colorPrimaryVariant"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
