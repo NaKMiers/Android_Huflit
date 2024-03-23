@@ -1,8 +1,10 @@
 package com.anpha.android_huflit;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,6 +35,7 @@ import android.widget.Toast;
 import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -83,14 +87,14 @@ public class ImageChat extends AppCompatActivity {
 
     // Elements
     TextView txtHelp2,txtusername, txtAmount, txtSize,txtAdminimg, txtDevinfo, txtChangetheme;
-    EditText edtImgChat;
+    EditText edtImgChat,txtSearch;
     NavigationView navigationView;
     ImageView btnSendImg, navigationIcon, imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon, receivedImage,imgAdminimg,imgDevinfo, imgChangetheme;
     PopupWindow popupWindow;
     Toolbar toolbarImage;
     Button btnSave,btnLogout;
     DrawerLayout drawerLayout;
-    ImageButton btnPlus1, btnInCr, btnMinus1, btnDes;
+    ImageButton btnPlus1, btnInCr, btnMinus1, btnDes,txtSend;
     ProgressBar loadingMessage;
 
 
@@ -176,6 +180,13 @@ public class ImageChat extends AppCompatActivity {
                 GoToNewBox(boxId);
             }
         });
+        txtSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
         // Click on edit button
         boxAdapter.setEditClickListener(new ChatBoxAdapter.OnEditClickListener() {
@@ -224,7 +235,6 @@ public class ImageChat extends AppCompatActivity {
                                 UpdateBoxName(API + "/box/edit-box/" + itemChatBox.get_id(), editText.getText().toString());
                             }
                         });
-
                     }
                 }
             }
@@ -249,6 +259,9 @@ public class ImageChat extends AppCompatActivity {
         InitialGetData();
     }
 
+
+
+
     private void mapping() {
         //Nạp layout từ tệp popup_image_chat_menu
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_image_chat_menu, null);
@@ -271,7 +284,7 @@ public class ImageChat extends AppCompatActivity {
         txtDevinfo = popupView.findViewById(R.id.txtDevinfo);
         txtChangetheme = popupView.findViewById(R.id.txtChangetheme);
         imgChangetheme = popupView.findViewById(R.id.imgChangetheme);
-
+        txtSearch = findViewById(R.id.txtSearch);
         txtHelp2 = findViewById(R.id.txtHelp2);
         edtImgChat = findViewById(R.id.edtImgChat);
         btnSendImg = findViewById(R.id.btnSendImg);
@@ -294,9 +307,12 @@ public class ImageChat extends AppCompatActivity {
         toolbarImage = findViewById(R.id.toolbarImage);
         imageChatBox = findViewById(R.id.imageChatBox);
         loadingMessage = findViewById(R.id.loadingMessage);
+        txtSend = findViewById(R.id.txtSend);
     }
 
     private void addEvents() {
+
+
         imgavatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1148,8 +1164,15 @@ public class ImageChat extends AppCompatActivity {
                 Toast.makeText(ImageChat.this, "Create Images Failed", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
+            // Phương thức để chuyển văn bản từ EditText thành prompt và so sánh với các prompt hiện có
+            private void compareWithExistingPrompts() {
+                // Lấy văn bản từ EditText
+
+            }
+
 
         });
+
     }
 
 
