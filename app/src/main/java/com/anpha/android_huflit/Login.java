@@ -130,7 +130,8 @@ import okhttp3.Response;
                        // get data from response
                        JSONObject userJson = json.optJSONObject("user");
                        String token = json.optString("token");
-                       Log.d("-----token", token);
+                       Log.d("----" +
+                               "t c ", token);
 
                        String username = userJson.optString("username");
                        String avatar = userJson.optString("avatar");

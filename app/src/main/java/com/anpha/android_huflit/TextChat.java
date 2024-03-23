@@ -297,7 +297,7 @@ public class TextChat extends AppCompatActivity {
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogOutUser();
+                    LogOutUser();
             }
         });
         imgavatar.setOnClickListener(new View.OnClickListener() {
