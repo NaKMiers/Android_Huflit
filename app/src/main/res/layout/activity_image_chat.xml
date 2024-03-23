@@ -339,7 +339,7 @@
                     android:textSize="20sp"
                     />
                 <ImageButton
-                    android:id="@+id/txtSend"
+                    android:id="@+id/BtnSearch"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center|right"

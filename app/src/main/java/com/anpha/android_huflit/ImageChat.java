@@ -94,7 +94,7 @@ public class ImageChat extends AppCompatActivity {
     Toolbar toolbarImage;
     Button btnSave,btnLogout;
     DrawerLayout drawerLayout;
-    ImageButton btnPlus1, btnInCr, btnMinus1, btnDes,txtSend;
+    ImageButton btnPlus1, btnInCr, btnMinus1, btnDes,btnSearch;
     ProgressBar loadingMessage;
 
 
@@ -133,7 +133,7 @@ public class ImageChat extends AppCompatActivity {
 
         // Khởi tạo Adapter và gán cho RecyclerView
         messages = new ArrayList<>();
-//        
+//
         adapter = new ImageMessageAdapter(messages);
 
         recyclerViewImage.setAdapter(adapter);
@@ -180,12 +180,7 @@ public class ImageChat extends AppCompatActivity {
                 GoToNewBox(boxId);
             }
         });
-        txtSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        
 
 
         // Click on edit button
@@ -307,7 +302,7 @@ public class ImageChat extends AppCompatActivity {
         toolbarImage = findViewById(R.id.toolbarImage);
         imageChatBox = findViewById(R.id.imageChatBox);
         loadingMessage = findViewById(R.id.loadingMessage);
-        txtSend = findViewById(R.id.txtSend);
+        btnSearch = findViewById(R.id.BtnSearch);
     }
 
     private void addEvents() {
@@ -390,7 +385,38 @@ public class ImageChat extends AppCompatActivity {
                 LogOutUser();
             }
         });
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchText();
+            }
+        });
     }
+
+    private void SearchText() {
+        // Bước 1: Tạo một chuỗi từ EditText
+        String txtsearch = txtSearch.getText().toString();
+
+        // Bước 2: Tạo danh sách prompts kết quả và duyệt qua prompts
+        List<Prompt> resultPrompts = new ArrayList<>();
+        for (Prompt prompt : prompts) {
+            // Bước 3: Kiểm tra xem chuỗi txtsearch có tồn tại trong nội dung văn bản của prompt hay không
+            if (prompt.getText().toString().contains(txtsearch)) { // Sử dụng contains để kiểm tra
+                // Bước 4: Nếu true, thêm prompt vào danh sách kết quả
+                resultPrompts.add(prompt);
+            }
+        }
+
+        // In ra các prompts kết quả
+        for (Prompt resultPrompt : resultPrompts) {
+            Log.d("Result Prompt", resultPrompt.getText());
+        }
+
+        // Bước 5: Done
+    }
+
+
 
     private void requireAuth() {
         SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
@@ -1165,10 +1191,7 @@ public class ImageChat extends AppCompatActivity {
                 e.printStackTrace();
             }
             // Phương thức để chuyển văn bản từ EditText thành prompt và so sánh với các prompt hiện có
-            private void compareWithExistingPrompts() {
-                // Lấy văn bản từ EditText
-
-            }
+           
 
 
         });
