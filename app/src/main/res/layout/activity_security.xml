@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Security">
+
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/custom_view"
+            android:layout_gravity="center_horizontal"
+            android:gravity="start"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/btnHome"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:onClick="goToHome"
+                android:layout_weight="0.5"
+                android:src="@drawable/home" />
+
+            <ImageView
+                android:id="@+id/btnProfile"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:onClick="goToProfile"
+                android:layout_weight="0.5"
+                android:src="@drawable/profile" />
+
+            <ImageView
+                android:id="@+id/themeBtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:onClick="goToTheme"
+                android:layout_weight="0.5"
+                android:src="@drawable/theme" />
+
+            <ImageView
+                android:id="@+id/btnSecurity"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:onClick="goToSecurity"
+                android:layout_weight="0.5"
+                android:src="@drawable/secure" />
+
+            <ImageView
+                android:id="@+id/btnLogout"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:onClick="goToLogout"
+                android:layout_weight="0.5"
+                android:src="@drawable/logout" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgChangeSecurity"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/owl"/>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="350dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="HUFLIT BIRD SECURITY"
+            android:textColor="@color/black"
+            android:textSize="25dp" />
+
+        <LinearLayout
+            android:layout_width="307dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/custom_edt"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/imageView37"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/icon_khoa" />
+
+            <EditText
+                android:id="@+id/edtOldPassSecurity"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edt"
+                android:ems="10"
+                android:hint="Old Password "
+                android:inputType="textPassword"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="307dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custom_edt"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/imageView3e7"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/icon_khoa" />
+
+            <EditText
+                android:id="@+id/edtNewPassSecurity"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edt"
+
+                android:ems="10"
+                android:hint="New Password"
+                android:inputType="textPassword"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="307dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custom_edt"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/imageView3e71"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/icon_khoa" />
+
+            <EditText
+                android:id="@+id/edtNewPassAgainSecurity"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edt"
+                android:ems="10"
+                android:hint="Enter A New Password "
+                android:inputType="textPassword"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSaveSecurity"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:onClick="HandleSaveSecurity"
+            android:background="@drawable/custom_btn"
+            android:text="SAVE" />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textSize="20dp"
+            android:textColor="@color/red"
+            android:text="Mật Khẩu:" />
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text="- Phải tối thiếu 6 ký tự" />
+
+        <TextView
+            android:id="@+id/textView29"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="- Phải có ít nhất một chữ hoa" />
+
+        <TextView
+            android:id="@+id/textView30"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="- Phải có ít nhất một chữ thường" />
+
+        <TextView
+            android:id="@+id/textView39"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="- Phải có ít nhất một chữ số" />
+
+    </LinearLayout>
+

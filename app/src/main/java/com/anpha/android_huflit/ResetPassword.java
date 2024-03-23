@@ -14,11 +14,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -29,16 +24,11 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import android.util.Log;
 
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class ResetPassword extends AppCompatActivity {
     EditText edtnewpassword, edtpassagainreset;
     Button btnokreset;
     OkHttpClient client = new OkHttpClient();
-    String API = "https://android-huflit-server.vercel.app";
+//    String API = "https://android-huflit-server.vercel.app";
 
 
     @Override
@@ -59,13 +49,13 @@ public class ResetPassword extends AppCompatActivity {
     public void handleSaveRP(View view) throws IOException {
         String newPassword = edtnewpassword.getText().toString();
         String confirmPassword = edtpassagainreset.getText().toString();
-
         Request request;
+
         if (!newPassword.equals(confirmPassword)) {
             Toast.makeText(ResetPassword.this, "Mật khẩu không trùng khớp. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
             return; // Thoát khỏi phương thức nếu mật khẩu không trùng khớp
         } else {
-            SharedPreferences preferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+            SharedPreferences preferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE);
             String emailReset = preferences.getString("emailReset", "");
 
             RequestBody formBody = new FormBody.Builder()

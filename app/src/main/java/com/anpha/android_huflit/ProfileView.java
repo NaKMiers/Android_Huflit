@@ -116,7 +116,7 @@ public class ProfileView extends AppCompatActivity {
             startActivity(intent);
         });
         securityBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(this, ImageChat.class);
+            Intent intent = new Intent(this, Security.class);
             startActivity(intent);
         });
         logoutBtn.setOnClickListener(view -> {
@@ -193,7 +193,4 @@ public class ProfileView extends AppCompatActivity {
         // Lấy lại dữ liệu từ SharedPreferences và hiển thị thông tin
 //        displayProfileInfo();
     }
-
-
-
 }

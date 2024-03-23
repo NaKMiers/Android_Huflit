@@ -15,11 +15,15 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".Security"
+            android:exported="true" />
+
+        <activity
             android:name=".AdminUserDetail"
             android:exported="true" />
         <activity
             android:name=".AdminUser"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".PopupOption"
             android:exported="true" />
