@@ -116,4 +116,19 @@ public class Prompt {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    @Override
+    public String toString() {
+        return "Prompt{" +
+                "_id='" + _id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", chatId='" + chatId + '\'' +
+                ", type='" + type + '\'' +
+                ", from='" + from + '\'' +
+                ", text='" + text + '\'' +
+                ", images=" + images +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

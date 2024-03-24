@@ -209,6 +209,38 @@
                     android:src="@drawable/chat" />
             </LinearLayout>
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="12dp"
+                android:layout_marginBottom="12dp">
+
+                <EditText
+                    android:id="@+id/txtSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/plaintextcustom"
+                    android:drawableLeft="@drawable/search1"
+                    android:drawablePadding="10dp"
+                    android:ems="10"
+                    android:hint="Search"
+                    android:inputType="text"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="45dp"
+                    android:singleLine="false"
+                    android:textColor="#333"
+                    android:textSize="16sp"
+                    />
+                <ImageButton
+                    android:id="@+id/BtnSearch"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center|right"
+                    android:layout_marginRight="10dp"
+                    android:background="@null"
+                    app:srcCompat="@drawable/altsend" />
+            </FrameLayout>
+
             <TextView
                 android:id="@+id/textView15"
                 android:layout_width="match_parent"

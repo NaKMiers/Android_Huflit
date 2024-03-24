@@ -166,7 +166,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="?attr/colorSecondaryVariant"
             android:paddingVertical="21dp">
 
             <LinearLayout
@@ -320,23 +319,25 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="12dp"
                 android:layout_marginTop="10dp">
 
                 <EditText
                     android:id="@+id/txtSearch"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/plaintextcustom"
                     android:drawableLeft="@drawable/search1"
                     android:drawablePadding="10dp"
                     android:ems="10"
                     android:hint="Search"
                     android:inputType="text"
-                    android:paddingLeft="10dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="45dp"
                     android:singleLine="false"
-                    android:textSize="20sp"
+                    android:textColor="#333"
+                    android:textSize="16sp"
                     />
                 <ImageButton
                     android:id="@+id/BtnSearch"
@@ -344,8 +345,8 @@
                     android:layout_height="25dp"
                     android:layout_gravity="center|right"
                     android:layout_marginRight="10dp"
+                    android:background="@null"
                     app:srcCompat="@drawable/altsend" />
-
             </FrameLayout>
 
             <TextView

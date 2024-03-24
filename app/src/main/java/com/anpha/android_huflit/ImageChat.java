@@ -48,6 +48,7 @@ import com.anpha.android_huflit.ChatBox.ItemChatBox;
 import com.anpha.android_huflit.Message.ChatBox;
 import com.anpha.android_huflit.Message.ImageMessage;
 import com.anpha.android_huflit.Message.ImageMessageAdapter;
+import com.anpha.android_huflit.Message.Message;
 import com.anpha.android_huflit.Models.Prompt;
 
 import org.json.JSONArray;
@@ -81,7 +82,7 @@ public class ImageChat extends AppCompatActivity {
     private ImageMessageAdapter adapter;
     private ArrayList<ItemChatBox> boxes;
     //Khởi tạo List tin nhắn
-    private List<ImageMessage> messages;
+    private ArrayList<ImageMessage> messages;
     ArrayList<Prompt> prompts = new ArrayList<>();
     ArrayList<String> imageUrls  = new ArrayList<>();
 
@@ -395,25 +396,28 @@ public class ImageChat extends AppCompatActivity {
     }
 
     private void SearchText() {
-        // Bước 1: Tạo một chuỗi từ EditText
-        String txtsearch = txtSearch.getText().toString();
+        String txtsearch = txtSearch.getText().toString().trim();
 
-        // Bước 2: Tạo danh sách prompts kết quả và duyệt qua prompts
-        List<Prompt> resultPrompts = new ArrayList<>();
-        for (Prompt prompt : prompts) {
-            // Bước 3: Kiểm tra xem chuỗi txtsearch có tồn tại trong nội dung văn bản của prompt hay không
-            if (prompt.getText().toString().contains(txtsearch)) { // Sử dụng contains để kiểm tra
-                // Bước 4: Nếu true, thêm prompt vào danh sách kết quả
-                resultPrompts.add(prompt);
+        if (!txtsearch.isEmpty()) {
+            ArrayList<ImageMessage> resultMessages = new ArrayList<>();
+
+            for (ImageMessage message : messages) {
+                Log.d("ASDASD----", message.toString());
+                if (message.toString().contains(txtsearch)) {
+                    resultMessages.add(message);
+                }
             }
-        }
+            // In ra các prompts kết quả
+            for (ImageMessage resultMessage : resultMessages) {
+                Log.d("Result Messsage", resultMessage.getText());
+            }
 
-        // In ra các prompts kết quả
-        for (Prompt resultPrompt : resultPrompts) {
-            Log.d("Result Prompt", resultPrompt.getText());
+            adapter = new ImageMessageAdapter(resultMessages);
+            recyclerViewImage.setAdapter(adapter);
+        } else {
+            adapter = new ImageMessageAdapter(messages);
+            recyclerViewImage.setAdapter(adapter);
         }
-
-        // Bước 5: Done
     }
 
 

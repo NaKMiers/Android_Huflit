@@ -48,4 +48,9 @@ public class ImageMessage {
     public void setImageUrls(ArrayList<String> imageUrls) {
         this.imageUrls = imageUrls;
     }
+
+    @Override
+    public String toString() {
+        return text + " " + (sentByUser ? "user" : "AI");
+    }
 }

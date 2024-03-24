@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ import android.widget.Toast;
 
 import com.anpha.android_huflit.ChatBox.ChatBoxAdapter;
 import com.anpha.android_huflit.ChatBox.ItemChatBox;
+import com.anpha.android_huflit.Message.ImageMessage;
+import com.anpha.android_huflit.Message.ImageMessageAdapter;
 import com.anpha.android_huflit.Message.Message;
 import com.anpha.android_huflit.Message.MessageAdapter;
 import com.anpha.android_huflit.Models.Prompt;
@@ -72,12 +75,13 @@ public class TextChat extends AppCompatActivity {
 
     // Elements
     ImageView btnSend, navigationIcon,imgavatar, fbIcon, insIcon, twIcon, pinIcon, gitIcon,imgChangetheme,imgDevinfo,imgAdmin;
-    EditText edtTextChat;
+    EditText edtTextChat, txtSearch;
     Toolbar toolbarChat;
     PopupWindow popupWindow;
     DrawerLayout drawerLayout;
     TextView txtHelp1, txtMode, txtusername,txtChangetheme,txtDevinfo,txtAdmin,txtHiUser;
     Button btnLogOut;
+    ImageButton btnSearch;
     ProgressBar loadingMessage;
     Switch speakSwitch;
 
@@ -253,7 +257,9 @@ public class TextChat extends AppCompatActivity {
         txtMode = findViewById(R.id.txtMode);
         chatBox = findViewById(R.id.chatBox);
         txtHiUser = findViewById(R.id.txtHiUser);
+        txtSearch = findViewById(R.id.txtSearch);
         speakSwitch = findViewById(R.id.speakSwitch);
+        btnSearch = findViewById(R.id.BtnSearch);
 
         //Nạp layout từ tệp popup_chat_menu
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_chat_menu, null);
@@ -363,6 +369,13 @@ public class TextChat extends AppCompatActivity {
                     return true;
                 }
                 return false;
+            }
+        });
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchText();
             }
         });
 
@@ -489,6 +502,31 @@ public class TextChat extends AppCompatActivity {
             loadingMessage.setVisibility(View.VISIBLE);
         } else {
             loadingMessage.setVisibility(View.GONE);
+        }
+    }
+
+    private void SearchText() {
+        String txtsearch = txtSearch.getText().toString().trim();
+
+        if (!txtsearch.isEmpty()) {
+            ArrayList<Message> resultMessages = new ArrayList<>();
+
+            for (Message message : messages) {
+                Log.d("ASDASD----", message.toString());
+                if (message.toString().contains(txtsearch)) {
+                    resultMessages.add(message);
+                }
+            }
+            // In ra các prompts kết quả
+            for (Message resultMessage : resultMessages) {
+                Log.d("Result Messsage", resultMessage.getText());
+            }
+
+            adapter = new MessageAdapter(resultMessages);
+            recyclerView.setAdapter(adapter);
+        } else {
+            adapter = new MessageAdapter(messages);
+            recyclerView.setAdapter(adapter);
         }
     }
 

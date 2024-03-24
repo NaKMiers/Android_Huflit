@@ -29,4 +29,9 @@ package com.anpha.android_huflit.Message;
         public void setSentByUser(boolean sentByUser) {
             this.sentByUser = sentByUser;
         }
+
+    @Override
+    public String toString() {
+        return text + " " + (sentByUser ? "user" : "AI");
     }
+}
