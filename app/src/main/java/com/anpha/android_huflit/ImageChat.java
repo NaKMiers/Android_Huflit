@@ -631,11 +631,13 @@ public class ImageChat extends AppCompatActivity {
     public void handleSentImagePrompt(View view) throws IOException {
         String text = edtImgChat.getText().toString().trim();
 
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+
         if (!text.isEmpty()) {
             txtHelp2.setText("");
 
             CreatePrompt(API + "/image/create-prompt", text.trim());
-            edtImgChat.setText(" ");
+            edtImgChat.setText("");
         }
     }
 
@@ -1089,11 +1091,10 @@ public class ImageChat extends AppCompatActivity {
                                 recyclerViewImage.scrollToPosition(messages.size() - 1);
 
                                 // clear text chat
-                                String promptString = edtImgChat.getText().toString();
                                 edtImgChat.setText("");
 
                                 // create images after prompt was created
-                                CreateImages(API + "/image/create-images", promptString);
+                                CreateImages(API + "/image/create-images", text);
 
                             } catch (JSONException | IOException e ) {
                                 throw new RuntimeException(e);

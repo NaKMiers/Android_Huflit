@@ -1035,13 +1035,10 @@ public class TextChat extends AppCompatActivity {
                                 recyclerView.scrollToPosition(messages.size() - 1);
 
                                 // clear text chat
-                                String promptString = edtTextChat.getText().toString();
-
-                                // clear text chat
                                 edtTextChat.setText("");
 
                                 // create completion after prompt was created
-                                CreateCompletion(API + "/chat/create-completion", promptString);
+                                CreateCompletion(API + "/chat/create-completion", text);
 
                             } catch (JSONException | IOException e) {
                                 throw new RuntimeException(e);
