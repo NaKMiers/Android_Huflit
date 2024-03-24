@@ -106,7 +106,7 @@ public class ThemeView extends AppCompatActivity {
             startActivity(intent);
         });
         securityBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(this, ImageChat.class);
+            Intent intent = new Intent(this, Security.class);
             startActivity(intent);
         });
         logoutBtn.setOnClickListener(view -> {
