@@ -138,7 +138,6 @@ public class ForgotPassword extends AppCompatActivity {
                     ForgotPassword.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d("asdaslkdjalskd", myResponse);
                             sendFPBtn.setText("Reset");
 
                             // hide email input
@@ -149,6 +148,13 @@ public class ForgotPassword extends AppCompatActivity {
                             inputCodeBox.setVisibility(View.VISIBLE);
 
                             isSent = true;
+                        }
+                    });
+                } else {
+                    ForgotPassword.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ForgotPassword.this, "Email không tồn tại", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

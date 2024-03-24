@@ -140,7 +140,7 @@
         android:textColor="#3F51B5"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintHorizontal_bias="0.164"
         app:layout_constraintStart_toEndOf="@+id/txtemailprofilechange"
         app:layout_constraintTop_toBottomOf="@+id/btnregister" />
 

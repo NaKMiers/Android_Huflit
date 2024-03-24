@@ -631,8 +631,6 @@ public class ImageChat extends AppCompatActivity {
     public void handleSentImagePrompt(View view) throws IOException {
         String text = edtImgChat.getText().toString().trim();
 
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-
         if (!text.isEmpty()) {
             txtHelp2.setText("");
 

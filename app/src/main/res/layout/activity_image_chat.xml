@@ -135,10 +135,10 @@
                     android:background="@drawable/edtcustom"
                     android:hint="Nhập câu lệnh tại đây..."
                     android:inputType="textMultiLine"
-                    android:textColorHint="?attr/colorPrimaryVariant"
-                    android:textColor="?attr/colorPrimaryVariant"
                     android:paddingHorizontal="21dp"
-                    android:scrollHorizontally="false"/>
+                    android:scrollHorizontally="false"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:textColorHint="?attr/colorPrimaryVariant" />
 
                 <ImageView
                     android:id="@+id/btnSendImg"
@@ -372,6 +372,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:onClick="handleClearBoxOfImage"
+                android:layout_marginBottom="20dp"
                 android:src="@drawable/broom" />
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>

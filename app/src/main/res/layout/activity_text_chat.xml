@@ -251,8 +251,8 @@
             <ListView
                 android:id="@+id/chatBox"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_margin="16px" />
 
             <ImageView
@@ -261,6 +261,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:onClick="handleClearBoxOfChat"
+                android:layout_marginBottom="20dp"
                 android:src="@drawable/broom" />
 
             <Switch
@@ -273,5 +274,4 @@
 
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
-
 </androidx.drawerlayout.widget.DrawerLayout>
