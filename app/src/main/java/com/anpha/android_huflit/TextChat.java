@@ -299,7 +299,7 @@ public class TextChat extends AppCompatActivity {
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogOutUser();
+                    LogOutUser();
             }
         });
         imgavatar.setOnClickListener(new View.OnClickListener() {
@@ -396,6 +396,7 @@ public class TextChat extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.apply();
+
         Intent intent = new Intent(TextChat.this, TextChat.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -594,7 +595,7 @@ public class TextChat extends AppCompatActivity {
 
     private void GetChatBoxes(String url){
         if (token.isEmpty()) {
-            Toast.makeText(TextChat.this, "Token không tồn tại", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TextChat.this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
             return;
         }
 

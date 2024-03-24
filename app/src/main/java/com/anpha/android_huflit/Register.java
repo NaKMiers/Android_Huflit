@@ -134,7 +134,7 @@ public class Register extends AppCompatActivity {
                         JSONObject json = new JSONObject(myResponse);
                         JSONObject userJson = json.optJSONObject("user");
                         String token = json.optString("token");
-                        String username = userJson.optString("username");
+                       String username = userJson.optString("username");
                         String avatar = userJson.optString("avatar");
 
 //                        Lưu username vào SharedPreferences
