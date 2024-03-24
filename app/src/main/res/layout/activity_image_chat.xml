@@ -318,6 +318,36 @@
                 android:text="SAVE"
                 android:textSize="14sp" />
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/txtSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/plaintextcustom"
+                    android:drawableLeft="@drawable/search1"
+                    android:drawablePadding="10dp"
+                    android:ems="10"
+                    android:hint="Search"
+                    android:inputType="text"
+                    android:paddingLeft="10dp"
+                    android:singleLine="false"
+                    android:textSize="20sp"
+                    />
+                <ImageButton
+                    android:id="@+id/BtnSearch"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center|right"
+                    android:layout_marginRight="10dp"
+                    app:srcCompat="@drawable/altsend" />
+
+            </FrameLayout>
+
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
@@ -326,6 +356,7 @@
                 android:layout_marginTop="10dp"
                 android:textColor="?attr/colorPrimaryVariant"
                 android:text="Chat Boxes" />
+
 
             <ListView
                 android:id="@+id/imageChatBox"
