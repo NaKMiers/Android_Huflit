@@ -155,8 +155,10 @@ public class TextChat extends AppCompatActivity {
             txtAdmin.setVisibility(View.GONE);
         }
 
+        speakSwitch.setChecked(isSpeak);
+
         txtusername.setText(username); // đặt tên người dùng trong textview
-        txtHiUser.setText(" Hi " + username );
+        txtHiUser.setText("Hi " + username);
 
         // Item selected
         chatBox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -566,6 +568,7 @@ public class TextChat extends AppCompatActivity {
 
             try {
                 CreatePrompt(API + "/chat/create-prompt", text);
+                edtTextChat.setText(" ");
             } catch (IOException e) {
                 e.printStackTrace();
             }

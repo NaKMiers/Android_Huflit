@@ -583,12 +583,13 @@ public class ImageChat extends AppCompatActivity {
     }
 
     public void handleSentImagePrompt(View view) throws IOException {
-        String messageText = edtImgChat.getText().toString().trim();
+        String text = edtImgChat.getText().toString().trim();
 
-        if (!messageText.isEmpty()) {
+        if (!text.isEmpty()) {
             txtHelp2.setText("");
 
-            CreatePrompt(API + "/image/create-prompt", edtImgChat.getText().toString());
+            CreatePrompt(API + "/image/create-prompt", text.trim());
+            edtImgChat.setText(" ");
         }
     }
 
